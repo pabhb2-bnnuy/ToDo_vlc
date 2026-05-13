@@ -9,5 +9,5 @@ public class VlcApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VlcApplication.class, args);
 	}
-
+//as
 }
