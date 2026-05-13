@@ -6,18 +6,16 @@ public class Usuario {
     private String nombre;
     private String email;
     private String password;
-    private String varchar;
     private String rol;
     private String fecha_creacion;
     private String estado;
     private int gestion_proyecto;
 
-    public Usuario(Integer id_usuario, String nombre, String email, String password, String varchar, String rol,
+    public Usuario(Integer id_usuario, String nombre, String email, String password, String rol,
             String fecha_creacion, String estado, Integer gestion_proyecto) {
         this.nombre = nombre;
         this.email = email;
         this.password = password;
-        this.varchar = varchar;
         this.rol = rol;
         this.fecha_creacion = fecha_creacion;
         this.estado = estado;
@@ -54,14 +52,6 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getVarchar() {
-        return varchar;
-    }
-
-    public void setVarchar(String varchar) {
-        this.varchar = varchar;
     }
 
     public String getRol() {
