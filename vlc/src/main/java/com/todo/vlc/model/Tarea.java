@@ -17,6 +17,7 @@ public class Tarea {
         this.fecha_entrega = fecha_entrega;
         this.estado = estado;
     }
+    
 
     public int getId_tarea() {
         return id_tarea;
