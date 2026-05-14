@@ -15,15 +15,13 @@ public class HomeController {
         return "index";
     }
 
-    @PostMapping("/saludar")
-    public String ejecutarFuncionJava(
-            @RequestParam(name = "nombreUsuario") String nombre,
-            Model model) {
+    @GetMapping("/registrarse")
+    public String registro() {
+        return "registrarse";
+    }
 
-        String mensajeFinal = "Hola " + nombre;
-
-        model.addAttribute("resultado", mensajeFinal);
-
-        return "index";
+    @GetMapping("/inicioSesion")
+    public String inicioSesion() {
+        return "inicioSesion";
     }
 }

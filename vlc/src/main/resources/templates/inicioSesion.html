@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo App</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleInicioSesion.css">
     <link rel="shortcut icon" href="img&svg/logo_chill.svg" type="image/x-icon">
 </head>
 
@@ -30,34 +30,36 @@
     <!-- Contenedor principal -->
     <main class="container">
         <section class="hero">
-            <h1>Organiza tu vida con <span>ToDo Vlc</span></h1>
-            <p>Gestiona tareas, recordatorios y mejora tu productividad desde cualquier dispositivo.</p>
-            <div class="buttons">
-                <a th:href="@{/registrarse}" class="btn btn-primary">
-                    Empezar Gratis
-                </a>
-                <a th:href="@{/inicioSesion}" class="btn btn-primary">
-                    Iniciar Sesión
-                </a>
-            </div>
+
+            <section class="hero">
+
+                <div class="login-box">
+
+                    <h1>Iniciar sesión</h1>
+
+                    <p>
+                        Accede a tu cuenta para gestionar tus tareas y proyectos.
+                    </p>
+
+
+                    <input type="email" name="email" placeholder="Correo electrónico" required>
+
+                    
+                    <input type="password" name="password" placeholder="Contraseña" required>
+
+                    <button type="submit" class="btn btn-primary">
+                        Entrar
+                    </button>
+
+
+
+                </div>
+
+            </section>
+
         </section>
 
-        <section class="features">
-            <div class="feature-box">
-                <h3>Rápida</h3>
-                <p>Interfaz optimizada y ligera.</p>
-            </div>
 
-            <div class="feature-box">
-                <h3>Segura</h3>
-                <p>Datos protegidos en todo momento.</p>
-            </div>
-
-            <div class="feature-box">
-                <h3>Multiplataforma</h3>
-                <p>Funciona en móvil y ordenador.</p>
-            </div>
-        </section>
     </main>
 
     <!-- Footer -->

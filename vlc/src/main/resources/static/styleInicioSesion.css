@@ -118,28 +118,6 @@ nav a:hover {
     color: white;
 }
 
-/* FEATURES */
-.features {
-    display: flex;
-    justify-content: center;
-    gap: clamp(10px, 2vw, 20px);
-    flex-wrap: wrap;
-}
-
-.feature-box {
-    text-align: center;
-    padding: 1rem;
-    background: rgba(17,24,39,0.85);
-    border-radius: 15px;
-    color: white;
-    width: clamp(180px, 25%, 250px);
-    backdrop-filter: blur(8px);
-}
-
-.feature-box h3 {
-    margin-bottom: 0.5rem;
-    font-size: clamp(16px, 1.2vw, 20px);
-}
 
 /* FOOTER */
 .bottom-bar {
@@ -179,3 +157,138 @@ nav a:hover {
     }
 }
 
+/* LOGIN BOX */
+.login-box {
+    width: 420px;
+    padding: 45px;
+    border-radius: 22px;
+    background: rgba(17,24,39,0.88);
+    backdrop-filter: blur(12px);
+    text-align: center;
+    flex-direction: column;
+}
+
+/* INPUTS */
+.login-form input {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 12px;
+    outline: none;
+    font-size: 16px;
+    margin-bottom: 22px; /* 👈 separación entre inputs */
+}
+
+/* BOTÓN */
+.btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px; /* 👈 separación con contraseña */
+}
+
+.btn-primary {
+    background: #38bdf8;
+    color: #0f172a;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.02);
+}
+
+
+
+/* CONTAINER */
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* 👈 centra vertical */
+    align-items: center;     /* 👈 centra horizontal */
+}
+
+/* HERO */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* LOGIN BOX */
+.login-box {
+    width: 420px;
+    padding: 45px;
+    border-radius: 22px;
+    background: rgba(17,24,39,0.88);
+    backdrop-filter: blur(12px);
+    text-align: center;
+    color: white;
+}
+
+/* TITULO */
+.login-box h1 {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+/* TEXTO */
+.login-box p {
+    color: #cbd5e1;
+    margin-bottom: 35px;
+    font-size: 16px;
+}
+
+/* FORMULARIO */
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* INPUTS */
+.login-box input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 12px;
+    outline: none;
+    font-size: 20px;
+    margin-bottom: 28px; /* 👈 separación entre inputs */
+}
+
+/* BOTÓN */
+.btn {
+    width: 80%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px; /* 👈 separación con contraseña */
+}
+
+.btn-primary {
+    background: #38bdf8;
+    color: #0f172a;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.02);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+    .login-box {
+        width: 90%;
+        max-width: 400px;
+        padding: 35px;
+    }
+
+}
