@@ -5,6 +5,7 @@ import com.todo.vlc.model.Usuario;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,21 +25,26 @@ public class postMapping {
     public String iniciarSesion(
 
             @RequestParam("mail") String email,
-            @RequestParam("password") String password
+            @RequestParam("password") String password,
+            RedirectAttributes redirectAttributes
 
     ) {
         Usuario usuario = new Usuario(email, password);
 
         try (Connection con = dataSource.getConnection()) {
 
-            String sql = "SELECT * FROM usuarios WHERE email = ? AND passwrd = ?";
+            String sql = "SELECT * FROM usuarios WHERE email = ?";
+                String sql2 = "SELECT * FROM usuarios WHERE passwrd = ?";
+
 
             PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps2 = con.prepareStatement(sql2);
 
             ps.setString(1, usuario.getEmail());
-            ps.setString(2, usuario.getPassword());
+            ps2.setString(1, usuario.getPassword());
 
             ResultSet rs = ps.executeQuery();
+            ResultSet rs2 = ps2.executeQuery();
 
             String emaill = null;
             String contraseña = null;
@@ -48,23 +54,42 @@ public class postMapping {
 
             if (rs.next()) {
                 emaill = rs.getString("email");
+            }
+
+            if (rs2.next()) {
                 contraseña = rs.getString("passwrd");
             }
             System.out.println(emaill);
             System.out.println(contraseña);
 
-            if (emaill.equals(email)) {
-                if (contraseña.equals(password)) {
-                    return "index";
-                } else {
 
-                }
-            } else {
-
+            if (emaill == null) {
+                redirectAttributes.addFlashAttribute(
+                        "error",
+                        "El email no existe"
+                );
+                return "redirect:/inicioSesion";
             }
+
+            if (contraseña == null) {
+                redirectAttributes.addFlashAttribute(
+                        "error",
+                        "Email o contraseña incorrectos"
+                );
+                return "redirect:/inicioSesion";
+            }
+
+    
 
         } catch (Exception e) {
             e.printStackTrace();
+
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    "Error interno del servidor"
+            );
+
+            return "redirect:/inicioSesion";
         }
 
         return "inicioSesion";
