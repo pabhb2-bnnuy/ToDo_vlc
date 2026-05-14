@@ -20,7 +20,9 @@ CREATE TABLE proyecto (
     descripcion VARCHAR(150),
     fecha_inicio DATE,
     fecha_limite DATE,
-    estado VARCHAR(30)
+    estado VARCHAR(30),
+     id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 
 CREATE TABLE tareas (
