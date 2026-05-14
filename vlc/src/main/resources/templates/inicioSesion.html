@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo App</title>
-    <link rel="stylesheet" href="styleInicioSesion.css">
+    <link rel="stylesheet" href="form_style.css">
+    
     <link rel="shortcut icon" href="img&svg/logo_chill.svg" type="image/x-icon">
 </head>
 
@@ -30,36 +31,31 @@
     <!-- Contenedor principal -->
     <main class="container">
         <section class="hero">
+            <div class="form-container">
+                <h2>Iniciar Sesión</h2>
+                <form action="/register" method="post">
 
-            <section class="hero">
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" name="mail" id="email" required>
+                    </div>
 
-                <div class="login-box">
+                    <!-- Contraseña -->
+                    <div class="form-group">
+                        <label for="passwd">Contraseña:</label>
+                        <input type="password" name="password" id="passwd" required
+                            pattern="(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}"
+                            title="Mínimo 6 caracteres y al menos 1 caracter especial">
+                    </div>
 
-                    <h1>Iniciar sesión</h1>
-
-                    <p>
-                        Accede a tu cuenta para gestionar tus tareas y proyectos.
-                    </p>
-
-
-                    <input type="email" name="email" placeholder="Correo electrónico" required>
-
-                    
-                    <input type="password" name="password" placeholder="Contraseña" required>
-
-                    <button type="submit" class="btn btn-primary">
-                        Entrar
-                    </button>
-
-
-
-                </div>
-
-            </section>
-
+                    <!-- Botón -->
+                    <div class="form-group">
+                        <button type="submit">Entrar</button>
+                    </div>
+                </form>
+            </div>
         </section>
-
-
     </main>
 
     <!-- Footer -->
