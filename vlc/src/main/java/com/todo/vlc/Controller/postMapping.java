@@ -30,8 +30,8 @@ public class postMapping {
     ) {
         Usuario usuario = new Usuario(email, password);
 
-        try(Connection con = dataSource.getConnection();){
-            
+        try (Connection con = dataSource.getConnection();) {
+
             String sql = "SELECT * FROM usuarios WHERE email = ? AND passwrd = ?";
 
             PreparedStatement ps = con.prepareStatement(sql);
@@ -54,13 +54,13 @@ public class postMapping {
             System.out.println(emaill);
             System.out.println(contraseña);
 
-            if (emaill.equals(email)){
-                if(contraseña.equals(password)){
+            if (emaill.equals(email)) {
+                if (contraseña.equals(password)) {
                     return "index";
-                }else{
+                } else {
 
                 }
-            }else{
+            } else {
 
             }
 

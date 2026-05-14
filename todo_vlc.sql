@@ -8,7 +8,7 @@ CREATE TABLE usuarios (
     email VARCHAR(100) UNIQUE,
     passwrd VARCHAR(50) NOT NULL,
     rol VARCHAR(50),
-    fecha_creacion DATE
+    fecha_creacion VARCHAR(16) DEFAULT (DATE_FORMAT(CURRENT_TIMESTAMP, '%d/%m/%Y %H:%i'))
 );
 
 
@@ -35,7 +35,7 @@ CREATE TABLE tareas (
 CREATE TABLE usuario_proyecto (
     id_usuario INT,
     id_proyecto INT,
-    fecha_asignacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_asignacion VARCHAR(16) DEFAULT (DATE_FORMAT(CURRENT_TIMESTAMP, '%d/%m/%Y %H:%i')),
     PRIMARY KEY (id_usuario, id_proyecto),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto) ON DELETE CASCADE
