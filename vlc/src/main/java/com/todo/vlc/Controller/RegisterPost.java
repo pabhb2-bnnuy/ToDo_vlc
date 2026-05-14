@@ -2,7 +2,6 @@ package com.todo.vlc.Controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import javax.sql.DataSource;
 
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.todo.vlc.model.Usuario;
 
 @Controller
 public class RegisterPost {
@@ -27,7 +25,7 @@ public class RegisterPost {
             @RequestParam("password") String password,
             @RequestParam("rol") String rol) {
 
-        try (Connection con = dataSource.getConnection();) {
+        try (Connection con = dataSource.getConnection()) {
 
             String sql = "INSERT INTO usuarios(nombre, email, passwrd, rol) VALUES (?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
