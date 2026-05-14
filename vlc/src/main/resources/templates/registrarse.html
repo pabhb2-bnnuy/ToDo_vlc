@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+    <link rel="stylesheet" href="form_style.css">
+    
+    <link rel="shortcut icon" href="img&svg/logo_chill.svg" type="image/x-icon">
+</head>
+
+<body>
+
+    <!-- Video de fondo -->
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="mov_bbb.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+
+    <!-- Header -->
+    <header class="top-bar">
+        <div><img src="img&svg/full_logoo.svg" alt="todo_main_logo" width="140px"></div>
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#">Features</a>
+            <a href="#">Contacto</a>
+        </nav>
+    </header>
+
+    <!-- Contenedor principal -->
+    <main class="container">
+        <section class="hero">
+            <div class="form-container">
+                <h2>Formulario de Registro</h2>
+                <form action="/register" method="post">
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label for="name">Nombre:</label>
+                        <input type="text" name="nombre" id="name" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" name="mail" id="email" required>
+                    </div>
+
+                    <!-- Contraseña -->
+                    <div class="form-group">
+                        <label for="passwd">Contraseña:</label>
+                        <input type="password" name="password" id="passwd" required
+                            pattern="(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}"
+                            title="Mínimo 6 caracteres y al menos 1 caracter especial">
+                    </div>
+
+                    <!-- Rol -->
+                    <div class="form-group">
+                        <label for="rol">Rol:</label>
+                        <input type="text" name="rol" id="rol">
+                    </div>
+
+                    <!-- Fecha de Creación -->
+                    <div class="form-group">
+                        <label for="fecha">Fecha de Creación:</label>
+                        <input type="date" name="fecha_creacion" id="fecha">
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="form-group">
+                        <label for="estado">Estado:</label>
+                        <select name="estado" id="estado">
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
+                    </div>
+
+                    <!-- Gestión de Proyecto -->
+                    <div class="form-group">
+                        <label for="gestion">Gestión Proyecto:</label>
+                        <input type="text" name="gestion_proyecto" id="gestion">
+                    </div>
+
+                    <!-- Botón -->
+                    <div class="form-group">
+                        <button type="submit">Registrarse</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bottom-bar">
+        <div>2026</div>
+        <div><a href="https://github.com/Nicoaz25"><img src="img&svg/github_icon.svg" alt="github_logo"
+                    width="20px"></a></div>
+        <div>IES La Sénia</div>
+        <div><a href="https://github.com/pabhb2-bnnuy"><img src="img&svg/github_icon.svg" alt="github_logo"
+                    width="20px"></a></div>
+
+    </footer>
+
+</body>
+
+</html>

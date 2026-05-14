@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomeController {
 
+<<<<<<< HEAD
     @GetMapping("/")
     public String inicio() {
 
@@ -23,5 +24,7 @@ public class HomeController {
     @GetMapping("/inicioSesion")
     public String inicioSesion() {
         return "inicioSesion";
+=======
+>>>>>>> fe4fce8 (cambios en base de datos, creando registro usuario)
     }
 }
