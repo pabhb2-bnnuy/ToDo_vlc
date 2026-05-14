@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 @Controller
 public class postMapping {
@@ -20,9 +18,10 @@ public class postMapping {
             @RequestParam("password") String password
 
     ) {
+        Usuario usuario = new Usuario(email, password);
+        
+        
 
-        
-        
-        return "menu";
+        return "index";
     }
 }
