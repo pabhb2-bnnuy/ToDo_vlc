@@ -52,7 +52,7 @@ nav a:hover {
 
 /* ====================== CONTENEDOR PRINCIPAL ====================== */
 .container {
-    min-height: 100vh;
+    min-height: 90.7vh;
     padding: 6rem 6%;
     display: flex;
     justify-content: center;

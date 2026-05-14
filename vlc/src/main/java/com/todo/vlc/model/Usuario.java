@@ -8,18 +8,19 @@ public class Usuario {
     private String password;
     private String rol;
     private String fecha_creacion;
-    private String estado;
-    private int gestion_proyecto;
+
+    public Usuario(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     public Usuario(Integer id_usuario, String nombre, String email, String password, String rol,
-            String fecha_creacion, String estado, Integer gestion_proyecto) {
+            String fecha_creacion) {
         this.nombre = nombre;
         this.email = email;
         this.password = password;
         this.rol = rol;
         this.fecha_creacion = fecha_creacion;
-        this.estado = estado;
-        this.gestion_proyecto = gestion_proyecto;
     }
 
     public Integer getId_usuario() {
@@ -68,22 +69,6 @@ public class Usuario {
 
     public void setFecha_creacion(String fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public Integer getGestion_proyecto() {
-        return gestion_proyecto;
-    }
-
-    public void setGestion_proyecto(Integer gestion_proyecto) {
-        this.gestion_proyecto = gestion_proyecto;
     }
 
 }

@@ -8,8 +8,7 @@ CREATE TABLE usuarios (
     email VARCHAR(100) UNIQUE,
     passwrd VARCHAR(50) NOT NULL,
     rol VARCHAR(50),
-    fecha_creacion DATE,
-    gestion_proyecto INT
+    fecha_creacion DATE
 );
 
 
