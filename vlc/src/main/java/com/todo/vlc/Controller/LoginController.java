@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.net.PasswordAuthentication;
-import java.sql.Connection;
 import java.util.Optional;
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,27 +46,16 @@ public class LoginController {
             System.out.println(usuario.getEmail());
             System.out.println(usuario.getPasswrd());
 
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-            if (!encoder.matches(password, usuario.getPasswrd())) {
-
-                redirectAttributes.addFlashAttribute(
-                        "error",
-                        "Email o contraseña incorrectos");
-
-                return "redirect:/inicioSesion";
+            if (passwordEncoder.matches(password, passwordEncoder.encode(usuario.getPasswrd())))     {
+                System.out.println("ASi es");
             }
-
-            System.out.println("INPUT: " + password);
-            System.out.println("HASH BD: " + usuario.getPasswrd());
-            System.out.println("MATCH: " + encoder.matches(password, usuario.getPasswrd()));
 
         } catch (Exception e) {
             e.printStackTrace();
 
-           // redirectAttributes.addFlashAttribute(
-             //       "error",
-               //     "Error interno del servidor");
+            // redirectAttributes.addFlashAttribute(
+            // "error",
+            // "Error interno del servidor");
 
             return "redirect:/inicioSesion";
         }

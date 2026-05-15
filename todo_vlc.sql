@@ -8,7 +8,7 @@ CREATE TABLE usuarios (
     email VARCHAR(100) UNIQUE,
     passwrd VARCHAR(200) NOT NULL,
     rol VARCHAR(50),
-    fecha_creacion VARCHAR(16) DEFAULT (DATE_FORMAT(CURRENT_TIMESTAMP, '%d/%m/%Y %H:%i'))
+    fecha_creacion VARCHAR(200)
 );
 
 
