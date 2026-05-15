@@ -6,13 +6,16 @@ import java.sql.PreparedStatement;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 public class RegisterPost {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private DataSource dataSource;
@@ -26,6 +29,8 @@ public class RegisterPost {
             @RequestParam("rol") String rol) {
 
         try (Connection con = dataSource.getConnection()) {
+
+             password = passwordEncoder.encode(password);
 
             String sql = "INSERT INTO usuarios(nombre, email, passwrd, rol) VALUES (?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);

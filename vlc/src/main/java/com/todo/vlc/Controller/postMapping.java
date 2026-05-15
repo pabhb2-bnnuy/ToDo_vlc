@@ -29,7 +29,7 @@ public class postMapping {
             RedirectAttributes redirectAttributes
 
     ) {
-        Usuario usuario = new Usuario(email, password);
+        
 
         try (Connection con = dataSource.getConnection()) {
 
@@ -40,8 +40,8 @@ public class postMapping {
             PreparedStatement ps = con.prepareStatement(sql);
             PreparedStatement ps2 = con.prepareStatement(sql2);
 
-            ps.setString(1, usuario.getEmail());
-            ps2.setString(1, usuario.getPassword());
+            ps.setString(1,"placeholder" );
+            ps2.setString(1, "placeholder");
 
             ResultSet rs = ps.executeQuery();
             ResultSet rs2 = ps2.executeQuery();

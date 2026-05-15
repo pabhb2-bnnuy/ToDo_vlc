@@ -6,7 +6,7 @@ CREATE TABLE usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50),
     email VARCHAR(100) UNIQUE,
-    passwrd VARCHAR(50) NOT NULL,
+    passwrd VARCHAR(200) NOT NULL,
     rol VARCHAR(50),
     fecha_creacion VARCHAR(16) DEFAULT (DATE_FORMAT(CURRENT_TIMESTAMP, '%d/%m/%Y %H:%i'))
 );
