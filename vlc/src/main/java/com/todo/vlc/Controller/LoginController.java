@@ -67,9 +67,9 @@ public class LoginController {
         } catch (Exception e) {
             e.printStackTrace();
 
-            redirectAttributes.addFlashAttribute(
-                    "error",
-                    "Error interno del servidor");
+           // redirectAttributes.addFlashAttribute(
+             //       "error",
+               //     "Error interno del servidor");
 
             return "redirect:/inicioSesion";
         }
