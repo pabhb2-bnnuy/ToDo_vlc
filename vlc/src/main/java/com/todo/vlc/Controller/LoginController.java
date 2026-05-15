@@ -34,7 +34,7 @@ public class LoginController {
 
             Optional<Usuario> optUsuario = usuarioRepository.findByEmail(email);
 
-            if (optUsuario == null) {
+            if (optUsuario.isEmpty()) {
                 redirectAttributes.addFlashAttribute(
                         "error",
                         "El email no existe");
@@ -46,16 +46,19 @@ public class LoginController {
             System.out.println(usuario.getEmail());
             System.out.println(usuario.getPasswrd());
 
-            if (passwordEncoder.matches(password, passwordEncoder.encode(usuario.getPasswrd())))     {
-                System.out.println("ASi es");
+            if (!passwordEncoder.matches(password, usuario.getPasswrd())) {
+                redirectAttributes.addFlashAttribute(
+                        "error",
+                        "El email o la contraseña no son correctos");
+                return "redirect:/inicioSesion";
             }
 
         } catch (Exception e) {
             e.printStackTrace();
 
-            // redirectAttributes.addFlashAttribute(
-            // "error",
-            // "Error interno del servidor");
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    "Error interno del servidor");
 
             return "redirect:/inicioSesion";
         }
