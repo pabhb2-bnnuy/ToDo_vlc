@@ -1,5 +1,7 @@
 package com.todo.vlc.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +27,6 @@ public class Usuario {
     private String email;
     private String passwrd;
     private String rol;
-    private String fecha_creacion;
-
+    @Column(insertable = false, updatable = false)
+    private LocalDateTime fecha_creacion;
 }

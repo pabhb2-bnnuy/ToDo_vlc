@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS toDo_vlc;
 CREATE DATABASE toDo_vlc;
 USE toDo_vlc;
 
-CREATE TABLE usuarios (
+CREATE TABLE usuarios ( 
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50),
     email VARCHAR(100) UNIQUE,
