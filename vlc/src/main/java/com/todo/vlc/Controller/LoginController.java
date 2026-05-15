@@ -23,12 +23,9 @@ public class LoginController {
 
     @PostMapping("/inicioSesion")
     public String iniciarSesion(
-
             @RequestParam("mail") String email,
             @RequestParam("password") String password,
-            RedirectAttributes redirectAttributes
-
-    ) {
+            RedirectAttributes redirectAttributes) {
 
         try {
 
@@ -42,9 +39,6 @@ public class LoginController {
             }
 
             Usuario usuario = optUsuario.get();
-
-            System.out.println(usuario.getEmail());
-            System.out.println(usuario.getPasswrd());
 
             if (!passwordEncoder.matches(password, usuario.getPasswrd())) {
                 redirectAttributes.addFlashAttribute(
