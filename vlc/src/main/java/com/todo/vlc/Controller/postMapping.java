@@ -1,5 +1,6 @@
 package com.todo.vlc.Controller;
 
+import com.todo.vlc.Repository.UsuarioRepository;
 import com.todo.vlc.model.Usuario;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.util.Optional;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class postMapping {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @PostMapping("/inicioSesion")
     public String iniciarSesion(
 
@@ -29,65 +33,39 @@ public class postMapping {
             RedirectAttributes redirectAttributes
 
     ) {
-        
 
         try (Connection con = dataSource.getConnection()) {
 
-            String sql = "SELECT * FROM usuarios WHERE email = ?";
-                String sql2 = "SELECT * FROM usuarios WHERE passwrd = ?";
+            Optional<Usuario> optUsuario = usuarioRepository.findByEmail(email);
+            
 
+            
 
-            PreparedStatement ps = con.prepareStatement(sql);
-            PreparedStatement ps2 = con.prepareStatement(sql2);
-
-            ps.setString(1,"placeholder" );
-            ps2.setString(1, "placeholder");
-
-            ResultSet rs = ps.executeQuery();
-            ResultSet rs2 = ps2.executeQuery();
-
-            String emaill = null;
-            String contraseña = null;
-
-            System.out.println(email);
-            System.out.println(password);
-
-            if (rs.next()) {
-                emaill = rs.getString("email");
-            }
-
-            if (rs2.next()) {
-                contraseña = rs.getString("passwrd");
-            }
-            System.out.println(emaill);
-            System.out.println(contraseña);
-
-
-            if (emaill == null) {
+            if (optUsuario == null) {
                 redirectAttributes.addFlashAttribute(
                         "error",
-                        "El email no existe"
-                );
+                        "El email no existe");
                 return "redirect:/inicioSesion";
             }
 
-            if (contraseña == null) {
+            Usuario usuario = optUsuario.get();
+            
+            System.out.println(usuario.getEmail());
+            System.out.println(usuario.getPasswrd());
+
+            if (!usuario.getPasswrd().equals(password)) {
                 redirectAttributes.addFlashAttribute(
                         "error",
-                        "Email o contraseña incorrectos"
-                );
+                        "Email o contraseña incorrectos");
                 return "redirect:/inicioSesion";
             }
-
-    
 
         } catch (Exception e) {
             e.printStackTrace();
 
             redirectAttributes.addFlashAttribute(
                     "error",
-                    "Error interno del servidor"
-            );
+                    "Error interno del servidor");
 
             return "redirect:/inicioSesion";
         }

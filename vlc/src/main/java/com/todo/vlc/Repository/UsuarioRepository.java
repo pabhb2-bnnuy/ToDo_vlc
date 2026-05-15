@@ -11,5 +11,6 @@ import com.todo.vlc.model.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Optional<Usuario> findByEmail(String email);
+    
 
 }
