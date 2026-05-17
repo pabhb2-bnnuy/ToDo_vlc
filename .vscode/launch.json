@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-VlcApplication<vlc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.todo.vlc.VlcApplication",
+            "projectName": "vlc",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

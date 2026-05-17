@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.todo.vlc.Repository.UsuarioRepository;
+import com.todo.vlc.model.Rol;
 import com.todo.vlc.model.Usuario;
 
 @Controller
@@ -23,14 +24,13 @@ public class RegisterController {
 
             @RequestParam("nombre") String nombre,
             @RequestParam("mail") String email,
-            @RequestParam("password") String password,
-            @RequestParam("rol") String rol) {
+            @RequestParam("password") String password) {
 
         Usuario usuario = new Usuario();
 
         usuario.setEmail(email);
         usuario.setPasswrd(passwordEncoder.encode(password));
-        usuario.setRol(rol);
+        usuario.setRol(Rol.ROLE_COLLABORATOR);
         usuario.setNombre(nombre);
 
         usuarioRepository.save(usuario);

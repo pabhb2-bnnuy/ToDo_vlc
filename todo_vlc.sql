@@ -28,7 +28,7 @@ CREATE TABLE tareas (
     titulo VARCHAR(150),
     descripcion VARCHAR(150),
     prioridad INT,
-    fecha_entrega DATE,
+    fecha_asignacion VARCHAR(16) DEFAULT (DATE_FORMAT(CURRENT_TIMESTAMP, '%d/%m/%Y %H:%i')),
     estado VARCHAR(30)
 );
 

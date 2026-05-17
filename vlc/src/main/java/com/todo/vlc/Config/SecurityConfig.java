@@ -2,33 +2,50 @@ package com.todo.vlc.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)
-            throws Exception {
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-        http
-                .csrf(csrf -> csrf.disable())
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+                return config.getAuthenticationManager();
+        }
 
-                .authorizeHttpRequests(auth -> auth
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-                        // rutas públicas
-                        .requestMatchers("/", "/home", "/registro").permitAll()
+                return http
+                                .csrf(csrf -> csrf.disable())
+                                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                .authorizeHttpRequests(auth -> auth
 
-                        // rutas privadas
-                        .requestMatchers("/admin/**").authenticated()
+                                                .requestMatchers("/", "/inicioSesion", "/registrarse").permitAll()
 
-                        // todo lo demás público
-                        .anyRequest().permitAll())
+                                                .requestMatchers("/css/*", "/media/**").permitAll()
 
-                // activar formulario login
-                .formLogin(form -> form.permitAll());
+                                                .requestMatchers("/admin/**").hasRole("ADMIN")
 
-        return http.build();
-    }
+                                                .anyRequest().authenticated())
+                                // logout
+                                .logout(logout -> logout
+                                                .logoutUrl("/cerrarSesion")
+                                                .logoutSuccessUrl("/inicioSesion")
+                                                .invalidateHttpSession(true)
+                                                .deleteCookies("JSESSIONID"))
+                                .build();
+
+        }
+
 }
