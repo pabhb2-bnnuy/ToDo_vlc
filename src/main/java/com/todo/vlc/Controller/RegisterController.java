@@ -34,7 +34,7 @@ public class RegisterController {
         usuario.setNombre(nombre);
 
         usuarioRepository.save(usuario);
-        return "inicioSesion";
+        return "iniciarSesion";
     }
 
 }

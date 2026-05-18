@@ -31,7 +31,7 @@ public class SecurityConfig {
                                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(auth -> auth
 
-                                                .requestMatchers("/", "/inicioSesion", "/registrarse").permitAll()
+                                                .requestMatchers("/", "/inicioSesion", "/registrarse", "/menu").permitAll()
 
                                                 .requestMatchers("/css/*", "/media/**").permitAll()
 

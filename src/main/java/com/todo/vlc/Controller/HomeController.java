@@ -21,4 +21,9 @@ public class HomeController {
     public String inicioSesion() {
         return "inicioSesion";
     }
+
+    @GetMapping("/menu")
+    public String menu() {
+        return "menu";
+    }
 }

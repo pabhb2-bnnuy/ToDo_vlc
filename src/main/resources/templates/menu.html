@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+
+    <link rel="stylesheet" th:href="@{/css/form_style.css}">
+    <link rel="shortcut icon" href="media/logo_chill.svg" type="image/x-icon">
+</head>
+
+<body>
+
+    <!-- VIDEO FONDO -->
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="media/mov_bbb.mp4" type="video/mp4">
+    </video>
+
+    <div class="overlay"></div>
+
+    <!-- HEADER -->
+    <header class="top-bar">
+
+        <a href="/" class="logo">
+            <img src="media/full_logoo.svg" alt="todo_main_logo" width="150px">
+        </a>
+
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="#">Mis proyectos</a>
+            <a href="#">Perfil</a>
+        </nav>
+
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="dashboard">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <h2>Workspaces</h2>
+
+            <ul>
+                <li>📁 Proyecto DAM</li>
+                <li>📁 Backend Java</li>
+                <li>📁 Diseño UI</li>
+                <li>📁 Equipo</li>
+            </ul>
+
+            <button class="new-project-btn">
+                + Nuevo Proyecto
+            </button>
+
+        </aside>
+
+        <!-- TABLERO -->
+        <section class="board-container">
+
+            <!-- COLUMNA -->
+            <div class="board-column">
+
+                <div class="column-header">
+                    <h3>Por hacer</h3>
+                    <span>3</span>
+                </div>
+
+                <div class="task-card">
+                    <h4>Diseñar login</h4>
+                    <p>Crear interfaz responsive del login.</p>
+                </div>
+
+                <div class="task-card">
+                    <h4>Conectar MySQL</h4>
+                    <p>Configurar JPA y usuarios.</p>
+                </div>
+
+                <div class="task-card">
+                    <h4>Navbar</h4>
+                    <p>Agregar navegación principal.</p>
+                </div>
+
+            </div>
+
+            <!-- COLUMNA -->
+            <div class="board-column">
+
+                <div class="column-header">
+                    <h3>En progreso</h3>
+                    <span>2</span>
+                </div>
+
+                <div class="task-card active">
+                    <h4>Spring Security</h4>
+                    <p>Implementar remember-me y sesiones.</p>
+                </div>
+
+                <div class="task-card active">
+                    <h4>Diseño Trello</h4>
+                    <p>Adaptar interfaz estilo kanban.</p>
+                </div>
+
+            </div>
+
+            <!-- COLUMNA -->
+            <div class="board-column">
+
+                <div class="column-header">
+                    <h3>Completado</h3>
+                    <span>2</span>
+                </div>
+
+                <div class="task-card done">
+                    <h4>Formulario login</h4>
+                    <p>Validaciones funcionando.</p>
+                </div>
+
+                <div class="task-card done">
+                    <h4>Registro usuarios</h4>
+                    <p>Inserción en MySQL completada.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bottom-bar">
+
+        <div>2026</div>
+
+        <div>
+            <a href="https://github.com/Nicoaz25">
+                <img src="media/github_icon.svg" alt="github_logo" width="20px">
+            </a>
+        </div>
+
+        <div>IES La Sénia</div>
+
+        <div>
+            <a href="https://github.com/pabhb2-bnnuy">
+                <img src="media/github_icon.svg" alt="github_logo" width="20px">
+            </a>
+        </div>
+
+    </footer>
+
+</body>
+
+</html>
