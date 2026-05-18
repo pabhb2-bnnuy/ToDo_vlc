@@ -30,7 +30,7 @@ public class RegisterController {
 
         usuario.setEmail(email);
         usuario.setPasswrd(passwordEncoder.encode(password));
-        usuario.setRol(Rol.ROLE_COLLABORATOR);
+        usuario.setRol(Rol.COLLABORATOR);
         usuario.setNombre(nombre);
 
         usuarioRepository.save(usuario);

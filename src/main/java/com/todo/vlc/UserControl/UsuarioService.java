@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.todo.vlc.Repository.UsuarioRepository;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class UsuarioService implements UserDetailsService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -19,6 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throws UsernameNotFoundException {
 
         return usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("Usuario no encontrado"));
     }
 }
