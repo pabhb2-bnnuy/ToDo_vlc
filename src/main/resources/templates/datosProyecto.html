@@ -41,28 +41,6 @@
 
             <h2>Crear proyecto</h2>
 
-            <form action="/projects/create" method="post">
-
-                <input type="text" name="nombre" placeholder="Nombre del proyecto" required>
-
-                <textarea name="descripcion" placeholder="Descripción del proyecto" required></textarea>
-
-                <label>Fecha límite</label>
-                <input type="date" name="fecha_limite" required>
-
-                <label>Estado</label>
-                <select name="estado">
-                    <option value="ACTIVO">Activo</option>
-                    <option value="PAUSADO">Pausado</option>
-                    <option value="COMPLETADO">Completado</option>
-                </select>
-
-                <button type="submit" class="btn-save">
-                    Guardar proyecto
-                </button>
-
-            </form>
-
             <form action="/crearProyecto" method="post">
                 <div class="form-group">
                     <label for="name">Nombre:</label>
@@ -79,12 +57,6 @@
                     <input type="date" id="fecha" name="fecha">
                 </div>
 
-                <div class="form-group">
-                    <label for="text">Estado:</label>
-                    <input type="text" id="estado" name="fecha">
-                </div>
-
-                <!-- Botón -->
                 <div class="form-group">
                     <button type="submit">Registrarse</button>
                 </div>

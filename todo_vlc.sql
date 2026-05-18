@@ -16,7 +16,7 @@ CREATE TABLE proyecto (
     id_proyecto INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50),
     descripcion VARCHAR(150),
-    fecha_inicio DATE,
+    fecha_inicio VARCHAR(200),
     fecha_limite DATE,
     estado VARCHAR(30),
      id_usuario INT NOT NULL,
