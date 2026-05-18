@@ -497,67 +497,67 @@ nav a:hover {
 }
 
 /* BOTÓN FLOTANTE PROYECTO */
-.floating-create-project{
-    position:fixed;
-    bottom:90px;
-    right:30px;
-    background:#38bdf8;
-    border:none;
-    padding:14px 18px;
-    border-radius:50px;
-    font-weight:bold;
-    cursor:pointer;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
-    z-index:100;
+.floating-create-project {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    background: #38bdf8;
+    border: none;
+    padding: 14px 18px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 100;
 }
 
 /* MODAL FONDO */
-.modal-create{
-    position:fixed;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:rgba(0,0,0,0.6);
-    z-index:200;
+.modal-create {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 200;
 }
 
 /* CAJA MODAL */
-.modal-box{
-    background:#0f172a;
-    padding:25px;
-    border-radius:16px;
-    width:350px;
-    color:white;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
+.modal-box {
+    background: #0f172a;
+    padding: 25px;
+    border-radius: 16px;
+    width: 350px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 /* INPUTS */
 .modal-box input,
 .modal-box textarea,
-.modal-box select{
-    padding:10px;
-    border:none;
-    border-radius:10px;
-    outline:none;
+.modal-box select {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
 }
 
 /* TEXTAREA */
-.modal-box textarea{
-    height:80px;
-    resize:none;
+.modal-box textarea {
+    height: 80px;
+    resize: none;
 }
 
 /* BOTÓN GUARDAR */
-.btn-save{
-    background:#22c55e;
-    border:none;
-    padding:10px;
-    border-radius:10px;
-    font-weight:bold;
-    cursor:pointer;
+.btn-save {
+    background: #22c55e;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 /* RESPONSIVE */

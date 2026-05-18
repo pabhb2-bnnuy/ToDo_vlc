@@ -34,7 +34,7 @@ public class SecurityConfig {
                                 .csrf(csrf -> csrf.disable())
 
                                 .authorizeHttpRequests(auth -> auth
-
+                                                // URLS sin iniciar sesión.
                                                 .requestMatchers(
                                                                 "/",
                                                                 "/inicioSesion",
@@ -46,9 +46,15 @@ public class SecurityConfig {
                                                                 "/datosProyecto")
                                                 .permitAll()
 
+                                                // URLS para admin
                                                 .requestMatchers("/admin/**")
                                                 .hasRole("ADMIN")
 
+                                                // URLS para Gestor
+                                                .requestMatchers("/admin/**")
+                                                .hasRole("GESTOR")
+
+                                                // Urls para Colaborador
                                                 .requestMatchers("/test")
                                                 .hasRole("COLLABORATOR")
 
@@ -84,6 +90,7 @@ public class SecurityConfig {
                                                 // clave interna
                                                 .key("vlc-clave-secreta-2026"))
 
+                                // Cerrar sesión.
                                 .logout(logout -> logout
 
                                                 .logoutUrl("/cerrarSesion")
