@@ -37,4 +37,9 @@ public class HomeController {
     public String menu() {
         return "menu";
     }
+
+    @GetMapping("/datosProyecto")
+    public String datosProyecto() {
+        return "datosProyecto";
+    }
 }

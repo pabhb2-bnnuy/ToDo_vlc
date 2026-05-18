@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+
+    <link rel="stylesheet" th:href="@{/css/form_style.css}">
+    <link rel="shortcut icon" href="media/logo_chill.svg">
+</head>
+
+<body>
+
+    <!-- VIDEO FONDO -->
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="media/mov_bbb.mp4" type="video/mp4">
+    </video>
+
+    <div class="overlay"></div>
+
+    <!-- ================= HEADER ================= -->
+    <header class="top-bar">
+
+        <a href="/" class="logo">
+            <img src="media/full_logoo.svg" width="150px">
+        </a>
+
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="#">Mis proyectos</a>
+            <a href="#">Perfil</a>
+        </nav>
+
+    </header>
+
+    <!-- ================= MODAL CREAR PROYECTO ================= -->
+    <div class="modal-create">
+
+        <div class="modal-box">
+
+            <h2>Crear proyecto</h2>
+
+            <form action="/projects/create" method="post">
+
+                <input type="text" name="nombre" placeholder="Nombre del proyecto" required>
+
+                <textarea name="descripcion" placeholder="Descripción del proyecto" required></textarea>
+
+                <label>Fecha límite</label>
+                <input type="date" name="fecha_limite" required>
+
+                <label>Estado</label>
+                <select name="estado">
+                    <option value="ACTIVO">Activo</option>
+                    <option value="PAUSADO">Pausado</option>
+                    <option value="COMPLETADO">Completado</option>
+                </select>
+
+                <button type="submit" class="btn-save">
+                    Guardar proyecto
+                </button>
+
+            </form>
+
+            <form action="/crearProyecto" method="post">
+                <div class="form-group">
+                    <label for="name">Nombre:</label>
+                    <input type="text" name="nombre" id="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="text">Descripción:</label>
+                    <input type="text" name="descripcion" id="descripcion" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha">Fecha límite:</label>
+                    <input type="date" id="fecha" name="fecha">
+                </div>
+
+                <div class="form-group">
+                    <label for="text">Estado:</label>
+                    <input type="text" id="estado" name="fecha">
+                </div>
+
+                <!-- Botón -->
+                <div class="form-group">
+                    <button type="submit">Registrarse</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- ================= CONTENIDO PRINCIPAL ================= -->
+    <main class="dashboard">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <h2>Workspaces</h2>
+
+            <ul>
+                <li>📁 Proyecto DAM</li>
+                <li>📁 Backend Java</li>
+                <li>📁 Diseño UI</li>
+                <li>📁 Equipo</li>
+            </ul>
+
+            <button class="new-project-btn">
+                + Nuevo Proyecto
+            </button>
+
+            <button class="new-tarea-btn">
+                + Crear tarea
+            </button>
+
+        </aside>
+
+        <!-- TABLERO -->
+        <section class="board-container">
+
+            <!-- Aquí luego van tus columnas tipo Trello -->
+
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bottom-bar">
+
+        <div>2026</div>
+
+        <div>
+            <a href="https://github.com/Nicoaz25">
+                <img src="media/github_icon.svg" width="20px">
+            </a>
+        </div>
+
+        <div>IES La Sénia</div>
+
+        <div>
+            <a href="https://github.com/pabhb2-bnnuy">
+                <img src="media/github_icon.svg" width="20px">
+            </a>
+        </div>
+
+    </footer>
+
+</body>
+
+</html>
