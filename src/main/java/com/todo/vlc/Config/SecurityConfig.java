@@ -41,7 +41,8 @@ public class SecurityConfig {
                                                                 "/registrarse",
                                                                 "/register",
                                                                 "/css/**",
-                                                                "/media/**")
+                                                                "/media/**",
+                                                        "menu")
                                                 .permitAll()
 
                                                 .requestMatchers("/admin/**")
