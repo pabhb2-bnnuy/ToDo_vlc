@@ -57,23 +57,32 @@ public class SecurityConfig {
 
                                 .formLogin(form -> form
 
-                                                // GET -> mostrar página login
+                                                // Página login (GET)
                                                 .loginPage("/inicioSesion")
 
-                                                // POST -> procesado automáticamente
+                                                // Procesar login (POST)
                                                 .loginProcessingUrl("/inicioSesion")
 
-                                                // nombres de inputs
+                                                // Names del formulario
                                                 .usernameParameter("mail")
                                                 .passwordParameter("password")
 
-                                                // login OK
+                                                // Login correcto
                                                 .defaultSuccessUrl("/?loginSuccess", true)
 
-                                                // login ERROR
+                                                // Login incorrecto
                                                 .failureUrl("/inicioSesion?error")
 
                                                 .permitAll())
+
+                                // PERSISTENCIA DE SESIÓN
+                                .rememberMe(remember -> remember
+
+                                                // name="" del checkbox
+                                                .rememberMeParameter("remember-me")
+
+                                                // clave interna
+                                                .key("vlc-clave-secreta-2026"))
 
                                 .logout(logout -> logout
 
@@ -83,7 +92,9 @@ public class SecurityConfig {
 
                                                 .invalidateHttpSession(true)
 
-                                                .deleteCookies("JSESSIONID"))
+                                                .deleteCookies(
+                                                                "JSESSIONID",
+                                                                "remember-me"))
 
                                 .build();
         }

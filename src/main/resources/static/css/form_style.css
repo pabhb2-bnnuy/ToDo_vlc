@@ -246,7 +246,7 @@ button:hover {
 
 /* ====================== FOOTER ====================== */
 .bottom-bar {
-    width: 100%;
+    width: 90%;
     padding: 2rem 44%;
     display: flex;
     justify-content: space-around;
