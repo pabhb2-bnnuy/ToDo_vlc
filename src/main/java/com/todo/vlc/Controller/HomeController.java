@@ -39,4 +39,14 @@ public class HomeController {
     public String datosProyecto() {
         return "datosProyecto";
     }
+
+    @GetMapping("/")
+    public String index(Authentication authentication) {
+
+        if (AuthUtils.estaLogeado(authentication)) {
+            return "redirect:/menu";
+        }
+
+        return "index";
+    }
 }
