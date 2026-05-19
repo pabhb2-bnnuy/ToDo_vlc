@@ -1,11 +1,22 @@
 package com.todo.vlc.Controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import com.todo.vlc.Repository.ProyectoRepository;
+import com.todo.vlc.model.Proyecto;
+
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    private ProyectoRepository proyectoRepository;
+
 
     @GetMapping("/registrarse")
     public String registro(Authentication authentication) {
@@ -17,7 +28,10 @@ public class HomeController {
     }
 
     @GetMapping("/menu")
-    public String menu() {
+    public String menu(Model model) {
+        List<Proyecto> proyectos = proyectoRepository.findAll();
+
+        model.addAttribute("proyectos", proyectos);
         return "menu";
     }
 

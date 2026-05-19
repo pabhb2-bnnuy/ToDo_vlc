@@ -53,10 +53,9 @@
             <h2>Workspaces</h2>
 
             <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li th:each="p : ${proyectos}">
+                    📁 <span th:text="${p.nombre}"></span>
+                </li>
             </ul>
 
             <a href="/datosProyecto"><button class="new-project-btn">
