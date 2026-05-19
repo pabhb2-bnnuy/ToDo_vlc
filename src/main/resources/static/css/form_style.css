@@ -535,8 +535,7 @@ nav a:hover {
 }
 
 /* INPUTS */
-.modal-box input,
-.modal-box textarea,
+
 .modal-box select {
     padding: 10px;
     border: none;
@@ -558,6 +557,53 @@ nav a:hover {
     border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
+}
+
+/* BOTÓN LOGOUT */
+.logout-btn{
+    background:#ef4444;
+    padding:10px 16px;
+    border-radius:10px;
+    color:white;
+    font-weight:bold;
+    text-decoration:none;
+    margin-right:15px;
+    transition:0.3s;
+}
+
+.logout-btn:hover{
+    background:#dc2626;
+    transform:scale(1.05);
+}
+
+/* HEADER MODAL */
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+/* BOTÓN CANCELAR */
+.cancelar-btn{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.cancelar-btn:hover{
+    background:#dc2626;
+}
+
+/* SEPARADOR NAV */
+.nav-divider{
+    color: rgba(255,255,255,0.4);
+    margin: 0 12px;
+    font-size: 18px;
 }
 
 /* RESPONSIVE */

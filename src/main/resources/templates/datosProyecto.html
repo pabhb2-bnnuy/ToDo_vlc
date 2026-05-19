@@ -23,13 +23,23 @@
     <header class="top-bar">
 
         <a href="/" class="logo">
-            <img src="media/full_logoo.svg" width="150px">
+            <img src="media/full_logoo.svg" alt="todo_main_logo" width="150px">
         </a>
 
         <nav>
+
             <a href="/">Inicio</a>
             <a href="#">Mis proyectos</a>
             <a href="#">Perfil</a>
+
+            <!-- BARRA SEPARADORA -->
+            <span class="nav-divider">|</span>
+
+            <!-- BOTÓN CERRAR SESIÓN -->
+            <a href="/cerrarSesion" class="logout-btn">
+                ⎋ Cerrar sesión
+            </a>
+
         </nav>
 
     </header>
@@ -39,7 +49,17 @@
 
         <div class="modal-box">
 
-            <h2>Crear proyecto</h2>
+            <div class="modal-header">
+
+                <h2>Crear proyecto</h2>
+
+                <a href="/menu">
+                    <button type="button" class="cancelar-btn">
+                        Cancelar
+                    </button>
+                </a>
+
+            </div>
 
             <form action="/crearProyecto" method="post">
                 <div class="form-group">
@@ -75,26 +95,80 @@
             <h2>Workspaces</h2>
 
             <ul>
-                <li>📁 Proyecto DAM</li>
-                <li>📁 Backend Java</li>
-                <li>📁 Diseño UI</li>
-                <li>📁 Equipo</li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
             </ul>
 
-            <button class="new-project-btn">
-                + Nuevo Proyecto
-            </button>
+            <a href="/datosProyecto"><button class="new-project-btn">
+                    + Nuevo Proyecto
+                </button>
+            </a>
 
-            <button class="new-tarea-btn">
-                + Crear tarea
-            </button>
 
         </aside>
 
         <!-- TABLERO -->
         <section class="board-container">
 
-            <!-- Aquí luego van tus columnas tipo Trello -->
+            <!-- COLUMNA -->
+            <div class="board-column">
+
+                <div class="column-header">
+                    <h3>Por hacer</h3>
+                    <span>3</span>
+                </div>
+
+                <div class="task-card">
+
+                </div>
+
+                <div class="task-card">
+
+                </div>
+
+                <div class="task-card">
+
+                </div>
+
+            </div>
+
+            <!-- COLUMNA -->
+            <div class="board-column">
+
+                <div class="column-header">
+                    <h3>En progreso</h3>
+                    <span>2</span>
+                </div>
+
+                <div class="task-card active">
+
+                </div>
+
+                <div class="task-card active">
+
+                </div>
+
+            </div>
+
+            <!-- COLUMNA -->
+            <div class="board-column">
+
+                <div class="column-header">
+                    <h3>Completado</h3>
+                    <span>2</span>
+                </div>
+
+                <div class="task-card done">
+
+                </div>
+
+                <div class="task-card done">
+
+                </div>
+
+            </div>
 
         </section>
 

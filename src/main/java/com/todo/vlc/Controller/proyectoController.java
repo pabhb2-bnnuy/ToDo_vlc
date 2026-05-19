@@ -30,12 +30,12 @@ public class proyectoController {
         proyecto.setNombre(nombre);
         proyecto.setDescripcion(descripcion);
         proyecto.setFecha_limite(fecha);
-        proyecto.setEstado("");
+        proyecto.setEstado(""); //hay que hacer lo mismo que en el rol de usuario
         proyecto.setUsuario(usuario);
 
         proyectoRepository.save(proyecto);
 
-        return "iniciarSesion";
+        return "menu";
     }
 
 }
