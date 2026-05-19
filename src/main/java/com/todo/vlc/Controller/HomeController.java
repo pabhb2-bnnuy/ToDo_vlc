@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import com.todo.vlc.Repository.ProyectoRepository;
 import com.todo.vlc.model.Proyecto;
-
+import com.todo.vlc.model.Usuario;
 
 @Controller
 public class HomeController {
 
     @Autowired
     private ProyectoRepository proyectoRepository;
-
 
     @GetMapping("/registrarse")
     public String registro(Authentication authentication) {
@@ -28,8 +27,11 @@ public class HomeController {
     }
 
     @GetMapping("/menu")
-    public String menu(Model model) {
-        List<Proyecto> proyectos = proyectoRepository.findAll();
+    public String menu(Model model, Authentication authentication) {
+
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+
+        List<Proyecto> proyectos = proyectoRepository.findByUsuario(usuario);
 
         model.addAttribute("proyectos", proyectos);
         return "menu";

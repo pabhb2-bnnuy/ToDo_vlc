@@ -42,8 +42,7 @@ public class SecurityConfig {
                                                                 "/registrarse",
                                                                 "/register",
                                                                 "/css/**",
-                                                                "/media/**",
-                                                                "/datosProyecto")
+                                                                "/media/**")
                                                 .permitAll()
 
                                                 // URLS para admin
@@ -56,6 +55,10 @@ public class SecurityConfig {
                                                 // URLS para Gestor
                                                 .requestMatchers("/menu/gestion")
                                                 .hasRole("GESTOR")
+
+                                                // URLS para gestor y colaborador
+                                                .requestMatchers("/datosProyecto")
+                                                .hasAnyRole("GESTOR", "COLLABORATOR")
 
                                                 .anyRequest()
                                                 .authenticated())
