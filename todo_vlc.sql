@@ -3,7 +3,7 @@ CREATE DATABASE toDo_vlc;
 USE toDo_vlc;
 
 CREATE TABLE usuarios ( 
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    idusuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50),
     email VARCHAR(100) UNIQUE,
     passwrd VARCHAR(200) NOT NULL,
@@ -13,18 +13,18 @@ CREATE TABLE usuarios (
 
 
 CREATE TABLE proyecto (
-    id_proyecto INT AUTO_INCREMENT PRIMARY KEY,
+    idproyecto INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50),
     descripcion VARCHAR(150),
     fecha_inicio VARCHAR(200),
     fecha_limite DATE,
     estado VARCHAR(30),
-     id_usuario INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+     idusuario INT NOT NULL,
+    FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario)
 );
 
 CREATE TABLE tareas (
-    id_tarea INT AUTO_INCREMENT PRIMARY KEY,
+    idtarea INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(150),
     descripcion VARCHAR(150),
     prioridad INT,
@@ -33,10 +33,10 @@ CREATE TABLE tareas (
 );
 
 CREATE TABLE usuario_proyecto (
-    id_usuario INT,
-    id_proyecto INT,
+    idusuario INT,
+    idproyecto INT,
     fecha_asignacion VARCHAR(16) DEFAULT (DATE_FORMAT(CURRENT_TIMESTAMP, '%d/%m/%Y %H:%i')),
-    PRIMARY KEY (id_usuario, id_proyecto),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
-    FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto) ON DELETE CASCADE
+    PRIMARY KEY (idusuario, idproyecto),
+    FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario) ON DELETE CASCADE,
+    FOREIGN KEY (idproyecto) REFERENCES proyecto(idproyecto) ON DELETE CASCADE
 );

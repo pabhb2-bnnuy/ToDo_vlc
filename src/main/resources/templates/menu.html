@@ -53,11 +53,17 @@
             <h2>Workspaces</h2>
 
             <ul>
+                
                 <li th:each="p : ${proyectos}">
-                    <a th:href="@{'/proyecto/' + ${p.id}}">
+
+                    <a th:href="@{/proyecto/{id}(id=${p.idproyecto})}">
+
                         📁 <span th:text="${p.nombre}"></span>
+
                     </a>
+
                 </li>
+
             </ul>
 
             <a href="/datosProyecto"><button class="new-project-btn">

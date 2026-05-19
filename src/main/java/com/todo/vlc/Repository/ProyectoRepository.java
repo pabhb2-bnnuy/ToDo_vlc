@@ -13,7 +13,7 @@ import com.todo.vlc.model.Usuario;
 public interface ProyectoRepository extends JpaRepository<Proyecto, Integer> {
 
     List<Proyecto> findByUsuario(Usuario usuario);
-    Optional<Proyecto> findById_proyecto(int id_proyecto);
+    Optional<Proyecto> findByIdproyecto(int idproyecto);
 
 
 }

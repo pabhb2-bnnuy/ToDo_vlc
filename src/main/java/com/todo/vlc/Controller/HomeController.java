@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 import com.todo.vlc.Repository.ProyectoRepository;
 import com.todo.vlc.model.Proyecto;
@@ -58,13 +57,4 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/proyecto/{id_proyecto}")
-    public String verProyecto(@PathVariable int id_proyecto, Model model) {
-
-        Proyecto proyecto = proyectoRepository.findById_proyecto(id_proyecto).orElse(null);
-
-        model.addAttribute("proyecto", proyecto);
-
-        return "proyecto";
-    }
 }

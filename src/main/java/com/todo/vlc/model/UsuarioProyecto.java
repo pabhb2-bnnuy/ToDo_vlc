@@ -16,12 +16,12 @@ public class UsuarioProyecto {
 
     @ManyToOne
     @MapsId("idUsuario")
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "idusuario")
     private Usuario usuario;
 
     @ManyToOne
     @MapsId("idProyecto")
-    @JoinColumn(name = "id_proyecto")
+    @JoinColumn(name = "idproyecto")
     private Proyecto proyecto;
 
     @Column(insertable = false, updatable = false)
