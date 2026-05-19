@@ -27,19 +27,24 @@ public class HomeController {
         return "registrarse";
     }
 
-    @GetMapping("/menu")
-    public String menu(Model model, Authentication authentication) {
-
+    public void listarProyectos(Model model, Authentication authentication) {
         Usuario usuario = (Usuario) authentication.getPrincipal();
-
         List<Proyecto> proyectos = proyectoRepository.findByUsuario(usuario);
 
         model.addAttribute("proyectos", proyectos);
+    }
+
+    @GetMapping("/menu")
+    public String menu(Model model, Authentication authentication) {
+
+        listarProyectos(model, authentication);
+
         return "menu";
     }
 
     @GetMapping("/datosProyecto")
-    public String datosProyecto() {
+    public String datosProyecto(Model model, Authentication authentication) {
+        listarProyectos(model, authentication);
         return "datosProyecto";
     }
 
