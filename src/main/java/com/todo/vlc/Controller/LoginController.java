@@ -12,7 +12,11 @@ public class LoginController {
     @GetMapping("/inicioSesion")
     public String login(
             Authentication authentication,
+
             @RequestParam(value = "error", required = false) String error,
+
+            @RequestParam(value = "disabled", required = false) String disabled,
+
             Model model) {
 
         if (AuthUtils.estaLogeado(authentication)) {
@@ -26,18 +30,13 @@ public class LoginController {
                     "Email o contraseña incorrectos");
         }
 
-        return "inicioSesion";
-    }
+        if (disabled != null) {
 
-
-    @GetMapping("/")
-    public String index(Authentication authentication) {
-
-        if (AuthUtils.estaLogeado(authentication)) {
-            return "redirect:/menu";
+            model.addAttribute(
+                    "error",
+                    "Tu cuenta está deshabilitada");
         }
 
-        return "index";
+        return "inicioSesion";
     }
-
 }

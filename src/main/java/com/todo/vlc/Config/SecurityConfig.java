@@ -3,6 +3,7 @@ package com.todo.vlc.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,7 +43,6 @@ public class SecurityConfig {
                                                                 "/register",
                                                                 "/css/**",
                                                                 "/media/**",
-                                                                "/menu",
                                                                 "/datosProyecto")
                                                 .permitAll()
 
@@ -50,13 +50,12 @@ public class SecurityConfig {
                                                 .requestMatchers("/admin/**")
                                                 .hasRole("ADMIN")
 
-                                                // URLS para Gestor
-                                                .requestMatchers("/admin/**")
-                                                .hasRole("GESTOR")
-
                                                 // Urls para Colaborador
-                                                .requestMatchers("/test")
+                                                .requestMatchers("/menu")
                                                 .hasRole("COLLABORATOR")
+                                                // URLS para Gestor
+                                                .requestMatchers("/menu/gestion")
+                                                .hasRole("GESTOR")
 
                                                 .anyRequest()
                                                 .authenticated())
@@ -76,8 +75,20 @@ public class SecurityConfig {
                                                 // Login correcto
                                                 .defaultSuccessUrl("/?loginSuccess", true)
 
-                                                // Login incorrecto
-                                                .failureUrl("/inicioSesion?error")
+                                                // Login incorrecto personalizado
+                                                .failureHandler((request, response, exception) -> {
+
+                                                        if (exception instanceof DisabledException) {
+
+                                                                response.sendRedirect(
+                                                                                "/inicioSesion?disabled");
+
+                                                        } else {
+
+                                                                response.sendRedirect(
+                                                                                "/inicioSesion?error");
+                                                        }
+                                                })
 
                                                 .permitAll())
 

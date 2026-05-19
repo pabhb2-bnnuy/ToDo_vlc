@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo App</title>
-     <link rel="stylesheet" th:href="@{/css/form_style.css}">
+    <link rel="stylesheet" th:href="@{/css/form_style.css}">
 
     <link rel="shortcut icon" href="img&svg/logo_chill.svg" type="image/x-icon">
 </head>
@@ -51,12 +51,12 @@
                     <!-- Contraseña -->
                     <div class="form-group">
                         <label for="passwd">Contraseña:</label>
-                        <input type="password" name="password" id="passwd" required
-                            pattern="(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}"
-                            title="Mínimo 6 caracteres y al menos 1 caracter especial">
+                        <input type="password" name="password" id="passwd" required pattern="^(?=.*[^A-Za-z0-9]).{6,}$"
+                            title="Mínimo 6 caracteres y al menos 1 carácter especial">
                     </div>
 
                     <!-- Botón -->
+                     <br>
                     <div class="form-group">
                         <button type="submit">Registrarse</button>
                     </div>
@@ -68,8 +68,8 @@
     <!-- Footer -->
     <footer class="bottom-bar">
         <div>2026</div>
-        <div><a href="https://github.com/Nicoaz25"><img src="media/github_icon.svg" alt="github_logo"
-                    width="20px"></a></div>
+        <div><a href="https://github.com/Nicoaz25"><img src="media/github_icon.svg" alt="github_logo" width="20px"></a>
+        </div>
         <div>IES La Sénia</div>
         <div><a href="https://github.com/pabhb2-bnnuy"><img src="media/github_icon.svg" alt="github_logo"
                     width="20px"></a></div>
