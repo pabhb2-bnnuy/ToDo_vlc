@@ -1,12 +1,335 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family: Consolas, monospace;
+      background:#050505;
+      color:#00ff88;
+      height:100vh;
+      overflow:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:
+      repeating-linear-gradient(
+        to bottom,
+        rgba(0,255,120,0.03),
+        rgba(0,255,120,0.03) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+      pointer-events:none;
+    }
+
+    .container{
+      display:flex;
+      height:100vh;
+      position:relative;
+      z-index:2;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar{
+      width:260px;
+      background:#0a0a0a;
+      border-right:1px solid rgba(0,255,120,0.15);
+      padding:30px 20px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .logo{
+      margin-bottom:50px;
+    }
+
+    .logo h1{
+      font-size:28px;
+      color:#00ff88;
+      letter-spacing:4px;
+    }
+
+    .logo p{
+      color:#008f4d;
+      margin-top:8px;
+      font-size:12px;
+    }
+
+    .menu{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+
+    .menu a{
+      text-decoration:none;
+      color:#00ff88;
+      padding:14px 18px;
+      border:1px solid rgba(0,255,120,0.1);
+      border-radius:12px;
+      background:rgba(0,255,120,0.03);
+      transition:0.2s;
+    }
+
+    .menu a:hover{
+      background:#00ff88;
+      color:black;
+      box-shadow:0 0 15px #00ff88;
+    }
+
+    .bottom{
+      font-size:12px;
+      color:#00703b;
+    }
+
+    /* MAIN */
+
+    .main{
+      flex:1;
+      padding:40px;
+      overflow:auto;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:35px;
+    }
+
+    .topbar h2{
+      font-size:32px;
+      font-weight:normal;
+      letter-spacing:3px;
+    }
+
+    .status{
+      padding:10px 18px;
+      border-radius:30px;
+      border:1px solid rgba(0,255,120,0.3);
+      background:rgba(0,255,120,0.05);
+      color:#00ff88;
+      font-size:13px;
+    }
+
+    /* CARDS */
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:25px;
+      margin-bottom:40px;
+    }
+
+    .card{
+      background:#0b0b0b;
+      border:1px solid rgba(0,255,120,0.1);
+      border-radius:20px;
+      padding:25px;
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-4px);
+      border-color:#00ff88;
+      box-shadow:0 0 20px rgba(0,255,120,0.2);
+    }
+
+    .card h3{
+      color:#00aa66;
+      margin-bottom:15px;
+      font-size:14px;
+      font-weight:normal;
+      letter-spacing:1px;
+    }
+
+    .card p{
+      font-size:40px;
+      color:#00ff88;
+    }
+
+    /* TERMINAL */
+
+    .terminal{
+      background:#020202;
+      border:1px solid rgba(0,255,120,0.12);
+      border-radius:20px;
+      padding:25px;
+      height:320px;
+      overflow:auto;
+      box-shadow:0 0 25px rgba(0,255,120,0.06);
+    }
+
+    .terminal-title{
+      margin-bottom:20px;
+      color:#00aa66;
+      letter-spacing:2px;
+    }
+
+    .line{
+      margin-bottom:12px;
+      font-size:14px;
+      color:#00ff88;
+    }
+
+    .line span{
+      color:#008f4d;
+      margin-right:10px;
+    }
+
+    /* GLOW */
+
+    .glow{
+      position:absolute;
+      width:500px;
+      height:500px;
+      background:#00ff88;
+      opacity:0.05;
+      filter:blur(120px);
+      top:-200px;
+      right:-100px;
+      z-index:1;
+    }
+
+  </style>
 </head>
+
 <body>
-    
-    <h1>asi es</h1>
+
+<div class="glow"></div>
+
+<div class="container">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div>
+
+      <div class="logo">
+        <h1>ROOT</h1>
+        <p>admin control panel</p>
+      </div>
+
+      <nav class="menu">
+        <a href="#">Dashboard</a>
+        <a href="#">Usuarios</a>
+        <a href="#">Proyectos</a>
+        <a href="#">Logs</a>
+        <a href="#">Seguridad</a>
+        <a href="#">Configuración</a>
+      </nav>
+
+    </div>
+
+    <div class="bottom">
+      SYSTEM ACTIVE • SECURE CONNECTION
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <div class="topbar">
+      <h2>ADMIN PANEL</h2>
+
+      <div class="status">
+        ● ONLINE
+      </div>
+    </div>
+
+    <!-- CARDS -->
+
+    <section class="cards">
+
+      <div class="card">
+        <h3>USUARIOS ACTIVOS</h3>
+        <p>1,284</p>
+      </div>
+
+      <div class="card">
+        <h3>PROYECTOS</h3>
+        <p>94</p>
+      </div>
+
+      <div class="card">
+        <h3>TAREAS</h3>
+        <p>312</p>
+      </div>
+
+      <div class="card">
+        <h3>LOGS CRÍTICOS</h3>
+        <p>7</p>
+      </div>
+
+    </section>
+
+    <!-- TERMINAL -->
+
+    <section class="terminal">
+
+      <div class="terminal-title">
+        SYSTEM LOGS
+      </div>
+
+      <div class="line">
+        <span>[12:04]</span>
+        Nueva conexión detectada
+      </div>
+
+      <div class="line">
+        <span>[12:08]</span>
+        Usuario admin autenticado
+      </div>
+
+      <div class="line">
+        <span>[12:10]</span>
+        Backup automático completado
+      </div>
+
+      <div class="line">
+        <span>[12:14]</span>
+        Proyecto actualizado correctamente
+      </div>
+
+      <div class="line">
+        <span>[12:18]</span>
+        Nueva tarea asignada
+      </div>
+
+      <div class="line">
+        <span>[12:21]</span>
+        Escaneo de seguridad completado
+      </div>
+
+      <div class="line">
+        <span>[12:24]</span>
+        Estado del servidor: estable
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
 </body>
 </html>

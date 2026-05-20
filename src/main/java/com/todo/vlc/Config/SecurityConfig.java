@@ -46,19 +46,19 @@ public class SecurityConfig {
                                                 .permitAll()
 
                                                 // URLS para admin
-                                                .requestMatchers("/admin/**", "/", "/menu/**", "/datosProyecto")
+                                                .requestMatchers("/admin/**")
                                                 .hasRole("ADMIN")
 
                                                 // Urls para Colaborador
-                                                .requestMatchers("/menu")
-                                                .hasRole("COLLABORATOR")
+                                             //   .requestMatchers("/menu")
+                                               // .hasRole("COLLABORATOR")
                                                 // URLS para Gestor
                                                 .requestMatchers("/menu/gestion")
                                                 .hasRole("GESTOR")
 
                                                 // URLS para gestor y colaborador
-                                                .requestMatchers("/datosProyecto")
-                                                .hasAnyRole("GESTOR", "COLLABORATOR")
+                                                .requestMatchers("/datosProyecto", "/menu")
+                                                .hasAnyRole("GESTOR", "COLLABORATOR","ADMIN")
 
                                                 .anyRequest()
                                                 .authenticated())
