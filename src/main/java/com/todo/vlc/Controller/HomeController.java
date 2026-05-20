@@ -65,15 +65,6 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/crearTarea/{id}")
-    public String crearTarea(@PathVariable Integer id, Model model) {
-
-        Proyecto proyecto = proyectoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
-
-        model.addAttribute("proyecto", proyecto);
-
-        return "crearTarea";
-    }
+   
 
 }

@@ -106,7 +106,7 @@
                 <h2>👤 Creador</h2>
 
                 <div class="info-box">
-                    Nico
+                    <span th:text="${proyecto.usuario.nombre}">Creador</span>
                 </div>
 
             </div>
@@ -117,7 +117,7 @@
                 <h2>📅 Fecha límite</h2>
 
                 <div class="info-box">
-                    20/06/2026
+                    <span th:text="${proyecto.fecha_limite}">20/06/2026</span>
                 </div>
 
             </div>

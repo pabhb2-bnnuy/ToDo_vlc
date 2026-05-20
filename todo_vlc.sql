@@ -29,8 +29,10 @@ CREATE TABLE tareas (
     titulo VARCHAR(150),
     descripcion VARCHAR(150),
     prioridad INT,
+    idproyecto INT,
     fecha_asignacion VARCHAR(16) DEFAULT (DATE_FORMAT(CURRENT_TIMESTAMP, '%d/%m/%Y %H:%i')),
-    estado VARCHAR(30)
+    estado VARCHAR(30),
+    FOREIGN KEY (idproyecto) REFERENCES proyecto(idproyecto)
 );
 
 CREATE TABLE usuario_proyecto (

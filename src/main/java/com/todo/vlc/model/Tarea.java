@@ -19,4 +19,8 @@ public class Tarea {
     private String fecha_entrega;
     private String estado;
 
+    @ManyToOne
+    @JoinColumn(name = "idproyecto")
+    private Proyecto proyecto;
+
 }

@@ -244,7 +244,7 @@
 
         </div>
 
-        <form action="/crearTarea" method="post">
+        <form th:action="@{/crearTarea/{id}(id=${proyecto.idproyecto})}" method="post"></form>
 
             <input type="hidden" name="proyectoId" th:value="${proyecto.idproyecto}">
 
