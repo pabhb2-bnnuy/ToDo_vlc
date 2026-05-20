@@ -19,7 +19,7 @@ public class TareaController {
     @Autowired
     private ProyectoRepository proyectoRepository;
 
-    // ===================== FORMULARIO =====================
+    // ===================== MOSTRAR FORMULARIO =====================
     @GetMapping("/crearTarea/{id}")
     public String mostrarFormulario(@PathVariable Integer id, Model model) {
 
@@ -42,9 +42,8 @@ public class TareaController {
 
         tarea.setProyecto(proyecto);
 
-        if (tarea.getEstado() == null) {
-            tarea.setEstado("TODO");
-        }
+        // 🔥 estado por defecto SIEMPRE
+        tarea.setEstado("Por hacer");
 
         tareaRepository.save(tarea);
 
