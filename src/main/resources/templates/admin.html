@@ -1,335 +1,279 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Panel</title>
+    <meta charset="UTF-8">
+    <title>Panel Administración</title>
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
-
-    body{
-      font-family: Consolas, monospace;
-      background:#050505;
-      color:#00ff88;
-      height:100vh;
-      overflow:hidden;
-    }
-
-    body::before{
-      content:"";
-      position:absolute;
-      width:100%;
-      height:100%;
-      background:
-      repeating-linear-gradient(
-        to bottom,
-        rgba(0,255,120,0.03),
-        rgba(0,255,120,0.03) 1px,
-        transparent 1px,
-        transparent 4px
-      );
-      pointer-events:none;
-    }
-
-    .container{
-      display:flex;
-      height:100vh;
-      position:relative;
-      z-index:2;
-    }
-
-    /* SIDEBAR */
-
-    .sidebar{
-      width:260px;
-      background:#0a0a0a;
-      border-right:1px solid rgba(0,255,120,0.15);
-      padding:30px 20px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-
-    .logo{
-      margin-bottom:50px;
-    }
-
-    .logo h1{
-      font-size:28px;
-      color:#00ff88;
-      letter-spacing:4px;
-    }
-
-    .logo p{
-      color:#008f4d;
-      margin-top:8px;
-      font-size:12px;
-    }
-
-    .menu{
-      display:flex;
-      flex-direction:column;
-      gap:15px;
-    }
-
-    .menu a{
-      text-decoration:none;
-      color:#00ff88;
-      padding:14px 18px;
-      border:1px solid rgba(0,255,120,0.1);
-      border-radius:12px;
-      background:rgba(0,255,120,0.03);
-      transition:0.2s;
-    }
-
-    .menu a:hover{
-      background:#00ff88;
-      color:black;
-      box-shadow:0 0 15px #00ff88;
-    }
-
-    .bottom{
-      font-size:12px;
-      color:#00703b;
-    }
-
-    /* MAIN */
-
-    .main{
-      flex:1;
-      padding:40px;
-      overflow:auto;
-    }
-
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:35px;
-    }
-
-    .topbar h2{
-      font-size:32px;
-      font-weight:normal;
-      letter-spacing:3px;
-    }
-
-    .status{
-      padding:10px 18px;
-      border-radius:30px;
-      border:1px solid rgba(0,255,120,0.3);
-      background:rgba(0,255,120,0.05);
-      color:#00ff88;
-      font-size:13px;
-    }
-
-    /* CARDS */
-
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:25px;
-      margin-bottom:40px;
-    }
-
-    .card{
-      background:#0b0b0b;
-      border:1px solid rgba(0,255,120,0.1);
-      border-radius:20px;
-      padding:25px;
-      transition:0.3s;
-    }
-
-    .card:hover{
-      transform:translateY(-4px);
-      border-color:#00ff88;
-      box-shadow:0 0 20px rgba(0,255,120,0.2);
-    }
-
-    .card h3{
-      color:#00aa66;
-      margin-bottom:15px;
-      font-size:14px;
-      font-weight:normal;
-      letter-spacing:1px;
-    }
-
-    .card p{
-      font-size:40px;
-      color:#00ff88;
-    }
-
-    /* TERMINAL */
-
-    .terminal{
-      background:#020202;
-      border:1px solid rgba(0,255,120,0.12);
-      border-radius:20px;
-      padding:25px;
-      height:320px;
-      overflow:auto;
-      box-shadow:0 0 25px rgba(0,255,120,0.06);
-    }
-
-    .terminal-title{
-      margin-bottom:20px;
-      color:#00aa66;
-      letter-spacing:2px;
-    }
-
-    .line{
-      margin-bottom:12px;
-      font-size:14px;
-      color:#00ff88;
-    }
-
-    .line span{
-      color:#008f4d;
-      margin-right:10px;
-    }
-
-    /* GLOW */
-
-    .glow{
-      position:absolute;
-      width:500px;
-      height:500px;
-      background:#00ff88;
-      opacity:0.05;
-      filter:blur(120px);
-      top:-200px;
-      right:-100px;
-      z-index:1;
-    }
-
-  </style>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 </head>
 
 <body>
 
-<div class="glow"></div>
+<div class="layout">
 
-<div class="container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-  <!-- SIDEBAR -->
+        <div class="logo">
+            <h2>ToDo VLC</h2>
+        </div>
 
-  <aside class="sidebar">
+        <nav class="menu">
+            <a href="#">Dashboard</a>
+            <a href="#">Usuarios</a>
+            <a href="#">Proyectos</a>
+            <a href="#">Tareas</a>
+            <a href="#">Cerrar sesión</a>
+        </nav>
 
-    <div>
+    </aside>
 
-      <div class="logo">
-        <h1>ROOT</h1>
-        <p>admin control panel</p>
-      </div>
+    <!-- CONTENIDO -->
+    <main class="main-content">
 
-      <nav class="menu">
-        <a href="#">Dashboard</a>
-        <a href="#">Usuarios</a>
-        <a href="#">Proyectos</a>
-        <a href="#">Logs</a>
-        <a href="#">Seguridad</a>
-        <a href="#">Configuración</a>
-      </nav>
+        <!-- TOPBAR -->
+        <header class="topbar">
 
-    </div>
+            <div>
+                <h1>Panel de Administración</h1>
+                <p>Gestión completa del sistema</p>
+            </div>
 
-    <div class="bottom">
-      SYSTEM ACTIVE • SECURE CONNECTION
-    </div>
+            <div class="admin-info">
+                <span th:text="${usuario.nombre}">
+                    Admin
+                </span>
+            </div>
 
-  </aside>
+        </header>
 
-  <!-- MAIN -->
+        <!-- ESTADISTICAS -->
+        <section class="stats-container">
 
-  <main class="main">
+            <div class="stat-card">
+                <h3>Usuarios</h3>
 
-    <div class="topbar">
-      <h2>ADMIN PANEL</h2>
+                <p th:text="${totalUsuarios}">
+                    15
+                </p>
+            </div>
 
-      <div class="status">
-        ● ONLINE
-      </div>
-    </div>
+            <div class="stat-card">
+                <h3>Proyectos</h3>
 
-    <!-- CARDS -->
+                <p th:text="${totalProyectos}">
+                    8
+                </p>
+            </div>
 
-    <section class="cards">
+            <div class="stat-card">
+                <h3>Tareas</h3>
 
-      <div class="card">
-        <h3>USUARIOS ACTIVOS</h3>
-        <p>1,284</p>
-      </div>
+                <p th:text="${totalTareas}">
+                    40
+                </p>
+            </div>
 
-      <div class="card">
-        <h3>PROYECTOS</h3>
-        <p>94</p>
-      </div>
+        </section>
 
-      <div class="card">
-        <h3>TAREAS</h3>
-        <p>312</p>
-      </div>
+        <!-- TABLA USUARIOS -->
+        <section class="table-container">
 
-      <div class="card">
-        <h3>LOGS CRÍTICOS</h3>
-        <p>7</p>
-      </div>
+            <div class="table-header">
+                <h2>Usuarios registrados</h2>
 
-    </section>
+                <button>
+                    Nuevo Usuario
+                </button>
+            </div>
 
-    <!-- TERMINAL -->
+            <table>
 
-    <section class="terminal">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
 
-      <div class="terminal-title">
-        SYSTEM LOGS
-      </div>
+                <tbody>
 
-      <div class="line">
-        <span>[12:04]</span>
-        Nueva conexión detectada
-      </div>
+                    <tr th:each="u : ${usuarios}">
 
-      <div class="line">
-        <span>[12:08]</span>
-        Usuario admin autenticado
-      </div>
+                        <td th:text="${u.idusuario}">
+                            1
+                        </td>
 
-      <div class="line">
-        <span>[12:10]</span>
-        Backup automático completado
-      </div>
+                        <td th:text="${u.nombre}">
+                            Juan
+                        </td>
 
-      <div class="line">
-        <span>[12:14]</span>
-        Proyecto actualizado correctamente
-      </div>
+                        <td th:text="${u.email}">
+                            correo@gmail.com
+                        </td>
 
-      <div class="line">
-        <span>[12:18]</span>
-        Nueva tarea asignada
-      </div>
+                        <td>
+                            <span class="rol"
+                                  th:text="${u.rol}">
+                                ADMIN
+                            </span>
+                        </td>
 
-      <div class="line">
-        <span>[12:21]</span>
-        Escaneo de seguridad completado
-      </div>
+                        <td>
 
-      <div class="line">
-        <span>[12:24]</span>
-        Estado del servidor: estable
-      </div>
+                            <span th:if="${u.enabled}"
+                                  class="activo">
+                                Activo
+                            </span>
 
-    </section>
+                            <span th:unless="${u.enabled}"
+                                  class="inactivo">
+                                Inactivo
+                            </span>
 
-  </main>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <!-- TABLA PROYECTOS -->
+        <section class="table-container">
+
+            <div class="table-header">
+                <h2>Proyectos</h2>
+
+                <button>
+                    Nuevo Proyecto
+                </button>
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th>Fecha límite</th>
+                        <th>Administrador</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr th:each="p : ${proyectos}">
+
+                        <td th:text="${p.idproyecto}">
+                            1
+                        </td>
+
+                        <td th:text="${p.nombre}">
+                            CRM Empresa
+                        </td>
+
+                        <td>
+
+                            <span class="estado"
+                                  th:text="${p.estado}">
+                                EN_PROGRESO
+                            </span>
+
+                        </td>
+
+                        <td th:text="${p.fecha_limite}">
+                            2026-08-10
+                        </td>
+
+                        <td th:text="${p.usuario.nombre}">
+                            Admin
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <!-- TABLA TAREAS -->
+        <section class="table-container">
+
+            <div class="table-header">
+                <h2>Tareas</h2>
+
+                <button>
+                    Nueva Tarea
+                </button>
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Prioridad</th>
+                        <th>Estado</th>
+                        <th>Fecha asignación</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr th:each="t : ${tareas}">
+
+                        <td th:text="${t.idtarea}">
+                            1
+                        </td>
+
+                        <td th:text="${t.titulo}">
+                            Backend Login
+                        </td>
+
+                        <td>
+
+                            <span class="prioridad"
+                                  th:text="${t.prioridad}">
+                                1
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="estado"
+                                  th:text="${t.estado}">
+                                PENDIENTE
+                            </span>
+
+                        </td>
+
+                        <td th:text="${t.fecha_asignacion}">
+                            10/05/2026
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
 
 </div>
 
 </body>
+
 </html>
