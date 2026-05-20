@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 import com.todo.vlc.Repository.ProyectoRepository;
 import com.todo.vlc.model.Proyecto;
@@ -55,6 +56,17 @@ public class HomeController {
         }
 
         return "index";
+    }
+
+    @GetMapping("/crearTarea/{id}")
+    public String crearTarea(@PathVariable Integer id, Model model) {
+
+        Proyecto proyecto = proyectoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+        model.addAttribute("proyecto", proyecto);
+
+        return "crearTarea";
     }
 
 }
