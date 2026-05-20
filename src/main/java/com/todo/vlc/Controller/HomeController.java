@@ -27,6 +27,13 @@ public class HomeController {
         return "registrarse";
     }
 
+     @GetMapping("/admin")
+    public String admin() {
+
+       
+        return "admin";
+    }
+
     public void listarProyectos(Model model, Authentication authentication) {
         Usuario usuario = (Usuario) authentication.getPrincipal();
         List<Proyecto> proyectos = proyectoRepository.findByUsuario(usuario);

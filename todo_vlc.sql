@@ -8,7 +8,8 @@ CREATE TABLE usuarios (
     email VARCHAR(100) UNIQUE,
     passwrd VARCHAR(200) NOT NULL,
     rol VARCHAR(50),
-    fecha_creacion VARCHAR(200)
+    fecha_creacion VARCHAR(200),
+    enabled boolean
 );
 
 
@@ -40,3 +41,5 @@ CREATE TABLE usuario_proyecto (
     FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario) ON DELETE CASCADE,
     FOREIGN KEY (idproyecto) REFERENCES proyecto(idproyecto) ON DELETE CASCADE
 );
+
+INSERT INTO usuarios (nombre, email, passwrd, rol, enabled) VALUES ('nombre','admin@admin.com', '$2a$10$POeHsb.tHP2P9FU1Yhe0EeKHVk9NOmjSRMx/.Q7krLP05nOYTiVsC', 'ADMIN', true);

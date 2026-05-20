@@ -12,7 +12,7 @@ public class Tarea {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_tarea;
+    private int idtarea;
     private String titulo;
     private String descripcion;
     private int prioridad;

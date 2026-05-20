@@ -46,7 +46,7 @@ public class SecurityConfig {
                                                 .permitAll()
 
                                                 // URLS para admin
-                                                .requestMatchers("/admin/**")
+                                                .requestMatchers("/admin/**", "/", "/menu/**", "/datosProyecto")
                                                 .hasRole("ADMIN")
 
                                                 // Urls para Colaborador
@@ -75,8 +75,32 @@ public class SecurityConfig {
                                                 .usernameParameter("mail")
                                                 .passwordParameter("password")
 
-                                                // Login correcto
-                                                .defaultSuccessUrl("/?loginSuccess", true)
+                                                .successHandler((request, response, authentication) -> {
+
+                                                        var authorities = authentication.getAuthorities();
+
+                                                        boolean isAdmin = authorities.stream()
+                                                                        .anyMatch(a -> a.getAuthority()
+                                                                                        .equals("ROLE_ADMIN"));
+
+                                                        boolean isGestor = authorities.stream()
+                                                                        .anyMatch(a -> a.getAuthority()
+                                                                                        .equals("ROLE_GESTOR"));
+
+                                                        boolean isCollaborator = authorities.stream()
+                                                                        .anyMatch(a -> a.getAuthority()
+                                                                                        .equals("ROLE_COLLABORATOR"));
+
+                                                        if (isAdmin) {
+                                                                response.sendRedirect("/admin");
+                                                        } else if (isGestor) {
+                                                                response.sendRedirect("/menu/gestion");
+                                                        } else if (isCollaborator) {
+                                                                response.sendRedirect("/menu");
+                                                        } else {
+                                                                response.sendRedirect("/");
+                                                        }
+                                                })
 
                                                 // Login incorrecto personalizado
                                                 .failureHandler((request, response, exception) -> {
