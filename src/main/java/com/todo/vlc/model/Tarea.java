@@ -23,4 +23,8 @@ public class Tarea {
     @JoinColumn(name = "idproyecto")
     private Proyecto proyecto;
 
+    @ManyToOne
+    @JoinColumn(name = "idusuario")
+    private Usuario usuario;
+
 }
