@@ -44,7 +44,7 @@
 
     </header>
 
-    
+
 
     <!-- CONTENIDO -->
     <main class="dashboard">
@@ -96,21 +96,18 @@
 
                 <h2>👥 Miembros</h2>
 
-                <div class="members-list">
+                <div class="member" th:each="miembro : ${miembros}">
 
-                    <div class="member">
-                        👤 Nico
-                    </div>
+                    👤
+                    <span th:text="${miembro.usuario.nombre}"></span>
 
-                    <div class="member">
-                        👤 Pablo
-                    </div>
-
-                    <div class="member">
-                        👤 Admin
-                    </div>
+                    <span th:if="${miembro.usuario.idusuario == proyecto.usuario.idusuario}">
+                        ⭐
+                    </span>
 
                 </div>
+
+            </div>
 
             </div>
 
@@ -122,9 +119,13 @@
                     </button>
                 </a>
 
-                <button class="invite-btn">
-                    + Invitar usuario
-                </button>
+                <a th:href="@{/invitarUsuario/{id}(id=${proyecto.idproyecto})}">
+
+                    <button class="invite-btn">
+                        + Invitar usuario
+                    </button>
+
+                </a>
 
 
             </div>

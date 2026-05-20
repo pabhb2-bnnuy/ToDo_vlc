@@ -1,6 +1,7 @@
 package com.todo.vlc.Controller;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -75,14 +76,18 @@ public class ProyectoController {
 
     @GetMapping("/proyecto/{idproyecto}")
     public String verProyecto(
-            @PathVariable Integer idproyecto,
+            @PathVariable int idproyecto,
             Model model) {
 
         Proyecto proyecto = proyectoRepository
                 .findById(idproyecto)
                 .orElse(null);
 
+        List<UsuarioProyecto> miembros = usuarioProyectoRepository.findByProyecto(proyecto);
+
         model.addAttribute("proyecto", proyecto);
+
+        model.addAttribute("miembros", miembros);
 
         return "proyecto";
     }

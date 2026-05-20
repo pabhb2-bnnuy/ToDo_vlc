@@ -46,7 +46,7 @@
 
         </header>
 
-        
+
 
         <!-- CONTENIDO PROYECTO -->
         <main class="dashboard">
@@ -54,145 +54,142 @@
             <!-- ================= SIDEBAR ================= -->
             <aside class="sidebar">
 
-            <!-- INFO PROYECTO -->
-            <div class="sidebar-section">
+                <!-- INFO PROYECTO -->
+                <div class="sidebar-section">
 
-                <h2>📌 Proyecto</h2>
+                    <h2>📌 Proyecto</h2>
 
-                <div class="info-box">
-                    <h3 th:text="${proyecto.nombre}">
-                        Proyecto DAM
-                    </h3>
+                    <div class="info-box">
+                        <h3 th:text="${proyecto.nombre}">
+                            Proyecto DAM
+                        </h3>
 
-                    <p th:text="${proyecto.descripcion}">
-                        Descripción del proyecto
-                    </p>
-                </div>
-
-            </div>
-
-            <!-- CREADOR -->
-            <div class="sidebar-section">
-
-                <h2>👤 Creador</h2>
-
-                <div class="info-box">
-                    <span th:text="${proyecto.usuario.nombre}">Creador</span>
-                </div>
-
-            </div>
-
-            <!-- FECHA -->
-            <div class="sidebar-section">
-
-                <h2>📅 Fecha límite</h2>
-
-                <div class="info-box">
-                    <span th:text="${proyecto.fecha_limite}">20/06/2026</span>
-                </div>
-
-            </div>
-
-            <!-- MIEMBROS -->
-            <div class="sidebar-section">
-
-                <h2>👥 Miembros</h2>
-
-                <div class="members-list">
-
-                    <div class="member">
-                        👤 Nico
-                    </div>
-
-                    <div class="member">
-                        👤 Pablo
-                    </div>
-
-                    <div class="member">
-                        👤 Admin
+                        <p th:text="${proyecto.descripcion}">
+                            Descripción del proyecto
+                        </p>
                     </div>
 
                 </div>
 
+                <!-- CREADOR -->
+                <div class="sidebar-section">
+
+                    <h2>👤 Creador</h2>
+
+                    <div class="info-box">
+                        <span th:text="${proyecto.usuario.nombre}">Creador</span>
+                    </div>
+
+                </div>
+
+                <!-- FECHA -->
+                <div class="sidebar-section">
+
+                    <h2>📅 Fecha límite</h2>
+
+                    <div class="info-box">
+                        <span th:text="${proyecto.fecha_limite}">20/06/2026</span>
+                    </div>
+
+                </div>
+
+                <!-- MIEMBROS -->
+                <div class="sidebar-section">
+
+                    <h2>👥 Miembros</h2>
+
+                    <div class="member" th:each="miembro : ${miembros}">
+
+                        👤
+                        <span th:text="${miembro.usuario.nombre}"></span>
+
+                        <span th:if="${miembro.usuario.idusuario == proyecto.usuario.idusuario}">
+                            ⭐
+                        </span>
+
+                    </div>
+
+                </div>
+
+    </div>
+
+    <div class="board-actions">
+
+        <a th:href="@{/crearTarea/{id}(id=${proyecto.idproyecto})}">
+            <button class="new-task-btn">
+                + Crear tarea
+            </button>
+        </a>
+
+        <button class="invite-btn">
+            + Invitar usuario
+        </button>
+
+
+    </div>
+
+
+
+    </aside>
+
+    <!-- ================= CONTENIDO TABLERO ================= -->
+    <section class="board-wrapper">
+
+
+
+        <!-- TABLERO -->
+        <section class="board-container">
+
+            <!-- POR HACER -->
+            <div class="board-column">
+
+                <div class="column-header">
+                    <h3>📌 Por hacer</h3>
+                    <span>3</span>
+                </div>
+
+                <div class="task-card">
+                    <h4>Diseñar login</h4>
+                    <p>Crear interfaz responsive.</p>
+                </div>
+
             </div>
 
-            <div class="board-actions">
+            <!-- EN PROGRESO -->
+            <div class="board-column">
 
-                <a th:href="@{/crearTarea/{id}(id=${proyecto.idproyecto})}">
-                    <button class="new-task-btn">
-                        + Crear tarea
-                    </button>
-                </a>
+                <div class="column-header">
+                    <h3>🚀 En progreso</h3>
+                    <span>2</span>
+                </div>
 
-                <button class="invite-btn">
-                    + Invitar usuario
-                </button>
-
+                <div class="task-card active">
+                    <h4>Spring Security</h4>
+                    <p>Configurar sesiones.</p>
+                </div>
 
             </div>
 
+            <!-- COMPLETADO -->
+            <div class="board-column">
 
+                <div class="column-header">
+                    <h3>✅ Completado</h3>
+                    <span>2</span>
+                </div>
 
-        </aside>
+                <div class="task-card done">
+                    <h4>Registro usuarios</h4>
+                    <p>MySQL terminado.</p>
+                </div>
 
-            <!-- ================= CONTENIDO TABLERO ================= -->
-            <section class="board-wrapper">
+            </div>
 
+        </section>
 
+    </section>
 
-                <!-- TABLERO -->
-                <section class="board-container">
-
-                    <!-- POR HACER -->
-                    <div class="board-column">
-
-                        <div class="column-header">
-                            <h3>📌 Por hacer</h3>
-                            <span>3</span>
-                        </div>
-
-                        <div class="task-card">
-                            <h4>Diseñar login</h4>
-                            <p>Crear interfaz responsive.</p>
-                        </div>
-
-                    </div>
-
-                    <!-- EN PROGRESO -->
-                    <div class="board-column">
-
-                        <div class="column-header">
-                            <h3>🚀 En progreso</h3>
-                            <span>2</span>
-                        </div>
-
-                        <div class="task-card active">
-                            <h4>Spring Security</h4>
-                            <p>Configurar sesiones.</p>
-                        </div>
-
-                    </div>
-
-                    <!-- COMPLETADO -->
-                    <div class="board-column">
-
-                        <div class="column-header">
-                            <h3>✅ Completado</h3>
-                            <span>2</span>
-                        </div>
-
-                        <div class="task-card done">
-                            <h4>Registro usuarios</h4>
-                            <p>MySQL terminado.</p>
-                        </div>
-
-                    </div>
-
-                </section>
-
-            </section>
-
-        </main>
+    </main>
 
     </div>
 
@@ -238,7 +235,22 @@
                     <label>Fecha de entrega</label>
                     <input type="date" name="fecha_entrega" required>
                 </div>
+                <!-- USUARIO ASIGNADO -->
+                <div class="form-group">
 
+                    <label>Asignar usuario</label>
+
+                    <select name="idusuario" required>
+
+                        <option value="">Selecciona usuario</option>
+
+                        <option th:each="miembro : ${miembros}" th:value="${miembro.usuario.idusuario}"
+                            th:text="${miembro.usuario.nombre}">
+                        </option>
+
+                    </select>
+
+                </div>
                 <button type="submit">Crear tarea</button>
 
             </form>

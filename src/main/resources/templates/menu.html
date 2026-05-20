@@ -53,16 +53,16 @@
             <h2>Workspaces</h2>
 
             <ul>
-                
-                <li th:each="p : ${proyectos}">
 
-                    <a th:href="@{/proyecto/{id}(id=${p.idproyecto})}">
+                <a th:href="@{/proyecto/{id}(id=${p.idproyecto})}" class="project-link" th:each="p : ${proyectos}">
+
+                    <li>
 
                         📁 <span th:text="${p.nombre}"></span>
 
-                    </a>
+                    </li>
 
-                </li>
+                </a>
 
             </ul>
 

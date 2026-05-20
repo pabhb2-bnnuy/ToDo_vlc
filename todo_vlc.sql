@@ -46,4 +46,4 @@
         FOREIGN KEY (idproyecto) REFERENCES proyecto(idproyecto) ON DELETE CASCADE
     );
 
-    INSERT INTO usuarios (nombre, email, passwrd, rol, enabled) VALUES ('nombre','admin@admin.com', '$2a$10$POeHsb.tHP2P9FU1Yhe0EeKHVk9NOmjSRMx/.Q7krLP05nOYTiVsC', 'ADMIN', true);
+    INSERT INTO usuarios (nombre, email, passwrd, rol, enabled) VALUES ('admin','admin@admin.com', '$2a$10$POeHsb.tHP2P9FU1Yhe0EeKHVk9NOmjSRMx/.Q7krLP05nOYTiVsC', 'ADMIN', true);

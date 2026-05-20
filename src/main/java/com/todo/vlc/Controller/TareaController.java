@@ -1,17 +1,21 @@
 package com.todo.vlc.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.todo.vlc.Repository.ProyectoRepository;
 import com.todo.vlc.Repository.TareaRepository;
+import com.todo.vlc.Repository.UsuarioProyectoRepository;
+import com.todo.vlc.Repository.UsuarioRepository;
 
 import com.todo.vlc.model.Proyecto;
 import com.todo.vlc.model.Tarea;
 import com.todo.vlc.model.Usuario;
+import com.todo.vlc.model.UsuarioProyecto;
 
 @Controller
 public class TareaController {
@@ -22,6 +26,12 @@ public class TareaController {
     @Autowired
     private ProyectoRepository proyectoRepository;
 
+    @Autowired
+    private UsuarioProyectoRepository usuarioProyectoRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     // ===================== MOSTRAR FORMULARIO =====================
 
     @GetMapping("/crearTarea/{id}")
@@ -31,6 +41,12 @@ public class TareaController {
 
         Proyecto proyecto = proyectoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+        // USUARIOS DEL PROYECTO
+        List<UsuarioProyecto> miembros =
+                usuarioProyectoRepository.findByProyecto(proyecto);
+
+        model.addAttribute("miembros", miembros);
 
         model.addAttribute("proyecto", proyecto);
 
@@ -48,14 +64,17 @@ public class TareaController {
 
             @ModelAttribute Tarea tarea,
 
-            @AuthenticationPrincipal Usuario usuario) {
+            @RequestParam("idusuario") Integer idusuario) {
 
         Proyecto proyecto = proyectoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
+        Usuario usuarioAsignado = usuarioRepository.findById(idusuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
         tarea.setProyecto(proyecto);
 
-        tarea.setUsuario(usuario);
+        tarea.setUsuario(usuarioAsignado);
 
         tarea.setEstado("POR_HACER");
 
