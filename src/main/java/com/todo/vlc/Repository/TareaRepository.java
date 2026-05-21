@@ -21,4 +21,6 @@ public interface TareaRepository extends JpaRepository<Tarea, Integer> {
     List<Tarea> findByProyectoAndEstado(Proyecto proyecto, String estado);
 
     List<Tarea> findByUsuarioAndEstado(Usuario usuario, String estado);
+
+    List<Tarea> findByProyectoAndEstadoOrderByPrioridadAsc(Proyecto proyecto, String estado);
 }

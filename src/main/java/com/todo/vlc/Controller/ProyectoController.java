@@ -1,6 +1,7 @@
 package com.todo.vlc.Controller;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,14 +92,16 @@ public class ProyectoController {
 
         // 🔥 ESTADOS CORRECTOS
         List<Tarea> tareasPorHacer = tareaRepository.findByProyectoAndEstado(proyecto, "TODO");
-
         List<Tarea> tareasEnProgreso = tareaRepository.findByProyectoAndEstado(proyecto, "DOING");
-
         List<Tarea> tareasCompletadas = tareaRepository.findByProyectoAndEstado(proyecto, "DONE");
+
+        // Orden por prioridad: 1 alta, 2 media, 3 baja
+        tareasPorHacer.sort(Comparator.comparingInt(Tarea::getPrioridad));
+        tareasEnProgreso.sort(Comparator.comparingInt(Tarea::getPrioridad));
+        tareasCompletadas.sort(Comparator.comparingInt(Tarea::getPrioridad));
 
         model.addAttribute("proyecto", proyecto);
         model.addAttribute("miembros", miembros);
-
         model.addAttribute("tareasPorHacer", tareasPorHacer);
         model.addAttribute("tareasEnProgreso", tareasEnProgreso);
         model.addAttribute("tareasCompletadas", tareasCompletadas);

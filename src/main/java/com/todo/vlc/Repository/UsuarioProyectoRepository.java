@@ -1,6 +1,7 @@
 package com.todo.vlc.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,6 +17,8 @@ public interface UsuarioProyectoRepository extends JpaRepository<UsuarioProyecto
     List<UsuarioProyecto> findByUsuario(Usuario usuario);
 
     List<UsuarioProyecto> findByProyecto(Proyecto proyecto);
+
+    Optional<UsuarioProyecto> findByProyectoAndUsuario(Proyecto proyecto, Usuario usuario);
 
     boolean existsByUsuarioAndProyecto(Usuario usuario, Proyecto proyecto);
 

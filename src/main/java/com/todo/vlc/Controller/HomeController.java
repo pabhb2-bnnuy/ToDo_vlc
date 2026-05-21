@@ -7,15 +7,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
-import com.todo.vlc.Repository.ProyectoRepository;
+import com.todo.vlc.Repository.UsuarioProyectoRepository;
 import com.todo.vlc.model.Proyecto;
 import com.todo.vlc.model.Usuario;
+import com.todo.vlc.model.UsuarioProyecto;
 
 @Controller
 public class HomeController {
 
     @Autowired
-    private ProyectoRepository proyectoRepository;
+    private UsuarioProyectoRepository usuarioProyectoRepository;
+
+
 
     @GetMapping("/registrarse")
     public String registro(Authentication authentication) {
@@ -26,11 +29,21 @@ public class HomeController {
         return "registrarse";
     }
 
-    public void listarProyectos(Model model, Authentication authentication) {
-        Usuario usuario = (Usuario) authentication.getPrincipal();
-        List<Proyecto> proyectos = proyectoRepository.findByUsuario(usuario);
+    public void listarProyectos(
+            Model model,
+            Authentication authentication) {
 
-        model.addAttribute("proyectos", proyectos);
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+
+        List<UsuarioProyecto> relaciones = usuarioProyectoRepository.findByUsuario(usuario);
+
+        List<Proyecto> proyectos = relaciones.stream()
+                .map(UsuarioProyecto::getProyecto)
+                .toList();
+
+        model.addAttribute(
+                "proyectos",
+                proyectos);
     }
 
     @GetMapping("/menu")
