@@ -27,24 +27,18 @@
         </a>
 
         <nav>
-
             <a href="/">Inicio</a>
             <a href="#">Mis proyectos</a>
             <a href="#">Perfil</a>
 
-            <!-- BARRA -->
             <span class="nav-divider">|</span>
 
-            <!-- VOLVER -->
             <a href="/menu" class="logout-btn">
                 ⬅ Volver
             </a>
-
         </nav>
 
     </header>
-
-
 
     <!-- CONTENIDO -->
     <main class="dashboard">
@@ -52,139 +46,226 @@
         <!-- ================= SIDEBAR ================= -->
         <aside class="sidebar">
 
-            <!-- INFO PROYECTO -->
+            <!-- PROYECTO -->
             <div class="sidebar-section">
-
                 <h2>📌 Proyecto</h2>
 
                 <div class="info-box">
-                    <h3 th:text="${proyecto.nombre}">
-                        Proyecto DAM
-                    </h3>
-
-                    <p th:text="${proyecto.descripcion}">
-                        Descripción del proyecto
-                    </p>
+                    <h3 th:text="${proyecto.nombre}">Proyecto</h3>
+                    <p th:text="${proyecto.descripcion}">Descripción</p>
                 </div>
-
             </div>
 
             <!-- CREADOR -->
             <div class="sidebar-section">
-
                 <h2>👤 Creador</h2>
 
                 <div class="info-box">
-                    <span th:text="${proyecto.usuario.nombre}">Creador</span>
+                    <span th:text="${proyecto.usuario.nombre}"></span>
                 </div>
-
             </div>
 
             <!-- FECHA -->
             <div class="sidebar-section">
-
                 <h2>📅 Fecha límite</h2>
 
                 <div class="info-box">
-                    <span th:text="${proyecto.fecha_limite}">20/06/2026</span>
+                    <span th:text="${proyecto.fecha_limite}"></span>
                 </div>
-
             </div>
 
             <!-- MIEMBROS -->
             <div class="sidebar-section">
-
                 <h2>👥 Miembros</h2>
 
                 <div class="member" th:each="miembro : ${miembros}">
-
-                    👤
-                    <span th:text="${miembro.usuario.nombre}"></span>
+                    👤 <span th:text="${miembro.usuario.nombre}"></span>
 
                     <span th:if="${miembro.usuario.idusuario == proyecto.usuario.idusuario}">
                         ⭐
                     </span>
-
                 </div>
-
             </div>
 
-            </div>
-
+            <!-- BOTONES -->
             <div class="board-actions">
 
                 <a th:href="@{/crearTarea/{id}(id=${proyecto.idproyecto})}">
-                    <button class="new-task-btn">
-                        + Crear tarea
-                    </button>
+                    <button class="new-task-btn">+ Crear tarea</button>
                 </a>
 
                 <a th:href="@{/invitarUsuario/{id}(id=${proyecto.idproyecto})}">
-
-                    <button class="invite-btn">
-                        + Invitar usuario
-                    </button>
-
+                    <button class="invite-btn">+ Invitar usuario</button>
                 </a>
-
 
             </div>
 
-
-
         </aside>
 
-        <!-- ================= CONTENIDO TABLERO ================= -->
+        <!-- ================= BOARD ================= -->
         <section class="board-wrapper">
 
-
-
-            <!-- TABLERO -->
             <section class="board-container">
 
-                <!-- POR HACER -->
+                <!-- ================= POR HACER ================= -->
                 <div class="board-column">
 
                     <div class="column-header">
                         <h3>📌 Por hacer</h3>
-                        <span>3</span>
+                        <span th:text="${#lists.size(tareasPorHacer)}">0</span>
                     </div>
 
-                    <div class="task-card">
-                        <h4>Diseñar login</h4>
-                        <p>Crear interfaz responsive.</p>
+                    <div class="task-card" th:each="tarea : ${tareasPorHacer}">
+                        <div class="task-menu">
+                            <span class="dots">⋮</span>
+                            <div class="task-dropdown">
+                                <a th:href="@{/tarea/estado/{id}/{estado}(id=${tarea.idtarea}, estado='TODO')}">
+                                    📌 Por hacer
+                                </a>
+
+                                <a th:href="@{/tarea/estado/{id}/{estado}(id=${tarea.idtarea}, estado='DOING')}">
+                                    🚀 En progreso
+                                </a>
+
+                                <a th:href="@{/tarea/estado/{id}/{estado}(id=${tarea.idtarea}, estado='DONE')}">
+                                    ✅ Completado
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="task-header">
+                            <h4 th:text="${tarea.titulo}"></h4>
+
+                            <div class="priority-bar"></div>
+
+                            <div class="priority-number">
+                                <span th:text="${tarea.prioridad}"></span>
+                            </div>
+
+                            <span class="toggle">▼</span>
+                        </div>
+
+                        <div class="task-user">
+                            👤 <span th:text="${tarea.usuario != null ? tarea.usuario.nombre : 'Sin asignar'}"></span>
+                        </div>
+
+                        <div class="task-description">
+                            <p th:text="${tarea.descripcion}"></p>
+
+                            <div class="task-date">
+                                📅 <span th:text="${tarea.fecha_entrega}"></span>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
 
-                <!-- EN PROGRESO -->
+                <!-- ================= EN PROGRESO ================= -->
                 <div class="board-column">
 
                     <div class="column-header">
                         <h3>🚀 En progreso</h3>
-                        <span>2</span>
+                        <span th:text="${#lists.size(tareasEnProgreso)}">0</span>
                     </div>
 
-                    <div class="task-card active">
-                        <h4>Spring Security</h4>
-                        <p>Configurar sesiones.</p>
+                    <div class="task-card active" th:each="tarea : ${tareasEnProgreso}">
+
+                        <div class="task-menu">
+                            <span class="dots">⋮</span>
+                            <div class="task-dropdown">
+                                <a th:href="@{/tarea/estado/{id}/{estado}(id=${tarea.idtarea}, estado='TODO')}">
+                                    📌 Por hacer
+                                </a>
+
+                                <a th:href="@{/tarea/estado/{id}/{estado}(id=${tarea.idtarea}, estado='DOING')}">
+                                    🚀 En progreso
+                                </a>
+
+                                <a th:href="@{/tarea/estado/{id}/{estado}(id=${tarea.idtarea}, estado='DONE')}">
+                                    ✅ Completado
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="task-header">
+                            <h4 th:text="${tarea.titulo}"></h4>
+
+                            <div class="priority-bar"></div>
+
+                            <div class="priority-number">
+                                <span th:text="${tarea.prioridad}"></span>
+                            </div>
+
+                            <span class="toggle">▼</span>
+                        </div>
+
+                        <div class="task-user">
+                            👤 <span th:text="${tarea.usuario != null ? tarea.usuario.nombre : 'Sin asignar'}"></span>
+                        </div>
+
+                        <div class="task-description">
+                            <p th:text="${tarea.descripcion}"></p>
+
+                            <div class="task-date">
+                                📅 <span th:text="${tarea.fecha_entrega}"></span>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
 
-                <!-- COMPLETADO -->
+                <!-- ================= COMPLETADO ================= -->
                 <div class="board-column">
 
                     <div class="column-header">
                         <h3>✅ Completado</h3>
-                        <span>2</span>
+                        <span th:text="${#lists.size(tareasCompletadas)}">0</span>
                     </div>
 
-                    <div class="task-card done">
-                        <h4>Registro usuarios</h4>
-                        <p>MySQL terminado.</p>
-                    </div>
+                    <div class="task-card done" th:each="tarea : ${tareasCompletadas}">
+                        <div class="task-menu">
+                            <span class="dots">⋮</span>
+                            <div class="task-dropdown">
+                                <a th:href="@{/tarea/estado/{id}/{estado}(id=${tarea.idtarea}, estado='TODO')}">
+                                    📌 Por hacer
+                                </a>
 
+                                <a th:href="@{/tarea/estado/{id}/{estado}(id=${tarea.idtarea}, estado='DOING')}">
+                                    🚀 En progreso
+                                </a>
+
+                                <a th:href="@{/tarea/estado/{id}/{estado}(id=${tarea.idtarea}, estado='DONE')}">
+                                    ✅ Completado
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="task-header">
+                            <h4 th:text="${tarea.titulo}"></h4>
+
+                            <div class="priority-bar"></div>
+
+                            <div class="priority-number">
+                                <span th:text="${tarea.prioridad}"></span>
+                            </div>
+
+                            <span class="toggle">▼</span>
+                        </div>
+
+                        <div class="task-user">
+                            👤 <span th:text="${tarea.usuario != null ? tarea.usuario.nombre : 'Sin asignar'}"></span>
+                        </div>
+
+                        <div class="task-description">
+                            <p th:text="${tarea.descripcion}"></p>
+
+                            <div class="task-date">
+                                📅 <span th:text="${tarea.fecha_entrega}"></span>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
             </section>
@@ -192,6 +273,15 @@
         </section>
 
     </main>
+
+    <!-- JS -->
+    <script>
+        document.querySelectorAll(".task-card").forEach(card => {
+            card.addEventListener("click", () => {
+                card.classList.toggle("open");
+            });
+        });
+    </script>
 
 </body>
 

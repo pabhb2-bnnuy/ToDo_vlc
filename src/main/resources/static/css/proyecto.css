@@ -631,156 +631,318 @@ nav a:hover {
     color: inherit;
 }
 
-.dashboard{
-    display:flex;
-    gap:30px;
-    padding:30px;
-    height:calc(100vh - 100px);
+.dashboard {
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+    height: calc(100vh - 100px);
 }
 
 /* SIDEBAR */
-.sidebar{
-    width:320px;
-    min-width:320px;
+.sidebar {
+    width: 320px;
+    min-width: 320px;
 
-    background:rgba(0,0,0,0.35);
+    background: rgba(0, 0, 0, 0.35);
 
-    backdrop-filter:blur(10px);
+    backdrop-filter: blur(10px);
 
-    border-radius:20px;
+    border-radius: 20px;
 
-    padding:25px;
+    padding: 25px;
 
-    overflow-y:auto;
+    overflow-y: auto;
 }
 
-.sidebar-section{
-    margin-bottom:30px;
+.sidebar-section {
+    margin-bottom: 30px;
 }
 
-.sidebar-section h2{
-    margin-bottom:12px;
-    color:white;
-    font-size:18px;
+.sidebar-section h2 {
+    margin-bottom: 12px;
+    color: white;
+    font-size: 18px;
 }
 
-.info-box{
-    background:rgba(255,255,255,0.08);
+.info-box {
+    background: rgba(255, 255, 255, 0.08);
 
-    padding:15px;
+    padding: 15px;
 
-    border-radius:12px;
+    border-radius: 12px;
 
-    color:white;
+    color: white;
 }
 
-.members-list{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+.members-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.member{
-    background:rgba(255,255,255,0.08);
+.member {
+    background: rgba(255, 255, 255, 0.08);
 
-    padding:12px;
+    padding: 12px;
 
-    border-radius:10px;
+    border-radius: 10px;
 
-    color:white;
+    color: white;
 }
 
-.activity-card{
-    background:rgba(255,255,255,0.08);
+.activity-card {
+    background: rgba(255, 255, 255, 0.08);
 
-    padding:12px;
+    padding: 12px;
 
-    border-radius:10px;
+    border-radius: 10px;
 
-    color:white;
+    color: white;
 
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
 /* TABLERO */
-.board-wrapper{
-    flex:1;
+.board-wrapper {
+    flex: 1;
 
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
 }
 
 /* BOTONES ARRIBA */
-.board-actions{
-    display:flex;
+.board-actions {
+    display: flex;
 
-    gap:10px;
+    gap: 10px;
 
-    margin-bottom:25px;
+    margin-bottom: 25px;
 }
 
-.config-btn{
-    border:none;
+.config-btn {
+    border: none;
 
-    padding:12px 20px;
+    padding: 12px 20px;
 
-    border-radius:12px;
+    border-radius: 12px;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    font-weight:bold;
+    font-weight: bold;
 }
 
 /* COLUMNAS */
-.board-container{
-    display:flex;
+.board-container {
+    display: flex;
 
-    gap:25px;
+    gap: 25px;
 
-    overflow-x:auto;
+    overflow-x: auto;
 }
 
-.board-container{
-    display:flex;
+.board-container {
+    display: flex;
 
-    gap:25px;
+    gap: 25px;
 
-    overflow-x:auto;
+    overflow-x: auto;
 }
 
-.board-column{
-    min-width:320px;
+.board-column {
+    min-width: 320px;
 
-    background:rgba(0,0,0,0.35);
+    background: rgba(0, 0, 0, 0.35);
 
-    border-radius:18px;
+    border-radius: 18px;
 
-    padding:20px;
+    padding: 20px;
 }
 
-.board-actions{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
+.board-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.board-actions a{
-    width:100%;
+.board-actions a {
+    width: 100%;
 }
 
 .new-task-btn,
-.invite-btn{
-    width:100%;
+.invite-btn {
+    width: 100%;
 
-    padding:14px;
+    padding: 14px;
 
-    border:none;
+    border: none;
 
-    border-radius:12px;
+    border-radius: 12px;
 
-    font-size:16px;
+    font-size: 16px;
 
-    font-weight:bold;
+    font-weight: bold;
 
-    cursor:pointer;
+    cursor: pointer;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    cursor: pointer;
+    margin-top: 25px;
+}
+
+.toggle {
+    transition: 0.3s;
+    font-size: 12px;
+}
+
+/* descripción desplegable */
+.task-description {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    margin-top: 0;
+}
+
+.task-card.open .task-description {
+    max-height: 200px;
+    margin-top: 10px;
+}
+
+.task-card.open .toggle {
+    transform: rotate(180deg);
+}
+
+/* ===================== MENÚ ⋮ MEJORADO ===================== */
+
+/* ================= CARD BASE ================= */
+
+.task-card {
+    position: relative;
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 15px;
+}
+
+/* ================= HEADER ================= */
+
+.task-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* TITULO */
+.task-header h4 {
+    margin: 0;
+    font-size: 16px;
+    flex: 1;
+}
+
+/* BARRA SEPARADORA PRIORIDAD */
+.priority-bar {
+    width: 2px;
+    height: 18px;
+    background: rgba(255,255,255,0.3);
+}
+
+/* NUMERO PRIORIDAD */
+.priority-number {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* FLECHA ARRIBA DERECHA */
+.toggle {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* ================= USUARIO ================= */
+
+.task-user {
+    margin-top: 6px;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+/* ================= DESCRIPCION ================= */
+
+.task-description {
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.35s ease;
+    margin-top: 0;
+}
+
+/* abierto */
+.task-card.open .task-description {
+    max-height: 200px;
+    margin-top: 12px;
+}
+
+/* ================= FECHA ================= */
+
+.task-date {
+    margin-top: 10px;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+/* ================= MENU 3 PUNTOS ================= */
+
+.task-menu {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.dots {
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+/* dropdown */
+.task-dropdown {
+    display: none;
+    position: absolute;
+    bottom: 25px;
+    right: 0;
+    background: #0f172a;
+    border-radius: 10px;
+    min-width: 150px;
+    overflow: hidden;
+}
+
+/* hover */
+.task-menu:hover .task-dropdown {
+    display: block;
+}
+
+.task-dropdown a {
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.task-dropdown a:hover {
+    background: rgba(56,189,248,0.2);
+}
+
+/* ================= PRIORIDAD (si quieres estilo extra) ================= */
+
+.priority-number {
+    background: rgba(56,189,248,0.2);
+    padding: 2px 6px;
+    border-radius: 6px;
 }

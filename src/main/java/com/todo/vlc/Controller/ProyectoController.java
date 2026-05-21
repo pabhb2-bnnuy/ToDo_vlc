@@ -10,9 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.todo.vlc.Repository.ProyectoRepository;
+import com.todo.vlc.Repository.TareaRepository;
 import com.todo.vlc.Repository.UsuarioProyectoRepository;
 
 import com.todo.vlc.model.Proyecto;
+import com.todo.vlc.model.Tarea;
 import com.todo.vlc.model.Usuario;
 import com.todo.vlc.model.UsuarioProyecto;
 import com.todo.vlc.model.UsuarioProyectoId;
@@ -26,6 +28,10 @@ public class ProyectoController {
     @Autowired
     private UsuarioProyectoRepository usuarioProyectoRepository;
 
+    @Autowired
+    private TareaRepository tareaRepository;
+
+    // ================= CREAR PROYECTO =================
     @PostMapping("/crearProyecto")
     public String crearProyecto(
 
@@ -37,12 +43,9 @@ public class ProyectoController {
 
             @RequestParam("fecha") String fecha) {
 
-        // CREAR PROYECTO
-
         Proyecto proyecto = new Proyecto();
 
         proyecto.setNombre(nombre);
-
         proyecto.setDescripcion(descripcion);
 
         proyecto.setFecha_inicio(String.valueOf(LocalDate.now()));
@@ -74,6 +77,7 @@ public class ProyectoController {
         return "redirect:/menu";
     }
 
+    // ================= VER PROYECTO =================
     @GetMapping("/proyecto/{idproyecto}")
     public String verProyecto(
             @PathVariable int idproyecto,
@@ -85,9 +89,19 @@ public class ProyectoController {
 
         List<UsuarioProyecto> miembros = usuarioProyectoRepository.findByProyecto(proyecto);
 
-        model.addAttribute("proyecto", proyecto);
+        // 🔥 ESTADOS CORRECTOS
+        List<Tarea> tareasPorHacer = tareaRepository.findByProyectoAndEstado(proyecto, "TODO");
 
+        List<Tarea> tareasEnProgreso = tareaRepository.findByProyectoAndEstado(proyecto, "DOING");
+
+        List<Tarea> tareasCompletadas = tareaRepository.findByProyectoAndEstado(proyecto, "DONE");
+
+        model.addAttribute("proyecto", proyecto);
         model.addAttribute("miembros", miembros);
+
+        model.addAttribute("tareasPorHacer", tareasPorHacer);
+        model.addAttribute("tareasEnProgreso", tareasEnProgreso);
+        model.addAttribute("tareasCompletadas", tareasCompletadas);
 
         return "proyecto";
     }

@@ -33,7 +33,6 @@ public class TareaController {
     private UsuarioRepository usuarioRepository;
 
     // ===================== MOSTRAR FORMULARIO =====================
-
     @GetMapping("/crearTarea/{id}")
     public String mostrarFormulario(
             @PathVariable Integer id,
@@ -42,44 +41,60 @@ public class TareaController {
         Proyecto proyecto = proyectoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
-        // USUARIOS DEL PROYECTO
         List<UsuarioProyecto> miembros =
                 usuarioProyectoRepository.findByProyecto(proyecto);
 
         model.addAttribute("miembros", miembros);
-
         model.addAttribute("proyecto", proyecto);
-
         model.addAttribute("tarea", new Tarea());
 
         return "crearTarea";
     }
 
     // ===================== GUARDAR TAREA =====================
-
     @PostMapping("/crearTarea/{id}")
     public String guardarTarea(
 
             @PathVariable Integer id,
-
             @ModelAttribute Tarea tarea,
-
-            @RequestParam("idusuario") Integer idusuario) {
+            @RequestParam(value = "idusuario", required = false) Integer idusuario) {
 
         Proyecto proyecto = proyectoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
-        Usuario usuarioAsignado = usuarioRepository.findById(idusuario)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
         tarea.setProyecto(proyecto);
 
-        tarea.setUsuario(usuarioAsignado);
+        // asignar usuario si viene
+        if (idusuario != null) {
+            Usuario usuarioAsignado = usuarioRepository.findById(idusuario)
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            tarea.setUsuario(usuarioAsignado);
+        }
 
-        tarea.setEstado("POR_HACER");
+        // estado por defecto
+        if (tarea.getEstado() == null || tarea.getEstado().isEmpty()) {
+            tarea.setEstado("TODO");
+        }
 
         tareaRepository.save(tarea);
 
         return "redirect:/proyecto/" + id;
+    }
+
+    // ===================== CAMBIAR ESTADO (KANBAN ⋮) =====================
+    @GetMapping("/tarea/estado/{id}/{estado}")
+    public String cambiarEstado(
+            @PathVariable int id,
+            @PathVariable String estado) {
+
+        Tarea tarea = tareaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+
+        tarea.setEstado(estado);
+        tareaRepository.save(tarea);
+
+        int proyectoId = tarea.getProyecto().getIdproyecto();
+
+        return "redirect:/proyecto/" + proyectoId;
     }
 }
