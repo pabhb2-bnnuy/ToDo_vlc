@@ -9,6 +9,8 @@ import com.todo.vlc.model.Usuario;
 import com.todo.vlc.model.UsuarioProyecto;
 import com.todo.vlc.model.UsuarioProyectoId;
 
+import jakarta.transaction.Transactional;
+
 public interface UsuarioProyectoRepository extends JpaRepository<UsuarioProyecto, UsuarioProyectoId> {
 
     List<UsuarioProyecto> findByUsuario(Usuario usuario);
@@ -17,5 +19,6 @@ public interface UsuarioProyectoRepository extends JpaRepository<UsuarioProyecto
 
     boolean existsByUsuarioAndProyecto(Usuario usuario, Proyecto proyecto);
 
+    @Transactional
     void deleteByUsuarioAndProyecto(Usuario usuario, Proyecto proyecto);
 }

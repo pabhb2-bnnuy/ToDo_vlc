@@ -1,4 +1,4 @@
-package com.todo.vlc.Controller;    
+package com.todo.vlc.Controller.Admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.todo.vlc.Repository.ProyectoRepository;
-import com.todo.vlc.Repository.UsuarioRepository;
 import com.todo.vlc.Repository.TareaRepository;
+import com.todo.vlc.Repository.UsuarioRepository;
 
 @Controller
 public class AdminController {
@@ -20,28 +20,28 @@ public class AdminController {
 
     @Autowired
     private TareaRepository tareaRepository;
+    
+    // ================= DASHBOARD =================
 
     @GetMapping("/admin")
-    public String admin(Model model) {
+    public String adminDashboard(Model model) {
 
-        model.addAttribute("usuarios",
-                usuarioRepository.findAll());
-
-        model.addAttribute("proyectos",
-                proyectoRepository.findAll());
-
-        model.addAttribute("tareas",
-                tareaRepository.findAll());
-
-        model.addAttribute("totalUsuarios",
+        model.addAttribute(
+                "totalUsuarios",
                 usuarioRepository.count());
 
-        model.addAttribute("totalProyectos",
+        model.addAttribute(
+                "usuariosActivos",
+                usuarioRepository.findByEnabledTrue().size());
+
+        model.addAttribute(
+                "totalProyectos",
                 proyectoRepository.count());
 
-        model.addAttribute("totalTareas",
+        model.addAttribute(
+                "totalTareas",
                 tareaRepository.count());
 
-        return "admin";
+        return "admin/adminDashboard";
     }
 }

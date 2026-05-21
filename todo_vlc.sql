@@ -33,8 +33,11 @@
         idusuario INT,
         fecha_asignacion VARCHAR(16) DEFAULT (DATE_FORMAT(CURRENT_TIMESTAMP, '%d/%m/%Y %H:%i')),
         estado VARCHAR(30),
-        FOREIGN KEY (idproyecto) REFERENCES proyecto(idproyecto),
-        FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario)
+        FOREIGN KEY (idproyecto)
+        REFERENCES proyecto(idproyecto)
+        ON DELETE CASCADE,
+        FOREIGN KEY (idusuario)
+        REFERENCES usuarios(idusuario)
     );
 
     CREATE TABLE usuario_proyecto (

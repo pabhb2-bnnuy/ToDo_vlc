@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Admin Panel</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <h1>ToDo Admin</h1>
+
+            <nav>
+
+                <a href="/admin">
+                    Dashboard
+                </a>
+
+                <a href="/admin/usuarios">
+                    Usuarios
+                </a>
+
+                <!-- NUEVO -->
+
+                <a href="/admin/proyectos">
+                    Proyectos
+                </a>
+
+                <a href="/menu">
+                    Volver a la app
+                </a>
+
+                <a href="/cerrarSesion">
+                    Cerrar sesión
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <!-- ================= CONTENIDO ================= -->
+
+        <main class="content">
+
+            <div class="page-header">
+
+                <h2>Dashboard</h2>
+
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <h3>Total usuarios</h3>
+
+                    <span th:text="${totalUsuarios}">
+                        0
+                    </span>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h3>Usuarios activos</h3>
+
+                    <span th:text="${usuariosActivos}">
+                        0
+                    </span>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h3>Proyectos</h3>
+
+                    <span th:text="${totalProyectos}">
+                        0
+                    </span>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h3>Tareas</h3>
+
+                    <span th:text="${totalTareas}">
+                        0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Asignar proyecto</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <h1>ToDo Admin</h1>
+
+            <nav>
+
+                <a href="/admin">
+                    Dashboard
+                </a>
+
+                <a href="/admin/usuarios">
+                    Usuarios
+                </a>
+                <a href="/admin/proyectos">
+                    Proyectos
+                </a>
+
+                <a href="/menu">
+                    Volver a la app
+                </a>
+                <a href="/cerrarSesion">
+                    Cerrar sesión
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <!-- CONTENIDO -->
+
+        <main class="content">
+
+            <div class="create-user-container">
+
+                <h2>
+
+                    Asignar proyecto a
+                    <span th:text="${usuario.nombre}"></span>
+
+                </h2>
+
+                <form th:action="@{/admin/asignarProyecto}" method="post">
+
+                    <!-- ID USUARIO -->
+
+                    <input type="hidden" name="idusuario" th:value="${usuario.idusuario}">
+
+                    <!-- SELECT PROYECTOS -->
+
+                    <div class="form-group">
+
+                        <label>Proyecto</label>
+
+                        <select name="idproyecto" required>
+
+                            <option value="">
+                                Selecciona un proyecto
+                            </option>
+
+                            <option th:each="p : ${proyectos}" th:value="${p.idproyecto}" th:text="${p.nombre}">
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <button class="primary-btn" type="submit">
+
+                        Asignar proyecto
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

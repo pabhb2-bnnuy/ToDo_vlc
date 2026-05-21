@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Crear usuario</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <h1>ToDo Admin</h1>
+
+            <nav>
+
+                <a href="/admin">
+                    Dashboard
+                </a>
+
+                <a href="/admin/usuarios">
+                    Usuarios
+                </a>
+
+                <a href="/admin/proyectos">
+                    Proyectos
+                </a>
+
+                <a href="/menu">
+                    Volver a la app
+                </a>
+                
+                <a href="/cerrarSesion">
+                    Cerrar sesión
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <!-- CONTENT -->
+
+        <main class="content">
+
+            <div class="create-user-container">
+
+                <h2>
+                    Crear usuario
+                </h2>
+
+                <form th:action="@{/admin/crearUsuario}" method="post">
+
+                    <!-- NOMBRE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Nombre
+                        </label>
+
+                        <input type="text" name="nombre" required>
+
+                    </div>
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Email
+                        </label>
+
+                        <input type="email" name="email" required>
+
+                    </div>
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Contraseña
+                        </label>
+
+                        <input type="password" name="password" required>
+
+                    </div>
+
+                    <!-- ROL -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Rol
+                        </label>
+
+                        <select name="rol">
+
+                            <option value="ADMIN">
+                                ADMIN
+                            </option>
+                            <option value="GESTOR">
+                                GESTOR
+                            </option>
+                            <option value="COLLABORATOR">
+                                COLLABORATOR
+                            </option>
+
+
+                        </select>
+
+                    </div>
+
+                    <!-- BOTON -->
+
+                    <button class="primary-btn" type="submit">
+
+                        Crear usuario
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

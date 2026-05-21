@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar proyecto</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <h1>ToDo Admin</h1>
+
+            <nav>
+
+                <a href="/admin">
+                    Dashboard
+                </a>
+
+                <a href="/admin/usuarios">
+                    Usuarios
+                </a>
+
+                <a href="/admin/proyectos">
+                    Proyectos
+                </a>
+
+                <a href="/menu">
+                    Volver a la app
+                </a>
+                <a href="/cerrarSesion">
+                    Cerrar sesión
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <!-- CONTENIDO -->
+
+        <main class="content">
+
+            <!-- HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>
+                        Editar proyecto
+                    </h2>
+
+                    <p>
+                        Gestiona información, tareas y estado del proyecto.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- FORMULARIO -->
+
+            <div class="form-card">
+
+                <form th:action="@{/admin/editarProyecto/{id}(id=${proyecto.idproyecto})}" method="post">
+
+                    <!-- NOMBRE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Nombre
+                        </label>
+
+                        <input type="text" name="nombre" th:value="${proyecto.nombre}" required>
+
+                    </div>
+
+                    <!-- DESCRIPCION -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Descripción
+                        </label>
+
+                        <textarea name="descripcion" required th:text="${proyecto.descripcion}">
+                    </textarea>
+
+                    </div>
+
+                    <!-- ESTADO -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Estado
+                        </label>
+
+                        <select name="estado">
+
+                            <option value="PENDIENTE" th:selected="${proyecto.estado == 'ACTIVO'}">
+
+                                PENDIENTE
+
+                            </option>
+
+                            <option value="EN_PROGRESO" th:selected="${proyecto.estado == 'PAUSADO'}">
+
+                                EN PROGRESO
+
+                            </option>
+
+                            <option value="FINALIZADO" th:selected="${proyecto.estado == 'FINALIZADO'}">
+
+                                FINALIZADO
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- FECHA -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Fecha límite
+                        </label>
+
+                        <input type="date" name="fecha_limite" th:value="${proyecto.fecha_limite}">
+
+                    </div>
+
+                    <!-- BOTON -->
+
+                    <button class="primary-btn" type="submit">
+
+                        Guardar cambios
+
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- TAREAS -->
+
+            <section class="card-section">
+
+                <div class="section-header">
+
+                    <h3>
+                        Tareas del proyecto
+                    </h3>
+
+                </div>
+
+                <div class="item-list">
+
+                    <div class="item-card" th:each="t : ${tareas}">
+
+                        <!-- INFO -->
+
+                        <div class="task-info">
+
+                            <strong th:text="${t.titulo}">
+                                Título
+                            </strong>
+
+                            <p th:text="${t.descripcion}">
+                                Descripción
+                            </p>
+
+                            <span class="task-meta">
+
+                                👤
+
+                                <span th:text="${t.usuario.nombre}">
+                                    Usuario
+                                </span>
+
+                            </span>
+
+                            <span class="task-meta">
+
+                                ⚡ Prioridad:
+
+                                <span th:text="${t.prioridad}">
+                                    1
+                                </span>
+
+                            </span>
+
+                            <span class="task-meta">
+
+                                📌 Estado:
+
+                                <span th:text="${t.estado}">
+                                    Estado
+                                </span>
+
+                            </span>
+
+                        </div>
+
+                        <!-- ACCIONES -->
+
+                        <div class="task-actions">
+
+                            <a th:href="@{/admin/tarea/{id}(id=${t.idtarea})}">
+
+                                <button type="button" class="secondary-btn">
+
+                                    Editar
+
+                                </button>
+
+                            </a>
+
+                            <form th:action="@{/admin/eliminarTarea/{id}(id=${t.idtarea})}" method="post">
+
+                                <button class="danger-mini-btn">
+
+                                    Eliminar
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

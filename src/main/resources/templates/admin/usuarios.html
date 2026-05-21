@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Usuarios</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <h1>ToDo Admin</h1>
+
+            <nav>
+
+                <a href="/admin">
+                    Dashboard
+                </a>
+
+                <a href="/admin/usuarios">
+                    Usuarios
+                </a>
+                <a href="/admin/proyectos">
+                    Proyectos
+                </a>
+                <a href="/menu">
+                    Volver a la app
+                </a>
+                
+                <a href="/cerrarSesion">
+                    Cerrar sesión
+                </a>
+
+
+            </nav>
+
+        </aside>
+
+        <!-- ================= CONTENIDO ================= -->
+
+        <main class="content">
+
+            <!-- HEADER -->
+
+            <div class="page-header">
+
+                <h2>Usuarios</h2>
+
+                <a href="/admin/crearUsuario">
+
+                    <button class="primary-btn">
+
+                        + Crear usuario
+
+                    </button>
+
+                </a>
+
+            </div>
+
+            <!-- TABLA -->
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Nombre</th>
+
+                            <th>Email</th>
+
+                            <th>Rol</th>
+
+                            <th>Estado</th>
+
+                            <th>Acciones</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:each="u : ${usuarios}">
+
+                            <!-- NOMBRE -->
+
+                            <td th:text="${u.nombre}"></td>
+
+                            <!-- EMAIL -->
+
+                            <td th:text="${u.email}"></td>
+
+                            <!-- ROL -->
+
+                            <td th:text="${u.rol}"></td>
+
+                            <!-- ESTADO -->
+
+                            <td>
+
+                                <span th:if="${u.enabled}" class="badge-active">
+
+                                    Activo
+
+                                </span>
+
+                                <span th:unless="${u.enabled}" class="badge-disabled">
+
+                                    Desactivado
+
+                                </span>
+
+                            </td>
+
+                            <!-- BOTON -->
+
+                            <td>
+
+                                <a th:href="@{/admin/usuario/{id}(id=${u.idusuario})}">
+
+                                    <button class="secondary-btn">
+
+                                        Gestionar
+
+                                    </button>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

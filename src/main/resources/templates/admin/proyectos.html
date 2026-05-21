@@ -1,0 +1,148 @@
+<!-- ========================= proyectos.html ========================= -->
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gestionar proyectos</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <h1>ToDo Admin</h1>
+
+            <nav>
+
+                <a href="/admin">
+                    Dashboard
+                </a>
+
+                <a href="/admin/usuarios">
+                    Usuarios
+                </a>
+
+                <a href="/admin/proyectos">
+                    Proyectos
+                </a>
+
+                <a href="/menu">
+                    Volver app
+                </a>
+
+                <a href="/cerrarSesion">
+                    Cerrar sesión
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <!-- CONTENT -->
+
+        <main class="content">
+
+            <div class="page-header">
+
+                <h2>Gestionar proyectos</h2>
+
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Nombre</th>
+
+                            <th>Creador</th>
+
+                            <th>Estado</th>
+
+                            <th>Fecha límite</th>
+
+                            <th>Acciones</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr th:each="p : ${proyectos}">
+
+                            <td th:text="${p.nombre}">
+                                Proyecto
+                            </td>
+
+                            <td th:text="${p.usuario.nombre}">
+                                Admin
+                            </td>
+
+                            <td th:text="${p.estado}">
+                                ACTIVO
+                            </td>
+
+                            <td th:text="${p.fecha_limite}">
+                                2026-05-21
+                            </td>
+
+                            <td style="display:flex; gap:10px;">
+
+                                <!-- EDITAR -->
+
+                                <a th:href="@{/admin/proyecto/{id}(id=${p.idproyecto})}">
+
+                                    <button class="secondary-btn">
+
+                                        Editar
+
+                                    </button>
+
+                                </a>
+
+                                <!-- ELIMINAR -->
+
+                                <form th:action="@{/admin/eliminarProyecto/{id}(id=${p.idproyecto})}" method="post">
+
+                                    <button class="danger-mini-btn">
+
+                                        Eliminar
+
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detalle Usuario</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <h1>ToDo Admin</h1>
+
+            <nav>
+
+                <a href="/admin">
+                    Dashboard
+                </a>
+
+                <a href="/admin/usuarios">
+                    Usuarios
+                </a>
+                <a href="/admin/proyectos">
+                    Proyectos
+                </a>
+                <a href="/menu">
+                    Volver a la app
+                </a>
+                
+                <a href="/cerrarSesion">
+                    Cerrar sesión
+                </a>
+            </nav>
+
+        </aside>
+
+        <!-- ================= CONTENIDO ================= -->
+
+        <main class="content">
+
+            <!-- ================= HEADER USUARIO ================= -->
+
+            <div class="user-header">
+
+                <div>
+
+                    <h2 th:text="${usuario.nombre}">
+                        Usuario
+                    </h2>
+
+                    <p th:text="${usuario.email}">
+                        usuario@email.com
+                    </p>
+
+                </div>
+
+                <!-- ACTIVAR / DESACTIVAR -->
+
+                <form th:action="@{/admin/toggleUsuario/{id}(id=${usuario.idusuario})}" method="post">
+
+                    <button class="danger-btn" th:if="${usuario.enabled}">
+
+                        Desactivar usuario
+
+                    </button>
+
+                    <button class="success-btn" th:unless="${usuario.enabled}">
+
+                        Reactivar usuario
+
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- ================= ROL ================= -->
+
+            <section class="card-section">
+
+                <h3>Rol</h3>
+
+                <form th:action="@{/admin/cambiarRol/{id}(id=${usuario.idusuario})}" method="post">
+
+                    <select name="rol">
+
+                        <option value="ADMIN">
+                            ADMIN
+                        </option>
+                        <option value="GESTOR">
+                            GESTOR
+                        </option>
+                        <option value="COLLABORATOR">
+                            COLLABORATOR
+                        </option>
+
+
+
+                    </select>
+
+                    <button class="primary-btn">
+
+                        Guardar rol
+
+                    </button>
+
+                </form>
+
+            </section>
+
+            <!-- ================= PROYECTOS ================= -->
+
+            <section class="card-section">
+
+                <div class="section-header">
+
+                    <h3>Proyectos</h3>
+
+                    <a th:href="@{/admin/asignarProyecto/{id}(id=${usuario.idusuario})}">
+
+                        <button class="primary-btn">
+
+                            + Asignar proyecto
+
+                        </button>
+
+                    </a>
+
+                </div>
+
+                <div class="item-list">
+
+                    <div class="item-card" th:each="p : ${proyectos}">
+
+                        <span th:text="${p.proyecto.nombre}">
+                            Proyecto
+                        </span>
+
+                        <!-- QUITAR PROYECTO -->
+
+                        <form th:action="@{/admin/quitarProyecto}" method="post">
+
+                            <input type="hidden" name="idusuario" th:value="${usuario.idusuario}">
+
+                            <input type="hidden" name="idproyecto" th:value="${p.proyecto.idproyecto}">
+
+                            <button class="danger-mini-btn">
+
+                                Quitar
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ================= TAREAS ================= -->
+
+            <section class="card-section">
+
+                <div class="section-header">
+
+                    <h3>Tareas asignadas</h3>
+
+                    <a th:href="@{/admin/asignarTarea/{id}(id=${usuario.idusuario})}">
+
+                        <button class="primary-btn">
+
+                            + Asignar tarea
+
+                        </button>
+
+                    </a>
+
+                </div>
+
+                <div class="item-list">
+
+                    <div class="item-card" th:each="t : ${tareas}">
+
+                        <span th:text="${t.titulo}">
+                            Tarea
+                        </span>
+
+                        <!-- QUITAR TAREA -->
+
+                        <form th:action="@{/admin/quitarTarea/{id}(id=${t.idtarea})}" method="post">
+
+                            <button class="danger-mini-btn">
+
+                                Quitar
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

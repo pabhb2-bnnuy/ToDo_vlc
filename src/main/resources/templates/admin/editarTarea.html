@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Editar tarea</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/admin.css}">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <h1>ToDo Admin</h1>
+
+        <nav>
+
+            <a href="/admin">Dashboard</a>
+
+            <a href="/admin/usuarios">Usuarios</a>
+
+            <a href="/admin/proyectos">Proyectos</a>
+
+              <a href="/menu">
+                    Volver a la app
+                </a>
+            
+             <a href="/cerrarSesion">
+                    Cerrar sesión
+                </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- CONTENIDO -->
+
+    <main class="content">
+
+        <div class="page-header">
+
+            <h2>Editar tarea</h2>
+
+        </div>
+
+        <div class="form-card">
+
+            <form th:action="@{/admin/editarTarea/{id}(id=${tarea.idtarea})}"
+                  method="post">
+
+                <!-- TITULO -->
+
+                <div class="form-group">
+
+                    <label>Título</label>
+
+                    <input type="text"
+                           name="titulo"
+                           th:value="${tarea.titulo}"
+                           required>
+
+                </div>
+
+                <!-- DESCRIPCION -->
+
+                <div class="form-group">
+
+                    <label>Descripción</label>
+
+                    <textarea name="descripcion"
+                              required
+                              th:text="${tarea.descripcion}"></textarea>
+
+                </div>
+
+                <!-- PRIORIDAD -->
+
+                <div class="form-group">
+
+                    <label>Prioridad</label>
+
+                    <input type="number"
+                           name="prioridad"
+                           min="1"
+                           max="5"
+                           th:value="${tarea.prioridad}"
+                           required>
+
+                </div>
+
+                <!-- FECHA -->
+
+                <div class="form-group">
+
+                    <label>Fecha entrega</label>
+
+                    <input type="date"
+                           name="fecha_entrega"
+                           th:value="${tarea.fecha_entrega}">
+
+                </div>
+
+                <!-- ESTADO -->
+
+                <div class="form-group">
+
+                    <label>Estado</label>
+
+                    <select name="estado">
+
+                        <option value="POR_HACER">
+                            Por hacer
+                        </option>
+
+                        <option value="EN_PROGRESO">
+                            En progreso
+                        </option>
+
+                        <option value="COMPLETADA">
+                            Completada
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- USUARIO -->
+
+                <div class="form-group">
+
+                    <label>Asignar usuario</label>
+
+                    <select name="idusuario">
+
+                        <option
+                            th:each="u : ${usuarios}"
+
+                            th:value="${u.usuario.idusuario}"
+
+                            th:selected="${u.usuario.idusuario == tarea.usuario.idusuario}"
+
+                            th:text="${u.usuario.nombre}">
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <button class="primary-btn">
+                    Guardar cambios
+                </button>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
