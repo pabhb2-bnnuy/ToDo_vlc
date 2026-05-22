@@ -28,23 +28,28 @@ public class UsuarioProyectoController {
         @Autowired
         private UsuarioProyectoRepository usuarioProyectoRepository;
 
-        // ===================== MOSTRAR FORM INVITAR =====================
-        @GetMapping("/invitarUsuario/{id}")
-        public String mostrarFormularioInvitar(
-                        @PathVariable Integer id,
-                        Model model) {
+  // ===================== MOSTRAR FORM INVITAR =====================
+@GetMapping("/invitarUsuario/{id}")
+public String mostrarFormularioInvitar(
+        @PathVariable Integer id,
+        Model model) {
 
-                Proyecto proyecto = proyectoRepository.findById(id)
-                                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+    Proyecto proyecto = proyectoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
-                List<Usuario> usuarios = usuarioRepository.findByEnabledTrue();
+    List<Usuario> usuarios = usuarioRepository.findByEnabledTrue();
+    List<UsuarioProyecto> usuariosProyecto = usuarioProyectoRepository.findByProyecto(proyecto);
 
-                model.addAttribute("proyecto", proyecto);
-                model.addAttribute("usuarios", usuarios);
+    List<Usuario> usuariosDisponibles = usuarios.stream()
+            .filter(usuario -> usuariosProyecto.stream()
+                    .noneMatch(up -> up.getUsuario().getIdusuario().equals(usuario.getIdusuario())))
+            .toList();
 
-                return "invitarUsuario";
-        }
+    model.addAttribute("proyecto", proyecto);
+    model.addAttribute("usuarios", usuariosDisponibles);
 
+    return "invitarUsuario";
+}
         // ===================== INVITAR =====================
         @PostMapping("/invitarUsuario/{id}")
         public String invitarUsuario(

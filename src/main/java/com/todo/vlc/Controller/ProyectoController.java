@@ -108,4 +108,9 @@ public class ProyectoController {
 
         return "proyecto";
     }
+
+    @GetMapping("/proyecto")
+    public String proyecto() {
+        return "proyecto";
+    }
 }

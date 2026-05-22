@@ -42,7 +42,9 @@ public class SecurityConfig {
                                                                 "/registrarse",
                                                                 "/register",
                                                                 "/css/**",
-                                                                "/media/**")
+                                                                "/media/**",
+                                                                "/webjars/**",
+                                                                "/proyecto/**")
                                                 .permitAll()
 
                                                 // URLS para admin

@@ -1,265 +1,130 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear tarea</title>
 
-    <link rel="stylesheet" th:href="@{/css/proyecto.css}">
-     <link rel="shortcut icon" href="media/logo_chill.svg" type="image/x-icon">
+   <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+    <link rel="shortcut icon" th:href="@{/media/logo_chill.svg}">
 </head>
 
-<body>
+<body class="text-white bg-black">
+    <style>
+        .bg-video {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
 
-    <!-- ================= FONDO (PÁGINA PROYECTO COMPLETA) ================= -->
-    <div class="project-background">
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: -1;
+        }
 
-        <!-- VIDEO -->
-        <video autoplay muted loop playsinline class="bg-video">
-            <source th:src="@{/media/mov_bbb.mp4}" type="video/mp4">
-        </video>
+        .glass {
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(10px);
+        }
 
-        <div class="overlay"></div>
+        .panel {
+            background: rgba(17, 24, 39, 0.9);
+            backdrop-filter: blur(8px);
+        }
+                  .logout-btn {
+            background: #ef4444;
+            padding: 6px 10px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 16px;
+            
+        }
 
-        <!-- HEADER -->
-        <header class="top-bar">
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+    </style>
 
-            <a href="/" class="logo">
-                <img th:src="@{/media/full_logoo.svg}" alt="logo" width="150px">
+    <video autoplay muted loop playsinline class="bg-video">
+        <source th:src="@{/media/mov_bbb.mp4}" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+
+    <header class="fixed-top glass">
+        <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <a href="/" class="d-inline-block">
+                <img th:src="@{/media/full_logoo.svg}" alt="logo" width="150">
             </a>
 
-            <nav>
-
-                <a href="/">Inicio</a>
-                <a href="#">Mis proyectos</a>
-                <a href="#">Perfil</a>
-
-                <!-- BARRA -->
-                <span class="nav-divider">|</span>
-
-                <!-- VOLVER -->
-                <a href="/menu" class="logout-btn">
-                    ⬅ Volver
-                </a>
-
+            <nav class="d-flex flex-wrap align-items-center gap-3">
+              <a href="/menu" class="text-white text-decoration-none">Mis proyectos</a>
+                <a href="/perfil" class="text-white text-decoration-none">Perfil</a>
+                <span class="text-secondary">|</span>
+                <a th:href="@{/proyecto/{id}(id=${proyecto.idproyecto})}" class="btn btn-outline-light btn-sm">⬅ Volver</a>
+                 <span class="text-secondary">|</span>
+                 <a href="/cerrarSesion" class="logout-btn">⎋ Cerrar sesión</a>
             </nav>
+        </div>
+    </header>
 
-        </header>
-
-
-
-        <!-- CONTENIDO PROYECTO -->
-        <main class="dashboard">
-
-            <!-- ================= SIDEBAR ================= -->
-            <aside class="sidebar">
-
-                <!-- INFO PROYECTO -->
-                <div class="sidebar-section">
-
-                    <h2>📌 Proyecto</h2>
-
-                    <div class="info-box">
-                        <h3 th:text="${proyecto.nombre}">
-                            Proyecto DAM
-                        </h3>
-
-                        <p th:text="${proyecto.descripcion}">
-                            Descripción del proyecto
-                        </p>
-                    </div>
-
-                </div>
-
-                <!-- CREADOR -->
-                <div class="sidebar-section">
-
-                    <h2>👤 Creador</h2>
-
-                    <div class="info-box">
-                        <span th:text="${proyecto.usuario.nombre}">Creador</span>
-                    </div>
-
-                </div>
-
-                <!-- FECHA -->
-                <div class="sidebar-section">
-
-                    <h2>📅 Fecha límite</h2>
-
-                    <div class="info-box">
-                        <span th:text="${proyecto.fecha_limite}">20/06/2026</span>
-                    </div>
-
-                </div>
-
-                <!-- MIEMBROS -->
-                <div class="sidebar-section">
-
-                    <h2>👥 Miembros</h2>
-
-                    <div class="member" th:each="miembro : ${miembros}">
-
-                        👤
-                        <span th:text="${miembro.usuario.nombre}"></span>
-
-                        <span th:if="${miembro.usuario.idusuario == proyecto.usuario.idusuario}">
-                            ⭐
-                        </span>
-
-                    </div>
-
-                </div>
-
-    </div>
-
-    <div class="board-actions">
-
-        <a th:href="@{/crearTarea/{id}(id=${proyecto.idproyecto})}">
-            <button class="new-task-btn">
-                + Crear tarea
-            </button>
-        </a>
-
-        <button class="invite-btn">
-            + Invitar usuario
-        </button>
-
-
-    </div>
-
-
-
-    </aside>
-
-    <!-- ================= CONTENIDO TABLERO ================= -->
-    <section class="board-wrapper">
-
-
-
-        <!-- TABLERO -->
-        <section class="board-container">
-
-            <!-- POR HACER -->
-            <div class="board-column">
-
-                <div class="column-header">
-                    <h3>📌 Por hacer</h3>
-                    <span>3</span>
-                </div>
-
-                <div class="task-card">
-                    <h4>Diseñar login</h4>
-                    <p>Crear interfaz responsive.</p>
-                </div>
-
-            </div>
-
-            <!-- EN PROGRESO -->
-            <div class="board-column">
-
-                <div class="column-header">
-                    <h3>🚀 En progreso</h3>
-                    <span>2</span>
-                </div>
-
-                <div class="task-card active">
-                    <h4>Spring Security</h4>
-                    <p>Configurar sesiones.</p>
-                </div>
-
-            </div>
-
-            <!-- COMPLETADO -->
-            <div class="board-column">
-
-                <div class="column-header">
-                    <h3>✅ Completado</h3>
-                    <span>2</span>
-                </div>
-
-                <div class="task-card done">
-                    <h4>Registro usuarios</h4>
-                    <p>MySQL terminado.</p>
-                </div>
-
-            </div>
-
-        </section>
-
-    </section>
-
-    </main>
-
-    </div>
-
-    <!-- ================= MODAL CREAR TAREA (ENCIMA DEL FONDO) ================= -->
-    <div class="modal-create">
-
-        <div class="modal-box">
-
-            <div class="modal-header">
-
-                <h2>Crear tarea</h2>
-
-                <a th:href="@{/proyecto/{id}(id=${proyecto.idproyecto})}">
-                    <button type="button" class="cancelar-btn">
-                        Cancelar
-                    </button>
-                </a>
-
+    <main class="min-vh-100 d-flex align-items-center justify-content-center px-3" style="padding-top: 6.5rem; padding-bottom: 4rem;">
+        <div class="panel rounded-4 p-4 p-md-5 w-100 shadow-lg" style="max-width: 560px;">
+            <div class="text-center mb-4">
+                <h1 class="h3 fw-bold mb-2">Crear tarea</h1>
+                <p class="text-secondary mb-0" th:text="${proyecto.nombre}">Proyecto</p>
             </div>
 
             <form th:action="@{/crearTarea/{id}(id=${proyecto.idproyecto})}" method="post">
-
-                <!-- TITULO -->
-                <div class="form-group">
-                    <label>Título</label>
-                    <input type="text" name="titulo" required>
+                <div class="mb-3">
+                    <label class="form-label">Título</label>
+                    <input type="text" name="titulo" class="form-control bg-dark text-white border-secondary" required>
                 </div>
 
-                <!-- DESCRIPCION -->
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <input type="text" name="descripcion" required>
+                <div class="mb-3">
+                    <label class="form-label">Descripción</label>
+                    <input type="text" name="descripcion" class="form-control bg-dark text-white border-secondary" required>
                 </div>
 
-                <!-- PRIORIDAD -->
-                <div class="form-group">
-                    <label>Prioridad</label>
-                    <input type="number" name="prioridad" min="1" max="5" required>
+                <div class="mb-3">
+                    <label class="form-label">Prioridad</label>
+                    <input type="number" name="prioridad" min="1" max="5" class="form-control bg-dark text-white border-secondary" required>
                 </div>
 
-                <!-- FECHA ENTREGA -->
-                <div class="form-group">
-                    <label>Fecha de entrega</label>
-                    <input type="date" name="fecha_entrega" required>
+                <div class="mb-3">
+                    <label class="form-label">Fecha de entrega</label>
+                    <input type="date" name="fecha_entrega" class="form-control bg-dark text-white border-secondary" required>
                 </div>
-                <!-- USUARIO ASIGNADO -->
-                <div class="form-group">
 
-                    <label>Asignar usuario</label>
-
-                    <select name="idusuario" required>
-
+                <div class="mb-4">
+                    <label class="form-label">Asignar usuario</label>
+                    <select name="idusuario" class="form-select bg-dark text-white border-secondary" required>
                         <option value="">Selecciona usuario</option>
-
-                        <option th:each="miembro : ${miembros}" th:value="${miembro.usuario.idusuario}"
-                            th:text="${miembro.usuario.nombre}">
+                        <option th:each="miembro : ${miembros}"
+                                th:value="${miembro.usuario.idusuario}"
+                                th:text="${miembro.usuario.nombre}">
                         </option>
-
                     </select>
-
                 </div>
-                <button type="submit">Crear tarea</button>
 
+                <div class="d-flex justify-content-between gap-3">
+                    <a th:href="@{/proyecto/{id}(id=${proyecto.idproyecto})}" class="btn btn-outline-light w-50">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-info fw-bold text-dark w-50">
+                        Crear tarea
+                    </button>
+                </div>
             </form>
-
         </div>
-
-    </div>
-
+    </main>
 </body>
-
 </html>
