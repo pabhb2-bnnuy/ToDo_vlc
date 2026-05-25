@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,7 +68,7 @@
             <a href="/" class="d-inline-block">
                 <img th:src="@{/media/full_logoo.svg}" alt="logo" width="150">
             </a>
-
+            <div><img th:src="@{/media/feria-valencia.svg}" alt="feria_valencia_logo" width="210px"></div>
             <nav class="d-flex flex-wrap align-items-center gap-3">
                 <a href="/menu" class="text-white text-decoration-none">Mis proyectos</a>
                 <a href="/perfil" class="text-white text-decoration-none">Perfil</a>
@@ -80,7 +81,7 @@
     </header>
 
     <main class="min-vh-100 d-flex align-items-center justify-content-center px-3"
-          style="padding-top: 6.5rem; padding-bottom: 4rem;">
+        style="padding-top: 6.5rem; padding-bottom: 4rem;">
         <div class="panel rounded-4 p-4 p-md-5 w-100 shadow-lg" style="max-width: 560px;">
             <div class="text-center mb-4">
                 <h1 class="h3 fw-bold mb-2">Crear proyecto</h1>
@@ -91,27 +92,20 @@
                 <!-- NOMBRE -->
                 <div class="mb-3">
                     <label class="form-label">Nombre</label>
-                    <input type="text"
-                           class="form-control bg-dark text-white border-secondary"
-                           name="nombre"
-                           required>
+                    <input type="text" class="form-control bg-dark text-white border-secondary" name="nombre" required>
                 </div>
 
                 <!-- DESCRIPCIÓN -->
                 <div class="mb-3">
                     <label class="form-label">Descripción</label>
-                    <input type="text"
-                           class="form-control bg-dark text-white border-secondary"
-                           name="descripcion"
-                           required>
+                    <input type="text" class="form-control bg-dark text-white border-secondary" name="descripcion"
+                        required>
                 </div>
 
                 <!-- FECHA LÍMITE -->
                 <div class="mb-4">
                     <label class="form-label">Fecha límite</label>
-                    <input type="date"
-                           class="form-control bg-dark text-white border-secondary"
-                           name="fecha">
+                    <input type="date" class="form-control bg-dark text-white border-secondary" name="fecha">
                 </div>
 
                 <div class="d-flex justify-content-between gap-3">
@@ -126,4 +120,5 @@
         </div>
     </main>
 </body>
+
 </html>

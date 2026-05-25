@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear tarea</title>
 
-   <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
     <link rel="shortcut icon" th:href="@{/media/logo_chill.svg}">
 </head>
 
@@ -36,7 +37,8 @@
             background: rgba(17, 24, 39, 0.9);
             backdrop-filter: blur(8px);
         }
-                  .logout-btn {
+
+        .logout-btn {
             background: #ef4444;
             padding: 6px 10px;
             border-radius: 10px;
@@ -45,7 +47,7 @@
             text-decoration: none;
             transition: 0.3s;
             font-size: 16px;
-            
+
         }
 
         .logout-btn:hover {
@@ -64,19 +66,22 @@
             <a href="/" class="d-inline-block">
                 <img th:src="@{/media/full_logoo.svg}" alt="logo" width="150">
             </a>
+            <div><img th:src="@{/media/feria-valencia.svg}" alt="feria_valencia_logo" width="210px"></div>
 
             <nav class="d-flex flex-wrap align-items-center gap-3">
-              <a href="/menu" class="text-white text-decoration-none">Mis proyectos</a>
+                <a href="/menu" class="text-white text-decoration-none">Mis proyectos</a>
                 <a href="/perfil" class="text-white text-decoration-none">Perfil</a>
                 <span class="text-secondary">|</span>
-                <a th:href="@{/proyecto/{id}(id=${proyecto.idproyecto})}" class="btn btn-outline-light btn-sm">⬅ Volver</a>
-                 <span class="text-secondary">|</span>
-                 <a href="/cerrarSesion" class="logout-btn">⎋ Cerrar sesión</a>
+                <a th:href="@{/proyecto/{id}(id=${proyecto.idproyecto})}" class="btn btn-outline-light btn-sm">⬅
+                    Volver</a>
+                <span class="text-secondary">|</span>
+                <a href="/cerrarSesion" class="logout-btn">⎋ Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
-    <main class="min-vh-100 d-flex align-items-center justify-content-center px-3" style="padding-top: 6.5rem; padding-bottom: 4rem;">
+    <main class="min-vh-100 d-flex align-items-center justify-content-center px-3"
+        style="padding-top: 6.5rem; padding-bottom: 4rem;">
         <div class="panel rounded-4 p-4 p-md-5 w-100 shadow-lg" style="max-width: 560px;">
             <div class="text-center mb-4">
                 <h1 class="h3 fw-bold mb-2">Crear tarea</h1>
@@ -91,26 +96,28 @@
 
                 <div class="mb-3">
                     <label class="form-label">Descripción</label>
-                    <input type="text" name="descripcion" class="form-control bg-dark text-white border-secondary" required>
+                    <input type="text" name="descripcion" class="form-control bg-dark text-white border-secondary"
+                        required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Prioridad</label>
-                    <input type="number" name="prioridad" min="1" max="5" class="form-control bg-dark text-white border-secondary" required>
+                    <input type="number" name="prioridad" min="1" max="3"
+                        class="form-control bg-dark text-white border-secondary" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Fecha de entrega</label>
-                    <input type="date" name="fecha_entrega" class="form-control bg-dark text-white border-secondary" required>
+                    <input type="date" name="fecha_entrega" class="form-control bg-dark text-white border-secondary"
+                        required>
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Asignar usuario</label>
                     <select name="idusuario" class="form-select bg-dark text-white border-secondary" required>
                         <option value="">Selecciona usuario</option>
-                        <option th:each="miembro : ${miembros}"
-                                th:value="${miembro.usuario.idusuario}"
-                                th:text="${miembro.usuario.nombre}">
+                        <option th:each="miembro : ${miembros}" th:value="${miembro.usuario.idusuario}"
+                            th:text="${miembro.usuario.nombre}">
                         </option>
                     </select>
                 </div>
@@ -127,4 +134,5 @@
         </div>
     </main>
 </body>
+
 </html>

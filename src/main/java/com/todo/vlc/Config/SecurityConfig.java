@@ -59,11 +59,10 @@ public class SecurityConfig {
 
                                                 // URLS para gestor y admin
                                                 .requestMatchers("/datosProyecto", "/menu", "/proyecto/**", "/perfil",
-                                                                "/cambiar-password")
+                                                                "/cambiar-password", "/**")
                                                 .hasAnyRole("GESTOR", "ADMIN")
 
-                                                .anyRequest()
-                                                .authenticated())
+                                )
 
                                 .formLogin(form -> form
 

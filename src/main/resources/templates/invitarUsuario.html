@@ -65,6 +65,7 @@
             <a href="/" class="d-inline-block">
                 <img th:src="@{/media/full_logoo.svg}" alt="logo" width="150">
             </a>
+            <div><img th:src="@{/media/feria-valencia.svg}" alt="feria_valencia_logo" width="210px"></div>
 
             <nav class="d-flex flex-wrap align-items-center gap-3">
                 <a href="/menu" class="text-white text-decoration-none">Mis proyectos</a>
@@ -82,12 +83,12 @@
         style="padding-top: 6.5rem; padding-bottom: 4rem;">
         <div class="panel rounded-4 p-4 p-md-5 w-100 shadow-lg" style="max-width: 560px;">
             <div class="text-center mb-4">
-                <h1 class="h3 fw-bold mb-2">Invitar usuario</h1>
+                <h1 class="h3 fw-bold mb-2">Añadir usuario</h1>
                 <p class="text-secondary mb-0" th:text="${proyecto.nombre}">Proyecto</p>
             </div>
 
             <div th:if="${#lists.isEmpty(usuarios)}" class="text-center text-secondary py-4">
-                No hay usuarios disponibles para invitar.
+                No hay usuarios disponibles para añadir.
             </div>
 
             <form th:unless="${#lists.isEmpty(usuarios)}" th:action="@{/invitarUsuario/{id}(id=${proyecto.idproyecto})}"
@@ -107,7 +108,7 @@
                         Cancelar
                     </a>
                     <button type="submit" class="btn btn-info fw-bold text-dark w-50">
-                        Invitar usuario
+                        Añadir usuario
                     </button>
                 </div>
             </form>

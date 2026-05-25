@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,19 +73,22 @@
             <a href="/" class="d-inline-block">
                 <img th:src="@{/media/full_logoo.svg}" alt="logo" width="150">
             </a>
+            <div><img th:src="@{/media/feria-valencia.svg}" alt="feria_valencia_logo" width="210px"></div>
 
             <nav class="d-flex flex-wrap align-items-center gap-3">
                 <a href="/menu" class="text-white text-decoration-none">Mis proyectos</a>
                 <a href="/perfil" class="text-white text-decoration-none">Perfil</a>
                 <span class="text-secondary">|</span>
-                <a th:href="@{/proyecto/{id}(id=${proyecto.idproyecto})}" class="btn btn-outline-light btn-sm">⬅ Volver</a>
+                <a th:href="@{/proyecto/{id}(id=${proyecto.idproyecto})}" class="btn btn-outline-light btn-sm">⬅
+                    Volver</a>
                 <span class="text-secondary">|</span>
                 <a href="/cerrarSesion" class="logout-btn">⎋ Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
-    <main class="min-vh-100 d-flex align-items-center justify-content-center px-3" style="padding-top: 6.5rem; padding-bottom: 4rem;">
+    <main class="min-vh-100 d-flex align-items-center justify-content-center px-3"
+        style="padding-top: 6.5rem; padding-bottom: 4rem;">
         <div class="panel rounded-4 p-4 p-md-5 w-100 shadow-lg" style="max-width: 560px;">
             <div class="text-center mb-4">
                 <h1 class="h3 fw-bold mb-2">Eliminar tarea del proyecto</h1>
@@ -96,15 +100,13 @@
                 <p class="text-secondary mb-0">Este proyecto no tiene tareas.</p>
             </div>
 
-            <form th:unless="${#lists.isEmpty(tareas)}"
-                  th:action="@{/eliminarTarea/{id}(id=${proyecto.idproyecto})}" method="post">
+            <form th:unless="${#lists.isEmpty(tareas)}" th:action="@{/eliminarTarea/{id}(id=${proyecto.idproyecto})}"
+                method="post">
                 <div class="mb-4">
                     <label class="form-label">Selecciona tarea a eliminar</label>
                     <select name="idtarea" class="form-select bg-dark text-white border-secondary" required>
                         <option value="">Selecciona tarea</option>
-                        <option th:each="tarea : ${tareas}"
-                                th:value="${tarea.idtarea}"
-                                th:text="${tarea.titulo}">
+                        <option th:each="tarea : ${tareas}" th:value="${tarea.idtarea}" th:text="${tarea.titulo}">
                         </option>
                     </select>
                 </div>
@@ -121,4 +123,5 @@
         </div>
     </main>
 </body>
+
 </html>

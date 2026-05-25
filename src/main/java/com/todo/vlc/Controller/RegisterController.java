@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.todo.vlc.Repository.UsuarioRepository;
 import com.todo.vlc.model.Rol;
@@ -23,26 +24,34 @@ public class RegisterController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping("/register")
-    public String iniciarSesion(
-
+    public String registrarUsuario(
             @RequestParam("nombre") String nombre,
             @RequestParam("mail") String email,
-            @RequestParam("password") String password) {
+            @RequestParam("password") String password,
+            RedirectAttributes redirectAttrs) {
 
+        // 1. Comprobar si ya existe un usuario con ese email
+        if (usuarioRepository.existsByEmail(email)) {
+            redirectAttrs.addFlashAttribute("error", "Ya existe una cuenta registrada con este email.");
+            return "redirect:/registrarse";
+        }
+
+        // 2. Crear el nuevo usuario
         Usuario usuario = new Usuario();
-
+        usuario.setNombre(nombre);
         usuario.setEmail(email);
         usuario.setPasswrd(passwordEncoder.encode(password));
         usuario.setRol(Rol.COLLABORATOR);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime ahora = LocalDateTime.now();
         String fechaFormateada = ahora.format(formatter);
         usuario.setFecha_creacion(fechaFormateada);
-        usuario.setNombre(nombre);
 
         usuarioRepository.save(usuario);
-        return "inicioSesion";
-    }
 
+        // 3. Éxito (ej: mensaje de éxito o redirigir al login)
+        redirectAttrs.addFlashAttribute("success", "Usuario creado con éxito. Inicia sesión.");
+        return "redirect:/inicioSesion";
+    }
 }

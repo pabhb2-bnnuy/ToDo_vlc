@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <title>ToDo App</title>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
-    <link rel="shortcut icon" href="img&svg/logo_chill.svg" type="image/x-icon">
+    <link rel="shortcut icon" th:href="@{/media/logo_chill.svg}" type="image/x-icon">
 </head>
 
 <body class="text-white bg-black">
@@ -37,8 +37,9 @@
     <header class="fixed-top bg-dark bg-opacity-50">
         <div class="container py-3 d-flex align-items-center">
             <a href="/" class="d-inline-block">
-                <img src="media/full_logoo.svg" alt="todo_main_logo" width="140" class="img-fluid">
+                <img th:src="@{/media/full_logoo.svg}" alt="todo_main_logo" width="140" class="img-fluid">
             </a>
+            <div><img th:src="@{/media/feria-valencia.svg}" alt="feria_valencia_logo" width="210px"></div>
         </div>
     </header>
 
@@ -47,6 +48,20 @@
         <section class="flex-grow-1 d-flex justify-content-center align-items-center">
             <div class="card border-0 rounded-4 bg-dark bg-opacity-75 text-white w-100" style="max-width: 520px;">
                 <div class="card-body p-4 p-md-5">
+
+                    <!-- Mensajes de error y éxito (flash attributes) -->
+                    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                        <span th:text="${error}">Ya existe una cuenta registrada con este email.</span>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                    </div>
+
+                    <div th:if="${success}" class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+                        <span th:text="${success}">Usuario creado con éxito. Inicia sesión.</span>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                    </div>
+
                     <h2 class="text-center fw-bold mb-4">Formulario de Registro</h2>
 
                     <form action="/register" method="post" class="mx-auto" style="max-width: 320px;">
@@ -83,14 +98,14 @@
 
                 <a href="https://github.com/Nicoaz25" target="_blank" rel="noopener"
                     class="d-inline-flex align-items-center text-white text-decoration-none gap-2">
-                    <img src="media/github_icon.svg" alt="github_logo" width="20" height="20">
+                    <img th:src="@{/media/github_icon.svg}" alt="github_logo" width="20" height="20">
                 </a>
 
                 <span>IES La Sénia</span>
 
                 <a href="https://github.com/pabhb2-bnnuy" target="_blank" rel="noopener"
                     class="d-inline-flex align-items-center text-white text-decoration-none gap-2">
-                    <img src="media/github_icon.svg" alt="github_logo" width="20" height="20">
+                    <img th:src="@{/media/github_icon.svg}" alt="github_logo" width="20" height="20">
                 </a>
             </div>
         </div>
