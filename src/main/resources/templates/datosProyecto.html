@@ -1,206 +1,129 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToDo App</title>
+    <title>Crear proyecto</title>
 
-    <link rel="stylesheet" th:href="@{/css/form_style.css}">
-    <link rel="shortcut icon" href="media/logo_chill.svg">
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/media/logo_chill.svg}">
 </head>
 
-<body>
+<body class="text-white bg-black">
+    <style>
+        .bg-video {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
 
-    <!-- VIDEO FONDO --> 
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: -1;
+        }
+
+        .glass {
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(10px);
+        }
+
+        .panel {
+            background: rgba(17, 24, 39, 0.9);
+            backdrop-filter: blur(8px);
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            padding: 6px 10px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+    </style>
+
     <video autoplay muted loop playsinline class="bg-video">
-        <source src="media/mov_bbb.mp4" type="video/mp4">
+        <source th:src="@{/media/mov_bbb.mp4}" type="video/mp4">
     </video>
-
     <div class="overlay"></div>
 
-    <!-- ================= HEADER ================= -->
-    <header class="top-bar">
-
-        <a href="/" class="logo">
-            <img src="media/full_logoo.svg" alt="todo_main_logo" width="150px">
-        </a>
-
-        <nav>
-
-            <a href="/">Inicio</a>
-            <a href="#">Mis proyectos</a>
-            <a href="#">Perfil</a>
-
-            <!-- BARRA SEPARADORA -->
-            <span class="nav-divider">|</span>
-
-            <!-- BOTÓN CERRAR SESIÓN -->
-            <a href="/cerrarSesion" class="logout-btn">
-                ⎋ Cerrar sesión
+    <header class="fixed-top glass">
+        <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <a href="/" class="d-inline-block">
+                <img th:src="@{/media/full_logoo.svg}" alt="logo" width="150">
             </a>
 
-        </nav>
-
+            <nav class="d-flex flex-wrap align-items-center gap-3">
+                <a href="/menu" class="text-white text-decoration-none">Mis proyectos</a>
+                <a href="/perfil" class="text-white text-decoration-none">Perfil</a>
+                <span class="text-secondary">|</span>
+                <a href="/menu" class="btn btn-outline-light btn-sm">⬅ Inicio</a>
+                <span class="text-secondary">|</span>
+                <a href="/cerrarSesion" class="logout-btn">⎋ Cerrar sesión</a>
+            </nav>
+        </div>
     </header>
 
-    <!-- ================= MODAL CREAR PROYECTO ================= -->
-    <div class="modal-create">
-
-        <div class="modal-box">
-
-            <div class="modal-header">
-
-                <h2>Crear proyecto</h2>
-
-                <a href="/menu">
-                    <button type="button" class="cancelar-btn">
-                        Cancelar
-                    </button>
-                </a>
-
+    <main class="min-vh-100 d-flex align-items-center justify-content-center px-3"
+          style="padding-top: 6.5rem; padding-bottom: 4rem;">
+        <div class="panel rounded-4 p-4 p-md-5 w-100 shadow-lg" style="max-width: 560px;">
+            <div class="text-center mb-4">
+                <h1 class="h3 fw-bold mb-2">Crear proyecto</h1>
+                <p class="text-secondary mb-0">Define detalles y límites del proyecto.</p>
             </div>
 
             <form action="/crearProyecto" method="post">
-                <div class="form-group">
-                    <label for="name">Nombre:</label>
-                    <input type="text" name="nombre" id="name" required>
+                <!-- NOMBRE -->
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text"
+                           class="form-control bg-dark text-white border-secondary"
+                           name="nombre"
+                           required>
                 </div>
 
-                <div class="form-group">
-                    <label for="text">Descripción:</label>
-                    <input type="text" name="descripcion" id="descripcion" required>
+                <!-- DESCRIPCIÓN -->
+                <div class="mb-3">
+                    <label class="form-label">Descripción</label>
+                    <input type="text"
+                           class="form-control bg-dark text-white border-secondary"
+                           name="descripcion"
+                           required>
                 </div>
 
-                <div class="form-group">
-                    <label for="fecha">Fecha límite:</label>
-                    <input type="date" id="fecha" name="fecha">
+                <!-- FECHA LÍMITE -->
+                <div class="mb-4">
+                    <label class="form-label">Fecha límite</label>
+                    <input type="date"
+                           class="form-control bg-dark text-white border-secondary"
+                           name="fecha">
                 </div>
 
-                <div class="form-group">
-                    <button type="submit">Registrarse</button>
+                <div class="d-flex justify-content-between gap-3">
+                    <a href="/menu" class="btn btn-outline-light w-50">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-info fw-bold text-dark w-50">
+                        Crear proyecto
+                    </button>
                 </div>
             </form>
-
         </div>
-
-    </div>
-
-    <!-- ================= CONTENIDO PRINCIPAL ================= -->
-    <main class="dashboard">
-
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-
-            <h2>Workspaces</h2>
-            <ul>
-
-                <li th:each="p : ${proyectos}">
-
-                    <a th:href="@{/proyecto/{id}(id=${p.idproyecto})}">
-
-                        📁 <span th:text="${p.nombre}"></span>
-
-                    </a>
-
-                </li>
-
-            </ul>
-
-            <a href="/datosProyecto"><button class="new-project-btn">
-                    + Nuevo Proyecto
-                </button>
-            </a>
-
-
-        </aside>
-
-        <!-- TABLERO -->
-        <section class="board-container">
-
-            <!-- COLUMNA -->
-            <div class="board-column">
-
-                <div class="column-header">
-                    <h3>Por hacer</h3>
-                    <span>3</span>
-                </div>
-
-                <div class="task-card">
-
-                </div>
-
-                <div class="task-card">
-
-                </div>
-
-                <div class="task-card">
-
-                </div>
-
-            </div>
-
-            <!-- COLUMNA -->
-            <div class="board-column">
-
-                <div class="column-header">
-                    <h3>En progreso</h3>
-                    <span>2</span>
-                </div>
-
-                <div class="task-card active">
-
-                </div>
-
-                <div class="task-card active">
-
-                </div>
-
-            </div>
-
-            <!-- COLUMNA -->
-            <div class="board-column">
-
-                <div class="column-header">
-                    <h3>Completado</h3>
-                    <span>2</span>
-                </div>
-
-                <div class="task-card done">
-
-                </div>
-
-                <div class="task-card done">
-
-                </div>
-
-            </div>
-
-        </section>
-
     </main>
-
-    <!-- ================= FOOTER ================= -->
-    <footer class="bottom-bar">
-
-        <div>2026</div>
-
-        <div>
-            <a href="https://github.com/Nicoaz25">
-                <img src="media/github_icon.svg" width="20px">
-            </a>
-        </div>
-
-        <div>IES La Sénia</div>
-
-        <div>
-            <a href="https://github.com/pabhb2-bnnuy">
-                <img src="media/github_icon.svg" width="20px">
-            </a>
-        </div>
-
-    </footer>
-
 </body>
-
 </html>

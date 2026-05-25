@@ -48,7 +48,7 @@
             background: rgba(56, 189, 248, 0.2);
         }
 
-              .logout-btn {
+        .logout-btn {
             background: #ef4444;
             padding: 6px 10px;
             border-radius: 10px;
@@ -57,12 +57,39 @@
             text-decoration: none;
             transition: 0.3s;
             font-size: 16px;
-            
         }
 
         .logout-btn:hover {
             background: #dc2626;
             transform: scale(1.05);
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 6.5rem 0 1.5rem;
+        }
+
+        .panel {
+            max-width: 560px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /*  Listado de proyectos con scroll interno */
+        .projects-list {
+            max-height: 300px;
+            /* altura fija alrededor del contenido visible */
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .projects-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .projects-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
         }
     </style>
 
@@ -85,22 +112,26 @@
             </nav>
         </div>
     </header>
+    <div style="margin-bottom: 100px;"></div>
 
-    <main class="flex-grow-1 d-flex align-items-center justify-content-center px-3">
-        <div class="panel rounded-4 p-4 p-md-5 w-100" style="max-width: 560px;">
+    <main class="px-3">
+        <div class="panel rounded-4 p-4 p-md-5 mx-auto" style="max-width: 560px;">
             <div class="text-center mb-4">
                 <h1 class="h3 fw-bold mb-2">Workspaces</h1>
                 <p class="text-secondary mb-0">Elige un proyecto para entrar</p>
             </div>
 
-            <div class="d-grid gap-2 mb-4">
-                <a th:href="@{/proyecto/{id}(id=${p.idproyecto})}" class="text-decoration-none"
-                    th:each="p : ${proyectos}">
-                    <div class="sidebar-card p-3 text-white d-flex align-items-center gap-2">
-                        <span>📁</span>
-                        <span th:text="${p.nombre}"></span>
-                    </div>
-                </a>
+            <!-- Contenedor scrollable de proyectos -->
+            <div class="projects-list">
+                <div class="d-grid gap-2 mb-4">
+                    <a th:href="@{/proyecto/{id}(id=${p.idproyecto})}" class="text-decoration-none"
+                        th:each="p : ${proyectos}">
+                        <div class="sidebar-card p-3 text-white d-flex align-items-center gap-2">
+                            <span>📁</span>
+                            <span th:text="${p.nombre}"></span>
+                        </div>
+                    </a>
+                </div>
             </div>
 
             <a href="/datosProyecto" class="btn btn-info fw-bold text-dark w-100">
@@ -108,7 +139,8 @@
             </a>
         </div>
     </main>
-    <footer class="bg-dark bg-opacity-50 mt-5">
+
+    <footer class="bg-dark bg-opacity-50 mt-auto">
         <div class="container py-4">
             <div class="d-flex justify-content-center align-items-center flex-wrap gap-3 text-white">
                 <span>2026</span>
