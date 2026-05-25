@@ -1,6 +1,6 @@
-    DROP DATABASE IF EXISTS toDo_vlc;
-    CREATE DATABASE toDo_vlc;
-    USE toDo_vlc;
+    DROP DATABASE IF EXISTS todo_vlc;
+    CREATE DATABASE todo_vlc;
+    USE todo_vlc;
 
     CREATE TABLE usuarios ( 
         idusuario INT AUTO_INCREMENT PRIMARY KEY,
