@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+    <link rel="shortcut icon" th:href="@{/media/logo_chill.svg}">
+</head>
+
+<body class="text-white bg-black d-flex flex-column min-vh-100">
+    <style>
+        .bg-video {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: -1;
+        }
+
+        .glass {
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(10px);
+        }
+
+        .panel {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+
+        .sidebar-card:hover {
+            background: rgba(56, 189, 248, 0.2);
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            padding: 6px 10px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 6.5rem 0 1.5rem;
+        }
+
+        .panel {
+            max-width: 560px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /*  Listado de proyectos con scroll interno */
+        .projects-list {
+            max-height: 300px;
+            /* altura fija alrededor del contenido visible */
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .projects-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .projects-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+    </style>
+
+    <video autoplay muted loop playsinline class="bg-video">
+        <source th:src="@{/media/mov_bbb.mp4}" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+
+    <header class="fixed-top glass">
+        <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <a href="/menucol" class="d-inline-block">
+                <img th:src="@{/media/full_logoo.svg}" alt="logo" width="150">
+            </a>
+
+            <nav class="d-flex flex-wrap align-items-center gap-3">
+                <a href="/menucol" class="text-white text-decoration-none">Mis proyectos</a>
+                <a href="/perfilcol" class="text-white text-decoration-none">Perfil</a>
+                <span class="text-secondary">|</span>
+                <a href="/cerrarSesion" class="logout-btn">⎋ Cerrar sesión</a>
+            </nav>
+        </div>
+    </header>
+    <div style="margin-bottom: 100px;"></div>
+
+    <main class="px-3">
+        <div class="panel rounded-4 p-4 p-md-5 mx-auto" style="max-width: 560px;">
+            <div class="text-center mb-4">
+                <h1 class="h3 fw-bold mb-2">Workspaces</h1>
+                <p class="text-secondary mb-0">Elige un proyecto para entrar</p>
+            </div>
+
+            <!-- Contenedor scrollable de proyectos -->
+            <div class="projects-list">
+                <div class="d-grid gap-2 mb-4">
+                    <a th:href="@{/proyectocol/{id}(id=${p.idproyecto})}" class="text-decoration-none"
+                        th:each="p : ${proyectos}">
+                        <div class="sidebar-card p-3 text-white d-flex align-items-center gap-2">
+                            <span>📁</span>
+                            <span th:text="${p.nombre}"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark bg-opacity-50 mt-auto">
+        <div class="container py-4">
+            <div class="d-flex justify-content-center align-items-center flex-wrap gap-3 text-white">
+                <span>2026</span>
+
+                <a href="https://github.com/Nicoaz25" target="_blank" rel="noopener"
+                    class="d-inline-flex align-items-center text-white text-decoration-none gap-2">
+                    <img th:src="@{/media/github_icon.svg}" alt="github_logo" width="20" height="20">
+                </a>
+
+                <span>IES La Sénia</span>
+
+                <a href="https://github.com/pabhb2-bnnuy" target="_blank" rel="noopener"
+                    class="d-inline-flex align-items-center text-white text-decoration-none gap-2">
+                    <img th:src="@{/media/github_icon.svg}" alt="github_logo" width="20" height="20">
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

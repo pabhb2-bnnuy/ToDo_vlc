@@ -1,6 +1,5 @@
 package com.todo.vlc.model;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,8 +33,7 @@ public class Usuario implements UserDetails {
 
     private boolean enabled = true;
 
-    @Column(insertable = false, updatable = false)
-    private LocalDateTime fecha_creacion;
+    private String fecha_creacion;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

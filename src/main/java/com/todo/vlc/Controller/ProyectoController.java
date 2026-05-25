@@ -79,8 +79,8 @@ public class ProyectoController {
     }
 
     // ================= VER PROYECTO =================
-    @GetMapping("/proyecto/{idproyecto}")
-    public String verProyecto(
+    @GetMapping("/proyectocol/{idproyecto}")
+    public String verProyectocolcol(
             @PathVariable int idproyecto,
             Model model) {
 
@@ -106,11 +106,36 @@ public class ProyectoController {
         model.addAttribute("tareasEnProgreso", tareasEnProgreso);
         model.addAttribute("tareasCompletadas", tareasCompletadas);
 
-        return "proyecto";
+        return "collaborator/proyectocol";
     }
 
-    @GetMapping("/proyecto")
-    public String proyecto() {
-        return "proyecto";
-    }
+    @GetMapping("/proyecto/{idproyecto}")
+public String verProyecto(
+        @PathVariable int idproyecto,
+        Model model) {
+
+    Proyecto proyecto = proyectoRepository
+            .findById(idproyecto)
+            .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+    List<UsuarioProyecto> miembros = usuarioProyectoRepository.findByProyecto(proyecto);
+
+    List<Tarea> tareasPorHacer = tareaRepository.findByProyectoAndEstado(proyecto, "TODO");
+    List<Tarea> tareasEnProgreso = tareaRepository.findByProyectoAndEstado(proyecto, "DOING");
+    List<Tarea> tareasCompletadas = tareaRepository.findByProyectoAndEstado(proyecto, "DONE");
+
+    tareasPorHacer.sort(Comparator.comparingInt(Tarea::getPrioridad));
+    tareasEnProgreso.sort(Comparator.comparingInt(Tarea::getPrioridad));
+    tareasCompletadas.sort(Comparator.comparingInt(Tarea::getPrioridad));
+
+    model.addAttribute("proyecto", proyecto);
+    model.addAttribute("miembros", miembros);
+    model.addAttribute("tareasPorHacer", tareasPorHacer);
+    model.addAttribute("tareasEnProgreso", tareasEnProgreso);
+    model.addAttribute("tareasCompletadas", tareasCompletadas);
+
+    return "proyecto";
+}
+
+  
 }

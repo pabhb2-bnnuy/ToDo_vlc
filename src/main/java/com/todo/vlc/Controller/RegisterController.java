@@ -1,5 +1,8 @@
 package com.todo.vlc.Controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -31,10 +34,15 @@ public class RegisterController {
         usuario.setEmail(email);
         usuario.setPasswrd(passwordEncoder.encode(password));
         usuario.setRol(Rol.COLLABORATOR);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+        LocalDateTime ahora = LocalDateTime.now();
+        String fechaFormateada = ahora.format(formatter);
+        usuario.setFecha_creacion(fechaFormateada);
         usuario.setNombre(nombre);
 
         usuarioRepository.save(usuario);
-        return "iniciarSesion";
+        return "inicioSesion";
     }
 
 }

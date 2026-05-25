@@ -1,5 +1,7 @@
 package com.todo.vlc.Controller.Admin;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,152 +21,157 @@ import com.todo.vlc.model.*;
 @RequestMapping("/admin")
 public class UsuarioAdminController {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+        @Autowired
+        private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private UsuarioProyectoRepository usuarioProyectoRepository;
+        @Autowired
+        private UsuarioProyectoRepository usuarioProyectoRepository;
 
-    @Autowired
-    private ProyectoRepository proyectoRepository;
+        @Autowired
+        private ProyectoRepository proyectoRepository;
 
-    @Autowired
-    private TareaRepository tareaRepository;
+        @Autowired
+        private TareaRepository tareaRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+        @Autowired
+        private PasswordEncoder passwordEncoder;
 
-    // ===================== LISTA USUARIOS =====================
+        // ===================== LISTA USUARIOS =====================
 
-    @GetMapping("/usuarios")
-    public String usuarios(Model model) {
+        @GetMapping("/usuarios")
+        public String usuarios(Model model) {
 
-        model.addAttribute(
-                "usuarios",
-                usuarioRepository.findAll());
+                model.addAttribute(
+                                "usuarios",
+                                usuarioRepository.findAll());
 
-        return "admin/usuarios";
-    }
+                return "admin/usuarios";
+        }
 
-    // ===================== DETALLE USUARIO =====================
+        // ===================== DETALLE USUARIO =====================
 
-    @GetMapping("/usuario/{id}")
-    public String detalleUsuario(
-            @PathVariable Integer id,
-            Model model) {
+        @GetMapping("/usuario/{id}")
+        public String detalleUsuario(
+                        @PathVariable Integer id,
+                        Model model) {
 
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow();
+                Usuario usuario = usuarioRepository.findById(id)
+                                .orElseThrow();
 
-        List<UsuarioProyecto> proyectos = usuarioProyectoRepository.findByUsuario(usuario);
+                List<UsuarioProyecto> proyectos = usuarioProyectoRepository.findByUsuario(usuario);
 
-        List<Tarea> tareas = tareaRepository.findByUsuario(usuario);
+                List<Tarea> tareas = tareaRepository.findByUsuario(usuario);
 
-        model.addAttribute("usuario", usuario);
+                model.addAttribute("usuario", usuario);
 
-        model.addAttribute("proyectos", proyectos);
+                model.addAttribute("proyectos", proyectos);
 
-        model.addAttribute("tareas", tareas);
+                model.addAttribute("tareas", tareas);
 
-        return "admin/detalleUsuario";
-    }
+                return "admin/detalleUsuario";
+        }
 
-    // ===================== FORM CREAR USUARIO =====================
+        // ===================== FORM CREAR USUARIO =====================
 
-    @GetMapping("/crearUsuario")
-    public String crearUsuarioForm(Model model) {
+        @PostMapping("/crearUsuario")
+        public String crearUsuario(
 
-        model.addAttribute(
-                "usuario",
-                new Usuario());
+                        @RequestParam("nombre") String nombre,
+                        @RequestParam("email") String email,
+                        @RequestParam("password") String password,
+                        @RequestParam("rol") String rol) {
 
-        return "admin/crearUsuario";
-    }
+                Usuario usuario = new Usuario();
 
-    // ===================== CREAR USUARIO =====================
+                usuario.setEmail(email);
+                usuario.setPasswrd(
+                                passwordEncoder.encode(password));
+                usuario.setRol(Rol.valueOf(rol.toUpperCase()));
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-    @PostMapping("/crearUsuario")
-    public String crearUsuario(
-            @ModelAttribute Usuario usuario) {
+                LocalDateTime ahora = LocalDateTime.now();
+                String fechaFormateada = ahora.format(formatter);
+                usuario.setFecha_creacion(fechaFormateada);
+                usuario.setNombre(nombre);
+                usuario.setEnabled(true);
 
-        usuario.setPasswrd(
-                passwordEncoder.encode(usuario.getPassword()));
+                usuarioRepository.save(usuario);
+                return "redirect:/admin/usuarios";
+        }
 
-        usuario.setEnabled(true);
+        @GetMapping("/crearUsuario")
+        public String crearusuarioo() {
+                return "admin/crearUsuario";
+        }
 
-        usuarioRepository.save(usuario);
+        // ===================== CAMBIAR ROL =====================
 
-        return "redirect:/admin/usuarios";
-    }
+        @PostMapping("/cambiarRol/{id}")
+        public String cambiarRol(
+                        @PathVariable Integer id,
+                        @RequestParam Rol rol) {
 
-    // ===================== CAMBIAR ROL =====================
+                Usuario usuario = usuarioRepository.findById(id)
+                                .orElseThrow();
 
-    @PostMapping("/cambiarRol/{id}")
-    public String cambiarRol(
-            @PathVariable Integer id,
-            @RequestParam Rol rol) {
+                usuario.setRol(rol);
 
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow();
+                usuarioRepository.save(usuario);
 
-        usuario.setRol(rol);
+                return "redirect:/admin/usuario/" + id;
+        }
 
-        usuarioRepository.save(usuario);
+        // ===================== ACTIVAR / DESACTIVAR =====================
 
-        return "redirect:/admin/usuario/" + id;
-    }
+        @PostMapping("/toggleUsuario/{id}")
+        public String toggleUsuario(
+                        @PathVariable Integer id) {
 
-    // ===================== ACTIVAR / DESACTIVAR =====================
+                Usuario usuario = usuarioRepository.findById(id)
+                                .orElseThrow();
 
-    @PostMapping("/toggleUsuario/{id}")
-    public String toggleUsuario(
-            @PathVariable Integer id) {
+                usuario.setEnabled(!usuario.isEnabled());
 
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow();
+                usuarioRepository.save(usuario);
 
-        usuario.setEnabled(!usuario.isEnabled());
+                return "redirect:/admin/usuario/" + id;
+        }
 
-        usuarioRepository.save(usuario);
+        // ===================== FORM ASIGNAR PROYECTO =====================
 
-        return "redirect:/admin/usuario/" + id;
-    }
+        @GetMapping("/asignarProyecto/{id}")
+        public String asignarProyectoForm(
+                        @PathVariable Integer id,
+                        Model model) {
 
-    // ===================== FORM ASIGNAR PROYECTO =====================
+                Usuario usuario = usuarioRepository.findById(id)
+                                .orElseThrow();
 
-    @GetMapping("/asignarProyecto/{id}")
-    public String asignarProyectoForm(
-            @PathVariable Integer id,
-            Model model) {
+                model.addAttribute("usuario", usuario);
 
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow();
+                model.addAttribute(
+                                "proyectos",
+                                proyectoRepository.findAll());
 
-        model.addAttribute("usuario", usuario);
+                return "admin/asignarProyecto";
+        }
 
-        model.addAttribute(
-                "proyectos",
-                proyectoRepository.findAll());
+        // ===================== FORM ASIGNAR TAREA =====================
 
-        return "admin/asignarProyecto";
-    }
+        @GetMapping("/asignarTarea/{id}")
+        public String asignarTareaForm(
+                        @PathVariable Integer id,
+                        Model model) {
 
-    // ===================== FORM ASIGNAR TAREA =====================
+                Usuario usuario = usuarioRepository.findById(id)
+                                .orElseThrow();
 
-    @GetMapping("/asignarTarea/{id}")
-    public String asignarTareaForm(
-            @PathVariable Integer id,
-            Model model) {
+                model.addAttribute("usuario", usuario);
 
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow();
+                model.addAttribute(
+                                "tareas",
+                                tareaRepository.findAll());
 
-        model.addAttribute("usuario", usuario);
-
-        model.addAttribute(
-                "tareas",
-                tareaRepository.findAll());
-
-        return "admin/asignarTarea";
-    }
+                return "admin/asignarTarea";
+        }
 }

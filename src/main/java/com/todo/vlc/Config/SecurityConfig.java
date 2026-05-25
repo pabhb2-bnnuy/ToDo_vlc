@@ -41,10 +41,11 @@ public class SecurityConfig {
                                                                 "/inicioSesion",
                                                                 "/registrarse",
                                                                 "/register",
-                                                                "/css/**",
                                                                 "/media/**",
                                                                 "/webjars/**",
-                                                                "/proyecto/**")
+                                                                "/inicioSesion?disabled",
+                                                                "/inicioSesion?error",
+                                                                "/cerrarSesion")
                                                 .permitAll()
 
                                                 // URLS para admin
@@ -52,15 +53,14 @@ public class SecurityConfig {
                                                 .hasRole("ADMIN")
 
                                                 // Urls para Colaborador
-                                                // .requestMatchers("/menu")
-                                                // .hasRole("COLLABORATOR")
-                                                // URLS para Gestor
-                                                .requestMatchers("/menu/gestion")
-                                                .hasRole("GESTOR")
+                                                .requestMatchers("/menucol", "/proyectocol/**", "/perfilcol",
+                                                                "/cambiar-passwordcol")
+                                                .hasRole("COLLABORATOR")
 
-                                                // URLS para gestor y colaborador
-                                                .requestMatchers("/datosProyecto", "/menu")
-                                                .hasAnyRole("GESTOR", "COLLABORATOR", "ADMIN")
+                                                // URLS para gestor y admin
+                                                .requestMatchers("/datosProyecto", "/menu", "/proyecto/**", "/perfil",
+                                                                "/cambiar-password")
+                                                .hasAnyRole("GESTOR", "ADMIN")
 
                                                 .anyRequest()
                                                 .authenticated())
@@ -96,9 +96,9 @@ public class SecurityConfig {
                                                         if (isAdmin) {
                                                                 response.sendRedirect("/admin");
                                                         } else if (isGestor) {
-                                                                response.sendRedirect("/menu/gestion");
-                                                        } else if (isCollaborator) {
                                                                 response.sendRedirect("/menu");
+                                                        } else if (isCollaborator) {
+                                                                response.sendRedirect("/menucol");
                                                         } else {
                                                                 response.sendRedirect("/");
                                                         }
