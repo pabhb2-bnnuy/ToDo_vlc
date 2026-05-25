@@ -1,162 +1,173 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Usuarios</title>
 
-    <link rel="stylesheet" th:href="@{/css/admin.css}">
-     <link rel="shortcut icon" href="media/logo_chill.svg" type="image/x-icon">
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
 
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/media/logo_chill.svg}" type="image/x-icon">
+
+    <!-- Estilos inline (tu estilo de admin) -->
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --hover-bg: #f1f5f9;
+            --sidebar-bg: #ffffff;
+            --badge-active-bg: #dcfce7;
+            --badge-active-text: #166534;
+            --badge-disabled-bg: #fee2e2;
+            --badge-disabled-text: #991b1b;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-dark);
+        }
+
+        .admin-layout {
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 20px;
+            flex-shrink: 0;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-size: 26px;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+        }
+
+        .sidebar .nav-link {
+            color: var(--text-muted);
+            padding: 14px 16px;
+            border-radius: 14px;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: var(--hover-bg);
+            color: var(--text-dark);
+        }
+
+        /* CONTENT */
+        .content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 40px;
+            max-width: 1400px;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            .admin-layout {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 
-<body>
-
-    <div class="admin-layout">
-
-        <!-- ================= SIDEBAR ================= -->
-
-        <aside class="sidebar">
-
-            <h1>ToDo Admin</h1>
-
-            <nav>
-
-                <a href="/admin">
-                    Dashboard
-                </a>
-
-                <a href="/admin/usuarios">
-                    Usuarios
-                </a>
-                <a href="/admin/proyectos">
-                    Proyectos
-                </a>
-                <a href="/menu">
-                    Volver a la app
-                </a>
-
-                <a href="/cerrarSesion">
-                    Cerrar sesión
-                </a>
-
-
-            </nav>
-
-        </aside>
-
-        <!-- ================= CONTENIDO ================= -->
-
-        <main class="content">
-
-            <!-- HEADER -->
-
-            <div class="page-header">
-
-                <h2>Usuarios</h2>
-
-                <a href="/admin/crearUsuario">
-
-                    <button class="primary-btn">
-
-                        + Crear usuario
-
-                    </button>
-
-                </a>
-
-            </div>
-
-            <!-- TABLA -->
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>Nombre</th>
-
-                            <th>Email</th>
-
-                            <th>Rol</th>
-
-                            <th>Estado</th>
-
-                            <th>Acciones</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        <tr th:each="u : ${usuarios}">
-
-                            <!-- NOMBRE -->
-
-                            <td th:text="${u.nombre}"></td>
-
-                            <!-- EMAIL -->
-
-                            <td th:text="${u.email}"></td>
-
-                            <!-- ROL -->
-
-                            <td th:text="${u.rol}"></td>
-
-                            <!-- ESTADO -->
-
-                            <td>
-
-                                <span th:if="${u.enabled}" class="badge-active">
-
-                                    Activo
-
-                                </span>
-
-                                <span th:unless="${u.enabled}" class="badge-disabled">
-
-                                    Desactivado
-
-                                </span>
-
-                            </td>
-
-                            <!-- BOTON -->
-
-                            <td>
-
-                                <a th:href="@{/admin/usuario/{id}(id=${u.idusuario})}">
-
-                                    <button class="secondary-btn">
-
-                                        Gestionar
-
-                                    </button>
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </main>
-
-    </div>
+<body class="bg-body-tertiary">
+
+<div class="admin-layout d-flex">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h1>ToDo Admin</h1>
+
+        <nav class="nav flex-column">
+            <a class="nav-link" href="/admin">
+                Dashboard
+            </a>
+            <a class="nav-link" href="/admin/usuarios">
+                Usuarios
+            </a>
+            <a class="nav-link" href="/admin/proyectos">
+                Proyectos
+            </a>
+            <a class="nav-link" href="/menu">
+                Volver a la app
+            </a>
+            <a class="nav-link" href="/cerrarSesion">
+                Cerrar sesión
+            </a>
+        </nav>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+        <div class="page-header d-flex justify-content-between align-items-center mb-4">
+            <h2 class="h3 fw-bold mb-0">Usuarios</h2>
+            <a href="/admin/crearUsuario" class="btn btn-primary btn-sm">
+                + Crear usuario
+            </a>
+        </div>
+
+        <div class="table-responsive rounded-4 border bg-white shadow-sm">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="u : ${usuarios}">
+                        <td th:text="${u.nombre}"></td>
+                        <td th:text="${u.email}"></td>
+                        <td th:text="${u.rol}"></td>
+                        <td>
+                            <span class="badge rounded-pill text-bg-success"
+                                  th:if="${u.enabled}">Activo</span>
+                            <span class="badge rounded-pill text-bg-danger"
+                                  th:unless="${u.enabled}">Desactivado</span>
+                        </td>
+                        <td class="text-end">
+                            <a th:href="@{/admin/usuario/{id}(id=${u.idusuario})}"
+                               class="btn btn-secondary btn-sm">
+                                Gestionar
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+</div>
 
 </body>
-
 </html>

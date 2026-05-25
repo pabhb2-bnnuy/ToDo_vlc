@@ -1,104 +1,167 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Asignar proyecto</title>
- <link rel="shortcut icon" href="media/logo_chill.svg" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/css/admin.css}">
 
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/media/logo_chill.svg}" type="image/x-icon">
+
+    <!-- Estilos inline (tu estilo de admin) -->
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --hover-bg: #f1f5f9;
+            --sidebar-bg: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-dark);
+        }
+
+        .admin-layout {
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 20px;
+            flex-shrink: 0;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-size: 26px;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+        }
+
+        .sidebar .nav-link {
+            color: var(--text-muted);
+            padding: 14px 16px;
+            border-radius: 14px;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: var(--hover-bg);
+            color: var(--text-dark);
+        }
+
+        /* CONTENT */
+        .content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            .admin-layout {
+                flex-direction: column;
+            }
+        }
+
+        /* CREATE USER CONTAINER */
+        .create-user-container {
+            max-width: 550px;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-body-tertiary">
 
-    <div class="admin-layout">
+<div class="admin-layout d-flex">
 
-        <!-- SIDEBAR -->
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h1>ToDo Admin</h1>
 
-        <aside class="sidebar">
+        <nav class="nav flex-column">
+            <a class="nav-link" href="/admin">
+                Dashboard
+            </a>
+            <a class="nav-link" href="/admin/usuarios">
+                Usuarios
+            </a>
+            <a class="nav-link" href="/admin/proyectos">
+                Proyectos
+            </a>
+            <a class="nav-link" href="/menu">
+                Volver a la app
+            </a>
+            <a class="nav-link" href="/cerrarSesion">
+                Cerrar sesión
+            </a>
+        </nav>
+    </aside>
 
-            <h1>ToDo Admin</h1>
+    <!-- CONTENIDO -->
+    <main class="content">
 
-            <nav>
+        <div class="create-user-container">
+            <h2 class="h4">
+                Asignar proyecto a
+                <span th:text="${usuario.nombre}"></span>
+            </h2>
 
-                <a href="/admin">
-                    Dashboard
-                </a>
+            <form th:action="@{/admin/asignarProyecto}" method="post" class="mt-4">
 
-                <a href="/admin/usuarios">
-                    Usuarios
-                </a>
-                <a href="/admin/proyectos">
-                    Proyectos
-                </a>
+                <!-- ID USUARIO (hidden) -->
+                <input type="hidden" name="idusuario" th:value="${usuario.idusuario}">
 
-                <a href="/menu">
-                    Volver a la app
-                </a>
-                <a href="/cerrarSesion">
-                    Cerrar sesión
-                </a>
+                <!-- SELECT PROYECTOS -->
+                <div class="mb-4">
+                    <label class="form-label">Proyecto</label>
+                    <select class="form-select" name="idproyecto" required>
+                        <option value="">Selecciona un proyecto</option>
+                        <option th:each="p : ${proyectos}"
+                                th:value="${p.idproyecto}"
+                                th:text="${p.nombre}">
+                        </option>
+                    </select>
+                </div>
 
-            </nav>
+                <button class="btn btn-primary" type="submit">
+                    Asignar proyecto
+                </button>
+            </form>
 
-        </aside>
+        </div>
 
-        <!-- CONTENIDO -->
+    </main>
 
-        <main class="content">
-
-            <div class="create-user-container">
-
-                <h2>
-
-                    Asignar proyecto a
-                    <span th:text="${usuario.nombre}"></span>
-
-                </h2>
-
-                <form th:action="@{/admin/asignarProyecto}" method="post">
-
-                    <!-- ID USUARIO -->
-
-                    <input type="hidden" name="idusuario" th:value="${usuario.idusuario}">
-
-                    <!-- SELECT PROYECTOS -->
-
-                    <div class="form-group">
-
-                        <label>Proyecto</label>
-
-                        <select name="idproyecto" required>
-
-                            <option value="">
-                                Selecciona un proyecto
-                            </option>
-
-                            <option th:each="p : ${proyectos}" th:value="${p.idproyecto}" th:text="${p.nombre}">
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    <button class="primary-btn" type="submit">
-
-                        Asignar proyecto
-
-                    </button>
-
-                </form>
-
-            </div>
-
-        </main>
-
-    </div>
+</div>
 
 </body>
-
 </html>

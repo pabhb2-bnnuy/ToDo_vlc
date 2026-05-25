@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quitar usuario</title>
+    <title>Eliminar tarea</title>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
     <link rel="shortcut icon" th:href="@{/media/logo_chill.svg}">
@@ -87,25 +87,25 @@
     <main class="min-vh-100 d-flex align-items-center justify-content-center px-3" style="padding-top: 6.5rem; padding-bottom: 4rem;">
         <div class="panel rounded-4 p-4 p-md-5 w-100 shadow-lg" style="max-width: 560px;">
             <div class="text-center mb-4">
-                <h1 class="h3 fw-bold mb-2">Quitar usuario del proyecto</h1>
+                <h1 class="h3 fw-bold mb-2">Eliminar tarea del proyecto</h1>
                 <p class="text-secondary mb-0" th:text="${proyecto.nombre}">Proyecto</p>
             </div>
 
-            <div th:if="${#lists.isEmpty(miembros)}" class="empty-box text-center">
-                <div class="mb-3 fs-1">👥</div>
-                <h2 class="h5 fw-bold mb-2">No hay miembros para quitar</h2>
-                <p class="text-secondary mb-0">Este proyecto no tiene usuarios asignados aparte del propietario.</p>
+            <div th:if="${#lists.isEmpty(tareas)}" class="empty-box text-center">
+                <div class="mb-3 fs-1">🗑️</div>
+                <h2 class="h5 fw-bold mb-2">No hay tareas para eliminar</h2>
+                <p class="text-secondary mb-0">Este proyecto no tiene tareas.</p>
             </div>
 
-            <form th:unless="${#lists.isEmpty(miembros)}"
-                  th:action="@{/quitarUsuario/{id}(id=${proyecto.idproyecto})}" method="post">
+            <form th:unless="${#lists.isEmpty(tareas)}"
+                  th:action="@{/eliminarTarea/{id}(id=${proyecto.idproyecto})}" method="post">
                 <div class="mb-4">
-                    <label class="form-label">Selecciona usuario a quitar</label>
-                    <select name="idusuario" class="form-select bg-dark text-white border-secondary" required>
-                        <option value="">Selecciona usuario</option>
-                        <option th:each="miembro : ${miembros}"
-                                th:value="${miembro.usuario.idusuario}"
-                                th:text="${miembro.usuario.nombre}">
+                    <label class="form-label">Selecciona tarea a eliminar</label>
+                    <select name="idtarea" class="form-select bg-dark text-white border-secondary" required>
+                        <option value="">Selecciona tarea</option>
+                        <option th:each="tarea : ${tareas}"
+                                th:value="${tarea.idtarea}"
+                                th:text="${tarea.titulo}">
                         </option>
                     </select>
                 </div>
@@ -115,7 +115,7 @@
                         Cancelar
                     </a>
                     <button type="submit" class="btn btn-danger fw-bold text-white w-50">
-                        Quitar usuario
+                        Eliminar tarea
                     </button>
                 </div>
             </form>

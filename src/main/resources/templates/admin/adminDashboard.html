@@ -1,112 +1,196 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <link rel="shortcut icon" href="media/logo_chill.svg" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/css/admin.css}">
 
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/media/logo_chill.svg}" type="image/x-icon">
+
+    <!-- Estilos inline en el head para mantener el estilo que te gusta -->
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --hover-bg: #f1f5f9;
+            --card-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+            --sidebar-bg: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-dark);
+        }
+
+        .admin-layout {
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 20px;
+            flex-shrink: 0;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-size: 26px;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+        }
+
+        .sidebar .nav-link {
+            color: var(--text-muted);
+            padding: 14px 16px;
+            border-radius: 14px;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: var(--hover-bg);
+            color: var(--text-dark);
+        }
+
+        /* CONTENT */
+        .content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            .admin-layout {
+                flex-direction: column;
+            }
+        }
+
+        /* HEADER */
+        .page-header {
+            margin-bottom: 35px;
+        }
+        .page-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            gap: 22px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 22px;
+            padding: 30px;
+            transition: 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--card-shadow);
+        }
+        .stat-card h3 {
+            color: #64748b;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .stat-card span {
+            font-size: 36px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        /* TABLES */
+        .table-container {
+            background-color: white;
+            border-radius: 22px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-body-tertiary">
 
-    <div class="admin-layout">
+<div class="admin-layout d-flex">
 
-        <!-- ================= SIDEBAR ================= -->
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+        <h1>ToDo Admin</h1>
 
-        <aside class="sidebar">
+        <nav class="nav flex-column">
+            <a class="nav-link" href="/admin">
+                Dashboard
+            </a>
+            <a class="nav-link" href="/admin/usuarios">
+                Usuarios
+            </a>
+            <a class="nav-link" href="/admin/proyectos">
+                Proyectos
+            </a>
+            <a class="nav-link" href="/menu">
+                Volver a la app
+            </a>
+            <a class="nav-link" href="/cerrarSesion">
+                Cerrar sesión
+            </a>
+        </nav>
+    </aside>
 
-            <h1>ToDo Admin</h1>
+    <!-- ================= CONTENIDO ================= -->
+    <main class="content">
 
-            <nav>
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <h2 class="h3 fw-bold mb-0">Dashboard</h2>
+        </div>
 
-                <a href="/admin">
-                    Dashboard
-                </a>
-
-                <a href="/admin/usuarios">
-                    Usuarios
-                </a>
-
-                <!-- NUEVO -->
-
-                <a href="/admin/proyectos">
-                    Proyectos
-                </a>
-
-                <a href="/menu">
-                    Volver a la app
-                </a>
-
-                <a href="/cerrarSesion">
-                    Cerrar sesión
-                </a>
-
-            </nav>
-
-        </aside>
-
-        <!-- ================= CONTENIDO ================= -->
-
-        <main class="content">
-
-            <div class="page-header">
-
-                <h2>Dashboard</h2>
-
+        <div class="row stats-grid g-3">
+            <div class="col-auto flex-fill stat-card rounded-4 shadow-sm">
+                <h3>Total usuarios</h3>
+                <span th:text="${totalUsuarios}" class="d-block lh-1">0</span>
             </div>
-
-            <div class="stats-grid">
-
-                <div class="stat-card">
-
-                    <h3>Total usuarios</h3>
-
-                    <span th:text="${totalUsuarios}">
-                        0
-                    </span>
-
-                </div>
-
-                <div class="stat-card">
-
-                    <h3>Usuarios activos</h3>
-
-                    <span th:text="${usuariosActivos}">
-                        0
-                    </span>
-
-                </div>
-
-                <div class="stat-card">
-
-                    <h3>Proyectos</h3>
-
-                    <span th:text="${totalProyectos}">
-                        0
-                    </span>
-
-                </div>
-
-                <div class="stat-card">
-
-                    <h3>Tareas</h3>
-
-                    <span th:text="${totalTareas}">
-                        0
-                    </span>
-
-                </div>
-
+            <div class="col-auto flex-fill stat-card rounded-4 shadow-sm">
+                <h3>Usuarios activos</h3>
+                <span th:text="${usuariosActivos}" class="d-block lh-1">0</span>
             </div>
+            <div class="col-auto flex-fill stat-card rounded-4 shadow-sm">
+                <h3>Proyectos</h3>
+                <span th:text="${totalProyectos}" class="d-block lh-1">0</span>
+            </div>
+            <div class="col-auto flex-fill stat-card rounded-4 shadow-sm">
+                <h3>Tareas</h3>
+                <span th:text="${totalTareas}" class="d-block lh-1">0</span>
+            </div>
+        </div>
 
-        </main>
+    </main>
 
-    </div>
+</div>
 
 </body>
-
 </html>

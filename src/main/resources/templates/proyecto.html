@@ -141,7 +141,7 @@
                 <img th:src="@{/media/full_logoo.svg}" alt="logo" width="150">
             </a>
 
-             <nav class="d-flex flex-wrap align-items-center gap-3">
+            <nav class="d-flex flex-wrap align-items-center gap-3">
                 <a href="/menu" class="text-white text-decoration-none">Mis proyectos</a>
                 <a href="/perfil" class="text-white text-decoration-none">Perfil</a>
                 <span class="text-secondary">|</span>
@@ -222,12 +222,17 @@
                             class="btn btn-info fw-bold text-dark">
                             + Crear tarea
                         </a>
+                        <a th:href="@{/eliminarTarea/{id}(id=${proyecto.idproyecto})}"
+                            class="btn btn-danger fw-bold text-white">
+                            − Quitar tarea
+                        </a>
                         <a th:href="@{/quitarUsuario/{id}(id=${proyecto.idproyecto})}" class="btn btn-outline-danger">
                             - Quitar usuario
                         </a>
                         <a th:href="@{/invitarUsuario/{id}(id=${proyecto.idproyecto})}" class="btn btn-outline-light">
                             + Invitar usuario
                         </a>
+
 
                     </div>
                 </div>

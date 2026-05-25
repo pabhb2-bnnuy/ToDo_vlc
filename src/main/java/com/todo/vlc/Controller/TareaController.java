@@ -20,81 +20,111 @@ import com.todo.vlc.model.UsuarioProyecto;
 @Controller
 public class TareaController {
 
-    @Autowired
-    private TareaRepository tareaRepository;
+        @Autowired
+        private TareaRepository tareaRepository;
 
-    @Autowired
-    private ProyectoRepository proyectoRepository;
+        @Autowired
+        private ProyectoRepository proyectoRepository;
 
-    @Autowired
-    private UsuarioProyectoRepository usuarioProyectoRepository;
+        @Autowired
+        private UsuarioProyectoRepository usuarioProyectoRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+        @Autowired
+        private UsuarioRepository usuarioRepository;
 
-    // ===================== MOSTRAR FORMULARIO =====================
-    @GetMapping("/crearTarea/{id}")
-    public String mostrarFormulario(
-            @PathVariable Integer id,
-            Model model) {
+        // ===================== MOSTRAR FORMULARIO =====================
+        @GetMapping("/crearTarea/{id}")
+        public String mostrarFormulario(
+                        @PathVariable Integer id,
+                        Model model) {
 
-        Proyecto proyecto = proyectoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+                Proyecto proyecto = proyectoRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
-        List<UsuarioProyecto> miembros =
-                usuarioProyectoRepository.findByProyecto(proyecto);
+                List<UsuarioProyecto> miembros = usuarioProyectoRepository.findByProyecto(proyecto);
 
-        model.addAttribute("miembros", miembros);
-        model.addAttribute("proyecto", proyecto);
-        model.addAttribute("tarea", new Tarea());
+                model.addAttribute("miembros", miembros);
+                model.addAttribute("proyecto", proyecto);
+                model.addAttribute("tarea", new Tarea());
 
-        return "crearTarea";
-    }
-
-    // ===================== GUARDAR TAREA =====================
-    @PostMapping("/crearTarea/{id}")
-    public String guardarTarea(
-
-            @PathVariable Integer id,
-            @ModelAttribute Tarea tarea,
-            @RequestParam(value = "idusuario", required = false) Integer idusuario) {
-
-        Proyecto proyecto = proyectoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
-
-        tarea.setProyecto(proyecto);
-
-        // asignar usuario si viene
-        if (idusuario != null) {
-            Usuario usuarioAsignado = usuarioRepository.findById(idusuario)
-                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-            tarea.setUsuario(usuarioAsignado);
+                return "crearTarea";
         }
 
-        // estado por defecto
-        if (tarea.getEstado() == null || tarea.getEstado().isEmpty()) {
-            tarea.setEstado("TODO");
+        // ===================== GUARDAR TAREA =====================
+        @PostMapping("/crearTarea/{id}")
+        public String guardarTarea(
+
+                        @PathVariable Integer id,
+                        @ModelAttribute Tarea tarea,
+                        @RequestParam(value = "idusuario", required = false) Integer idusuario) {
+
+                Proyecto proyecto = proyectoRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+                tarea.setProyecto(proyecto);
+
+                // asignar usuario si viene
+                if (idusuario != null) {
+                        Usuario usuarioAsignado = usuarioRepository.findById(idusuario)
+                                        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                        tarea.setUsuario(usuarioAsignado);
+                }
+
+                // estado por defecto
+                if (tarea.getEstado() == null || tarea.getEstado().isEmpty()) {
+                        tarea.setEstado("TODO");
+                }
+
+                tareaRepository.save(tarea);
+
+                return "redirect:/proyecto/" + id;
         }
 
-        tareaRepository.save(tarea);
+        // ===================== CAMBIAR ESTADO (KANBAN ⋮) =====================
+        @GetMapping("/tarea/estado/{id}/{estado}")
+        public String cambiarEstado(
+                        @PathVariable int id,
+                        @PathVariable String estado) {
 
-        return "redirect:/proyecto/" + id;
-    }
+                Tarea tarea = tareaRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
 
-    // ===================== CAMBIAR ESTADO (KANBAN ⋮) =====================
-    @GetMapping("/tarea/estado/{id}/{estado}")
-    public String cambiarEstado(
-            @PathVariable int id,
-            @PathVariable String estado) {
+                tarea.setEstado(estado);
+                tareaRepository.save(tarea);
 
-        Tarea tarea = tareaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+                int proyectoId = tarea.getProyecto().getIdproyecto();
 
-        tarea.setEstado(estado);
-        tareaRepository.save(tarea);
+                return "redirect:/proyecto/" + proyectoId;
+        }
 
-        int proyectoId = tarea.getProyecto().getIdproyecto();
+        // ===================== MOSTRAR FORMULARIO Eliminar Tarea =====================
+        @GetMapping("/eliminarTarea/{id}")
+        public String mostrarEliminarTarea(
+                        @PathVariable Integer id,
+                        Model model) {
 
-        return "redirect:/proyecto/" + proyectoId;
-    }
+                Proyecto proyecto = proyectoRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+                List<Tarea> tareas = tareaRepository.findByProyecto(proyecto);
+
+                model.addAttribute("tareas", tareas);
+                model.addAttribute("proyecto", proyecto);
+
+                return "eliminarTarea";
+        }
+
+        // ===================== ELIMINAR TAREA (POST) =====================
+        @PostMapping("/eliminarTarea/{id}")
+        public String eliminarTarea(
+                        @PathVariable Integer id,
+                        @RequestParam Integer idtarea) {
+
+                Tarea tarea = tareaRepository.findById(idtarea)
+                                .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+
+                tareaRepository.delete(tarea);
+
+                return "redirect:/proyecto/" + id;
+        }
 }

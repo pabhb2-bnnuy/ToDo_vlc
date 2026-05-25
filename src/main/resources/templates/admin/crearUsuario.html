@@ -1,141 +1,176 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear usuario</title>
- <link rel="shortcut icon" href="media/logo_chill.svg" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/css/admin.css}">
 
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/media/logo_chill.svg}" type="image/x-icon">
+
+    <!-- Estilos inline (tu estilo de admin) -->
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --hover-bg: #f1f5f9;
+            --sidebar-bg: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-dark);
+        }
+
+        .admin-layout {
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 20px;
+            flex-shrink: 0;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-size: 26px;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+        }
+
+        .sidebar .nav-link {
+            color: var(--text-muted);
+            padding: 14px 16px;
+            border-radius: 14px;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: var(--hover-bg);
+            color: var(--text-dark);
+        }
+
+        /* CONTENT */
+        .content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            .admin-layout {
+                flex-direction: column;
+            }
+        }
+
+        /* CONTENEDOR FORM */
+        .create-user-container {
+            max-width: 550px;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-body-tertiary">
 
-    <div class="admin-layout">
+<div class="admin-layout d-flex">
 
-        <!-- SIDEBAR -->
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h1>ToDo Admin</h1>
 
-        <aside class="sidebar">
+        <nav class="nav flex-column">
+            <a class="nav-link" href="/admin">
+                Dashboard
+            </a>
+            <a class="nav-link" href="/admin/usuarios">
+                Usuarios
+            </a>
+            <a class="nav-link" href="/admin/proyectos">
+                Proyectos
+            </a>
+            <a class="nav-link" href="/menu">
+                Volver a la app
+            </a>
+            <a class="nav-link" href="/cerrarSesion">
+                Cerrar sesión
+            </a>
+        </nav>
+    </aside>
 
-            <h1>ToDo Admin</h1>
+    <!-- CONTENT -->
+    <main class="content">
 
-            <nav>
+        <div class="create-user-container">
+            <h2 class="h4">Crear usuario</h2>
 
-                <a href="/admin">
-                    Dashboard
-                </a>
+            <form th:action="@{/admin/crearUsuario}" method="post" class="mt-4">
 
-                <a href="/admin/usuarios">
-                    Usuarios
-                </a>
+                <!-- NOMBRE -->
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" required>
+                </div>
 
-                <a href="/admin/proyectos">
-                    Proyectos
-                </a>
+                <!-- EMAIL -->
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" required>
+                </div>
 
-                <a href="/menu">
-                    Volver a la app
-                </a>
+                <!-- PASSWORD -->
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" name="password" required>
+                </div>
 
-                <a href="/cerrarSesion">
-                    Cerrar sesión
-                </a>
+                <!-- ROL -->
+                <div class="mb-3">
+                    <label class="form-label">Rol</label>
+                    <select class="form-select" name="rol">
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="GESTOR">GESTOR</option>
+                        <option value="COLLABORATOR">COLLABORATOR</option>
+                    </select>
+                </div>
 
-            </nav>
-
-        </aside>
-
-        <!-- CONTENT -->
-
-        <main class="content">
-
-            <div class="create-user-container">
-
-                <h2>
+                <button class="btn btn-primary" type="submit">
                     Crear usuario
-                </h2>
+                </button>
+            </form>
+        </div>
 
-                <form th:action="@{/admin/crearUsuario}" method="post">
+    </main>
 
-                    <!-- NOMBRE -->
-
-                    <div class="form-group">
-
-                        <label>
-                            Nombre
-                        </label>
-
-                        <input type="text" name="nombre" required>
-
-                    </div>
-
-                    <!-- EMAIL -->
-
-                    <div class="form-group">
-
-                        <label>
-                            Email
-                        </label>
-
-                        <input type="email" name="email" required>
-
-                    </div>
-
-                    <!-- PASSWORD -->
-
-                    <div class="form-group">
-
-                        <label>
-                            Contraseña
-                        </label>
-
-                        <input type="password" name="password" required>
-
-                    </div>
-
-                    <!-- ROL -->
-
-                    <div class="form-group">
-
-                        <label>
-                            Rol
-                        </label>
-
-                        <select name="rol">
-
-                            <option value="ADMIN">
-                                ADMIN
-                            </option>
-                            <option value="GESTOR">
-                                GESTOR
-                            </option>
-                            <option value="COLLABORATOR">
-                                COLLABORATOR
-                            </option>
-
-
-                        </select>
-
-                    </div>
-
-                    <!-- BOTON -->
-
-                    <button class="primary-btn" type="submit">
-
-                        Crear usuario
-
-                    </button>
-
-                </form>
-
-            </div>
-
-        </main>
-
-    </div>
+</div>
 
 </body>
-
 </html>
