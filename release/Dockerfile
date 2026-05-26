@@ -2,7 +2,7 @@ FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-COPY todo_vlc.jar app.jar
+COPY ./compiled/todo_vlc.jar app.jar
 
 EXPOSE 8080
 

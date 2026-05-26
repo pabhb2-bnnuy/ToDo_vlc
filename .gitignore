@@ -1,7 +1,10 @@
 HELP.md
 target/
 release/*
-
+!release/compiled/
+release/compiled/*
+!release/compiled/todo_vlc.jar
+!release/compiled/todo_vlc.jar
 !release/Dockerfile
 !release/docker-compose.yml
 !release/nginx.conf
