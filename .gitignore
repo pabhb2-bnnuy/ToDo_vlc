@@ -1,5 +1,8 @@
 HELP.md
 target/
+release/*
+!release/todo_vlc.jar
+!release/docker-compose.yml
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

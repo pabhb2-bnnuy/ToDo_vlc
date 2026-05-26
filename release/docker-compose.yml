@@ -1,0 +1,86 @@
+version: '3.9'
+
+services:
+
+  mysql:
+    image: mysql:8.4
+    container_name: mysql_vlc
+    restart: always
+
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      # Persistencia de datos
+      - mysql_data:/var/lib/mysql
+
+      # Script inicial SQL
+      - ./todo_vlc.sql:/docker-entrypoint-initdb.d/init.sql
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    networks:
+      - springnet
+
+
+
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+
+    container_name: spring_vlc
+    restart: always
+
+    environment:
+      SQL_URL: ${SQL_URL}
+      SQL_USER: ${SQL_USER}
+      SQL_PASS: ${SQL_PASS}
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    expose:
+      - "8080"
+
+    networks:
+      - springnet
+
+
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_vlc
+    restart: always
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+
+    depends_on:
+      - app
+
+    networks:
+      - springnet
+
+
+
+volumes:
+  mysql_data:
+
+
+
+networks:
+  springnet:
+    driver: bridge
