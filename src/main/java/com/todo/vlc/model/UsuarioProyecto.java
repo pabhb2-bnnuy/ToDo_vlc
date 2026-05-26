@@ -24,6 +24,5 @@ public class UsuarioProyecto {
     @JoinColumn(name = "idproyecto")
     private Proyecto proyecto;
 
-    @Column(insertable = false, updatable = false)
-    private String fecha_asignacion;
+    private String fechaasignacion;
 }

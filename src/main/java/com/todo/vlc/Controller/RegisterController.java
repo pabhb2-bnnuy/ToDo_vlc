@@ -40,13 +40,13 @@ public class RegisterController {
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setEmail(email);
-        usuario.setPasswrd(passwordEncoder.encode(password));
+        usuario.setPassword(passwordEncoder.encode(password));
         usuario.setRol(Rol.COLLABORATOR);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime ahora = LocalDateTime.now();
         String fechaFormateada = ahora.format(formatter);
-        usuario.setFecha_creacion(fechaFormateada);
+        usuario.setFechacreacion(fechaFormateada);
 
         usuarioRepository.save(usuario);
 

@@ -104,7 +104,7 @@ public class HomeController {
         Usuario usuario = (Usuario) authentication.getPrincipal();
 
         // 1. comprobar contraseña actual
-        if (!passwordEncoder.matches(actual, usuario.getPasswrd())) {
+        if (!passwordEncoder.matches(actual, usuario.getPassword())) {
             model.addAttribute("error", "La contraseña actual no es correcta");
             return "cambiarPassword";
         }
@@ -116,7 +116,7 @@ public class HomeController {
         }
 
         // 3. guardar nueva encriptada
-        usuario.setPasswrd(passwordEncoder.encode(nueva));
+        usuario.setPassword(passwordEncoder.encode(nueva));
         usuarioRepository.save(usuario);
 
         model.addAttribute("success", "Contraseña actualizada correctamente");
@@ -141,7 +141,7 @@ public class HomeController {
         Usuario usuario = (Usuario) authentication.getPrincipal();
 
         // 1. comprobar contraseña actual
-        if (!passwordEncoder.matches(actual, usuario.getPasswrd())) {
+        if (!passwordEncoder.matches(actual, usuario.getPassword())) {
             model.addAttribute("error", "La contraseña actual no es correcta");
             return "collaborator/cambiarPasswordcol";
         }
@@ -153,7 +153,7 @@ public class HomeController {
         }
 
         // 3. guardar nueva encriptada
-        usuario.setPasswrd(passwordEncoder.encode(nueva));
+        usuario.setPassword(passwordEncoder.encode(nueva));
         usuarioRepository.save(usuario);
 
         model.addAttribute("success", "Contraseña actualizada correctamente");

@@ -49,9 +49,9 @@ public class ProyectoController {
         proyecto.setNombre(nombre);
         proyecto.setDescripcion(descripcion);
 
-        proyecto.setFecha_inicio(String.valueOf(LocalDate.now()));
+        proyecto.setFechainicio(String.valueOf(LocalDate.now()));
 
-        proyecto.setFecha_limite(String.valueOf(LocalDate.parse(fecha)));
+        proyecto.setFechalimite(String.valueOf(LocalDate.parse(fecha)));
 
         proyecto.setEstado("PENDIENTE");
 

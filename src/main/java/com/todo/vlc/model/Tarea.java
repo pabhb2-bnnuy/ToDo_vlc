@@ -16,7 +16,7 @@ public class Tarea {
     private String titulo;
     private String descripcion;
     private int prioridad;
-    private String fecha_entrega;
+    private String fechaentrega;
     private String estado;
 
     @ManyToOne

@@ -94,7 +94,7 @@ public class ProyectoAdminController {
 
         proyecto.setEstado(estado);
 
-        proyecto.setFecha_limite(fecha_limite);
+        proyecto.setFechalimite(fecha_limite);
 
         proyectoRepository.save(proyecto);
 
@@ -259,7 +259,7 @@ public class ProyectoAdminController {
 
         tarea.setEstado(estado);
 
-        tarea.setFecha_entrega(fecha_entrega);
+        tarea.setFechaentrega(fecha_entrega);
 
         tarea.setUsuario(usuario);
 

@@ -15,8 +15,8 @@ public class Proyecto {
     private int idproyecto;
     private String nombre;
     private String descripcion;
-    private String fecha_inicio;
-    private String fecha_limite;
+    private String fechainicio;
+    private String fechalimite;
     private String estado;
 
     @ManyToOne

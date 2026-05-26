@@ -84,14 +84,14 @@ public class UsuarioAdminController {
                 Usuario usuario = new Usuario();
 
                 usuario.setEmail(email);
-                usuario.setPasswrd(
+                usuario.setPassword(
                                 passwordEncoder.encode(password));
                 usuario.setRol(Rol.valueOf(rol.toUpperCase()));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
                 LocalDateTime ahora = LocalDateTime.now();
                 String fechaFormateada = ahora.format(formatter);
-                usuario.setFecha_creacion(fechaFormateada);
+                usuario.setFechacreacion(fechaFormateada);
                 usuario.setNombre(nombre);
                 usuario.setEnabled(true);
 

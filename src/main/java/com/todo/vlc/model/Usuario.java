@@ -26,14 +26,14 @@ public class Usuario implements UserDetails {
     @Column(unique = true)
     private String email;
 
-    private String passwrd;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
     private boolean enabled = true;
 
-    private String fecha_creacion;
+    private String fechacreacion;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -48,7 +48,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getPassword() {
-        return passwrd;
+        return password;
     }
 
     @Override
