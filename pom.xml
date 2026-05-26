@@ -103,7 +103,7 @@
 
 	<build>
 		<finalName>todo_vlc</finalName>
-		<directory>release</directory>
+		<directory>release/compiled</directory>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
