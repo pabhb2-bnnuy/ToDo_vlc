@@ -120,7 +120,6 @@ public class HomeController {
         usuarioRepository.save(usuario);
 
         model.addAttribute("success", "Contraseña actualizada correctamente");
-
         return "cambiarPassword";
     }
 

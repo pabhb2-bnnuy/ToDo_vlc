@@ -3,6 +3,7 @@ package com.todo.vlc.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -80,11 +81,12 @@ public class TareaController {
                 return "redirect:/proyecto/" + id;
         }
 
-        // ===================== CAMBIAR ESTADO (KANBAN ⋮) =====================
+        // ===================== CAMBIAR ESTADO =====================
         @GetMapping("/tarea/estado/{id}/{estado}")
         public String cambiarEstado(
                         @PathVariable int id,
-                        @PathVariable String estado) {
+                        @PathVariable String estado,
+                        Authentication auth) {
 
                 Tarea tarea = tareaRepository.findById(id)
                                 .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
@@ -93,6 +95,13 @@ public class TareaController {
                 tareaRepository.save(tarea);
 
                 int proyectoId = tarea.getProyecto().getIdproyecto();
+
+                boolean isCollaborator = auth.getAuthorities().stream()
+                                .anyMatch(a -> a.getAuthority().equals("ROLE_COLLABORATOR"));
+
+                if (isCollaborator) {
+                        return "redirect:/proyectocol/" + proyectoId;
+                }
 
                 return "redirect:/proyecto/" + proyectoId;
         }

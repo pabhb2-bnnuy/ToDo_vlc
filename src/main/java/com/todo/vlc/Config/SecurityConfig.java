@@ -35,7 +35,8 @@ public class SecurityConfig {
                                 .csrf(csrf -> csrf.disable())
 
                                 .authorizeHttpRequests(auth -> auth
-                                                // URLS sin iniciar sesión.
+
+                                                // Públicas
                                                 .requestMatchers(
                                                                 "/",
                                                                 "/inicioSesion",
@@ -43,27 +44,36 @@ public class SecurityConfig {
                                                                 "/register",
                                                                 "/media/**",
                                                                 "/webjars/**",
-                                                                "/inicioSesion?disabled",
-                                                                "/inicioSesion?error",
                                                                 "/cerrarSesion")
                                                 .permitAll()
 
-                                                // URLS para admin
+                                                // Admin
                                                 .requestMatchers("/admin/**")
                                                 .hasRole("ADMIN")
 
-                                                // Urls para Colaborador
-                                                .requestMatchers("/menucol", "/proyectocol/**", "/perfilcol",
+                                                // Todos los roles
+                                                .requestMatchers("/tarea/**")
+                                                .hasAnyRole("GESTOR", "ADMIN", "COLLABORATOR")
+
+                                                // Collaborator
+                                                .requestMatchers(
+                                                                "/menucol",
+                                                                "/proyectocol/**",
+                                                                "/perfilcol",
                                                                 "/cambiar-passwordcol")
                                                 .hasRole("COLLABORATOR")
 
-                                                // URLS para gestor y admin
-                                                .requestMatchers("/datosProyecto", "/menu", "/proyecto/**", "/perfil",
-                                                                "/cambiar-password", "/**")
+                                                // Gestor/Admin
+                                                .requestMatchers(
+                                                                "/datosProyecto",
+                                                                "/menu",
+                                                                "/proyecto/**",
+                                                                "/perfil",
+                                                                "/cambiar-password")
                                                 .hasAnyRole("GESTOR", "ADMIN")
 
-                                )
-
+                                                .anyRequest()
+                                                .authenticated())
                                 .formLogin(form -> form
 
                                                 // Página login (GET)
