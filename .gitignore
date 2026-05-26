@@ -2,7 +2,10 @@ HELP.md
 target/
 release/*
 !release/todo_vlc.jar
+!release/Dockerfile
 !release/docker-compose.yml
+!release/nginx.conf
+!release/todo_vlc.sql
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
