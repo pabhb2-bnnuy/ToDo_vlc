@@ -6,6 +6,7 @@ release/*
 !release/docker-compose.yml
 !release/nginx.conf
 !release/todo_vlc.sql
+!release/.env
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
