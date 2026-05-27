@@ -28,29 +28,31 @@ public class UsuarioProyectoController {
         @Autowired
         private UsuarioProyectoRepository usuarioProyectoRepository;
 
-  // ===================== MOSTRAR FORM INVITAR =====================
-@GetMapping("/invitarUsuario/{id}")
-public String mostrarFormularioInvitar(
-        @PathVariable Integer id,
-        Model model) {
+        // Listar usuarios a la hora de añadirlos
+        @GetMapping("/invitarUsuario/{id}")
+        public String mostrarFormularioInvitar(
+                        @PathVariable Integer id,
+                        Model model) {
 
-    Proyecto proyecto = proyectoRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+                Proyecto proyecto = proyectoRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
-    List<Usuario> usuarios = usuarioRepository.findByEnabledTrue();
-    List<UsuarioProyecto> usuariosProyecto = usuarioProyectoRepository.findByProyecto(proyecto);
+                List<Usuario> usuarios = usuarioRepository.findByEnabledTrue();
+                List<UsuarioProyecto> usuariosProyecto = usuarioProyectoRepository.findByProyecto(proyecto);
 
-    List<Usuario> usuariosDisponibles = usuarios.stream()
-            .filter(usuario -> usuariosProyecto.stream()
-                    .noneMatch(up -> up.getUsuario().getIdusuario().equals(usuario.getIdusuario())))
-            .toList();
+                List<Usuario> usuariosDisponibles = usuarios.stream()
+                                .filter(usuario -> usuariosProyecto.stream()
+                                                .noneMatch(up -> up.getUsuario().getIdusuario()
+                                                                .equals(usuario.getIdusuario())))
+                                .toList();
 
-    model.addAttribute("proyecto", proyecto);
-    model.addAttribute("usuarios", usuariosDisponibles);
+                model.addAttribute("proyecto", proyecto);
+                model.addAttribute("usuarios", usuariosDisponibles);
 
-    return "invitarUsuario";
-}
-        // ===================== INVITAR =====================
+                return "invitarUsuario";
+        }
+
+        // Añadir usuarios
         @PostMapping("/invitarUsuario/{id}")
         public String invitarUsuario(
                         @PathVariable Integer id,
@@ -82,7 +84,7 @@ public String mostrarFormularioInvitar(
                 return "redirect:/proyecto/" + id;
         }
 
-        // ===================== MOSTRAR FORM QUITAR =====================
+        // Mostrar información para quitar un usuario
         @GetMapping("/quitarUsuario/{id}")
         public String mostrarFormularioQuitar(
                         @PathVariable Integer id,
@@ -104,7 +106,7 @@ public String mostrarFormularioInvitar(
                 return "quitarUsuario";
         }
 
-        // ===================== QUITAR USUARIO DEL PROYECTO =====================
+        // Quitar un usuario de un proyecto
         @PostMapping("/quitarUsuario/{id}")
         public String quitarUsuario(
                         @PathVariable Integer id,

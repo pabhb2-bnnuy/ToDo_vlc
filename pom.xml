@@ -98,7 +98,6 @@
 			<version>1.18.38</version>
 			<scope>provided</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -117,6 +116,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

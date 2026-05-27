@@ -27,6 +27,7 @@ public class HomeController {
     @Autowired
     private ProyectoRepository proyectoRepository;
 
+    // Mapping para registrarse
     @GetMapping("/registrarse")
     public String registro(Authentication authentication) {
 
@@ -35,6 +36,9 @@ public class HomeController {
         }
         return "registrarse";
     }
+
+    // Mapping para menu que lista todos los proyectos (este mapping se usa para
+    // admin y gestor)
 
     @GetMapping("/menu")
     public String menu(Model model, Authentication authentication) {
@@ -52,6 +56,7 @@ public class HomeController {
         return "datosProyecto";
     }
 
+    // Redirect a /menu si estas logeado y si no a /
     @GetMapping("/")
     public String index(Authentication authentication) {
 
@@ -62,6 +67,7 @@ public class HomeController {
         return "index";
     }
 
+    // Perfil de usuario para admin y gestor
     @GetMapping("/perfil")
     public String perfil(Model model, Authentication authentication) {
 
@@ -71,6 +77,7 @@ public class HomeController {
 
         return "perfil";
     }
+    // Perfil de usuario para collaborator
 
     @GetMapping("/perfilcol")
     public String perfilcol(Model model, Authentication authentication) {
@@ -92,6 +99,8 @@ public class HomeController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    // Mapping de cambiar contraseña admin y gestor
 
     @PostMapping("/cambiar-password")
     public String actualizarPassword(
@@ -129,6 +138,7 @@ public class HomeController {
         return "collaborator/cambiarPasswordcol";
     }
 
+    // Mapping de cambiar contraseña para collaborator
     @PostMapping("/cambiar-passwordcol")
     public String actualizarPasswordcol(
             Authentication authentication,

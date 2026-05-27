@@ -23,119 +23,116 @@ import com.todo.vlc.model.UsuarioProyectoId;
 @Controller
 public class ProyectoController {
 
-    @Autowired
-    private ProyectoRepository proyectoRepository;
+        @Autowired
+        private ProyectoRepository proyectoRepository;
 
-    @Autowired
-    private UsuarioProyectoRepository usuarioProyectoRepository;
+        @Autowired
+        private UsuarioProyectoRepository usuarioProyectoRepository;
 
-    @Autowired
-    private TareaRepository tareaRepository;
+        @Autowired
+        private TareaRepository tareaRepository;
 
-    // ================= CREAR PROYECTO =================
-    @PostMapping("/crearProyecto")
-    public String crearProyecto(
+        // Crear proyecto
+        @PostMapping("/crearProyecto")
+        public String crearProyecto(
 
-            @AuthenticationPrincipal Usuario usuario,
+                        @AuthenticationPrincipal Usuario usuario,
 
-            @RequestParam("nombre") String nombre,
+                        @RequestParam("nombre") String nombre,
 
-            @RequestParam("descripcion") String descripcion,
+                        @RequestParam("descripcion") String descripcion,
 
-            @RequestParam("fecha") String fecha) {
+                        @RequestParam("fecha") String fecha) {
 
-        Proyecto proyecto = new Proyecto();
+                Proyecto proyecto = new Proyecto();
 
-        proyecto.setNombre(nombre);
-        proyecto.setDescripcion(descripcion);
+                proyecto.setNombre(nombre);
+                proyecto.setDescripcion(descripcion);
 
-        proyecto.setFechainicio(String.valueOf(LocalDate.now()));
+                proyecto.setFechainicio(String.valueOf(LocalDate.now()));
 
-        proyecto.setFechalimite(String.valueOf(LocalDate.parse(fecha)));
+                proyecto.setFechalimite(String.valueOf(LocalDate.parse(fecha)));
 
-        proyecto.setEstado("PENDIENTE");
+                proyecto.setEstado("PENDIENTE");
 
-        proyecto.setUsuario(usuario);
+                proyecto.setUsuario(usuario);
 
-        proyectoRepository.save(proyecto);
+                proyectoRepository.save(proyecto);
 
-        // AÑADIR CREADOR A TABLA INTERMEDIA
+                UsuarioProyecto usuarioProyecto = new UsuarioProyecto();
 
-        UsuarioProyecto usuarioProyecto = new UsuarioProyecto();
+                UsuarioProyectoId id = new UsuarioProyectoId(
+                                usuario.getIdusuario(),
+                                proyecto.getIdproyecto());
 
-        UsuarioProyectoId id = new UsuarioProyectoId(
-                usuario.getIdusuario(),
-                proyecto.getIdproyecto());
+                usuarioProyecto.setId(id);
 
-        usuarioProyecto.setId(id);
+                usuarioProyecto.setUsuario(usuario);
 
-        usuarioProyecto.setUsuario(usuario);
+                usuarioProyecto.setProyecto(proyecto);
 
-        usuarioProyecto.setProyecto(proyecto);
+                usuarioProyectoRepository.save(usuarioProyecto);
 
-        usuarioProyectoRepository.save(usuarioProyecto);
+                return "redirect:/menu";
+        }
 
-        return "redirect:/menu";
-    }
+        // Listar proyecto para collaborator
+        @GetMapping("/proyectocol/{idproyecto}")
+        public String verProyectocolcol(
+                        @PathVariable int idproyecto,
+                        Model model) {
 
-    // ================= VER PROYECTO =================
-    @GetMapping("/proyectocol/{idproyecto}")
-    public String verProyectocolcol(
-            @PathVariable int idproyecto,
-            Model model) {
+                Proyecto proyecto = proyectoRepository
+                                .findById(idproyecto)
+                                .orElse(null);
 
-        Proyecto proyecto = proyectoRepository
-                .findById(idproyecto)
-                .orElse(null);
+                List<UsuarioProyecto> miembros = usuarioProyectoRepository.findByProyecto(proyecto);
 
-        List<UsuarioProyecto> miembros = usuarioProyectoRepository.findByProyecto(proyecto);
+                List<Tarea> tareasPorHacer = tareaRepository.findByProyectoAndEstado(proyecto, "TODO");
+                List<Tarea> tareasEnProgreso = tareaRepository.findByProyectoAndEstado(proyecto, "DOING");
+                List<Tarea> tareasCompletadas = tareaRepository.findByProyectoAndEstado(proyecto, "DONE");
 
-        // 🔥 ESTADOS CORRECTOS
-        List<Tarea> tareasPorHacer = tareaRepository.findByProyectoAndEstado(proyecto, "TODO");
-        List<Tarea> tareasEnProgreso = tareaRepository.findByProyectoAndEstado(proyecto, "DOING");
-        List<Tarea> tareasCompletadas = tareaRepository.findByProyectoAndEstado(proyecto, "DONE");
+                // Orden por prioridad: 1 alta, 2 media, 3 baja
+                tareasPorHacer.sort(Comparator.comparingInt(Tarea::getPrioridad));
+                tareasEnProgreso.sort(Comparator.comparingInt(Tarea::getPrioridad));
+                tareasCompletadas.sort(Comparator.comparingInt(Tarea::getPrioridad));
 
-        // Orden por prioridad: 1 alta, 2 media, 3 baja
-        tareasPorHacer.sort(Comparator.comparingInt(Tarea::getPrioridad));
-        tareasEnProgreso.sort(Comparator.comparingInt(Tarea::getPrioridad));
-        tareasCompletadas.sort(Comparator.comparingInt(Tarea::getPrioridad));
+                model.addAttribute("proyecto", proyecto);
+                model.addAttribute("miembros", miembros);
+                model.addAttribute("tareasPorHacer", tareasPorHacer);
+                model.addAttribute("tareasEnProgreso", tareasEnProgreso);
+                model.addAttribute("tareasCompletadas", tareasCompletadas);
 
-        model.addAttribute("proyecto", proyecto);
-        model.addAttribute("miembros", miembros);
-        model.addAttribute("tareasPorHacer", tareasPorHacer);
-        model.addAttribute("tareasEnProgreso", tareasEnProgreso);
-        model.addAttribute("tareasCompletadas", tareasCompletadas);
+                return "collaborator/proyectocol";
+        }
 
-        return "collaborator/proyectocol";
-    }
+        // Listar proyecto para admin y gestor
+        @GetMapping("/proyecto/{idproyecto}")
+        public String verProyecto(
+                        @PathVariable int idproyecto,
+                        Model model) {
 
-    @GetMapping("/proyecto/{idproyecto}")
-public String verProyecto(
-        @PathVariable int idproyecto,
-        Model model) {
+                Proyecto proyecto = proyectoRepository
+                                .findById(idproyecto)
+                                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
-    Proyecto proyecto = proyectoRepository
-            .findById(idproyecto)
-            .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+                List<UsuarioProyecto> miembros = usuarioProyectoRepository.findByProyecto(proyecto);
 
-    List<UsuarioProyecto> miembros = usuarioProyectoRepository.findByProyecto(proyecto);
+                List<Tarea> tareasPorHacer = tareaRepository.findByProyectoAndEstado(proyecto, "TODO");
+                List<Tarea> tareasEnProgreso = tareaRepository.findByProyectoAndEstado(proyecto, "DOING");
+                List<Tarea> tareasCompletadas = tareaRepository.findByProyectoAndEstado(proyecto, "DONE");
 
-    List<Tarea> tareasPorHacer = tareaRepository.findByProyectoAndEstado(proyecto, "TODO");
-    List<Tarea> tareasEnProgreso = tareaRepository.findByProyectoAndEstado(proyecto, "DOING");
-    List<Tarea> tareasCompletadas = tareaRepository.findByProyectoAndEstado(proyecto, "DONE");
+                tareasPorHacer.sort(Comparator.comparingInt(Tarea::getPrioridad));
+                tareasEnProgreso.sort(Comparator.comparingInt(Tarea::getPrioridad));
+                tareasCompletadas.sort(Comparator.comparingInt(Tarea::getPrioridad));
 
-    tareasPorHacer.sort(Comparator.comparingInt(Tarea::getPrioridad));
-    tareasEnProgreso.sort(Comparator.comparingInt(Tarea::getPrioridad));
-    tareasCompletadas.sort(Comparator.comparingInt(Tarea::getPrioridad));
+                model.addAttribute("proyecto", proyecto);
+                model.addAttribute("miembros", miembros);
+                model.addAttribute("tareasPorHacer", tareasPorHacer);
+                model.addAttribute("tareasEnProgreso", tareasEnProgreso);
+                model.addAttribute("tareasCompletadas", tareasCompletadas);
 
-    model.addAttribute("proyecto", proyecto);
-    model.addAttribute("miembros", miembros);
-    model.addAttribute("tareasPorHacer", tareasPorHacer);
-    model.addAttribute("tareasEnProgreso", tareasEnProgreso);
-    model.addAttribute("tareasCompletadas", tareasCompletadas);
+                return "proyecto";
+        }
 
-    return "proyecto";
-}
-
-  
 }

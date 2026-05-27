@@ -12,36 +12,36 @@ import com.todo.vlc.Repository.UsuarioRepository;
 @Controller
 public class AdminController {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+        @Autowired
+        private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private ProyectoRepository proyectoRepository;
+        @Autowired
+        private ProyectoRepository proyectoRepository;
 
-    @Autowired
-    private TareaRepository tareaRepository;
-    
-    // ================= DASHBOARD =================
+        @Autowired
+        private TareaRepository tareaRepository;
 
-    @GetMapping("/admin")
-    public String adminDashboard(Model model) {
+        // Contadores de tareas, usuarios, proyectos...
 
-        model.addAttribute(
-                "totalUsuarios",
-                usuarioRepository.count());
+        @GetMapping("/admin")
+        public String adminDashboard(Model model) {
 
-        model.addAttribute(
-                "usuariosActivos",
-                usuarioRepository.findByEnabledTrue().size());
+                model.addAttribute(
+                                "totalUsuarios",
+                                usuarioRepository.count());
 
-        model.addAttribute(
-                "totalProyectos",
-                proyectoRepository.count());
+                model.addAttribute(
+                                "usuariosActivos",
+                                usuarioRepository.findByEnabledTrue().size());
 
-        model.addAttribute(
-                "totalTareas",
-                tareaRepository.count());
+                model.addAttribute(
+                                "totalProyectos",
+                                proyectoRepository.count());
 
-        return "admin/adminDashboard";
-    }
+                model.addAttribute(
+                                "totalTareas",
+                                tareaRepository.count());
+
+                return "admin/adminDashboard";
+        }
 }

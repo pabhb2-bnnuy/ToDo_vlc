@@ -84,7 +84,7 @@
         </div>
     </header>
 
-    <main class="min-vh-100 d-flex align-items-center justify-content-center px-3" style="padding-top: 6.5rem; padding-bottom: 4rem;">
+    <main class="min-vh-100 d-flex align-items-center justify-content-center px-3" style="padding-top: 6.5rem; padding-bottom: 4rem; margin-top: 40px;">
         <div class="panel rounded-4 p-4 p-md-5 w-100 shadow-lg" style="max-width: 560px;">
             <div class="text-center mb-4">
                 <h1 class="h3 fw-bold mb-2">Quitar usuario del proyecto</h1>
@@ -92,7 +92,7 @@
             </div>
 
             <div th:if="${#lists.isEmpty(miembros)}" class="empty-box text-center">
-                <div class="mb-3 fs-1">👥</div>
+                <div class="mb-3 fs-1"></div>
                 <h2 class="h5 fw-bold mb-2">No hay miembros para quitar</h2>
                 <p class="text-secondary mb-0">Este proyecto no tiene usuarios asignados aparte del propietario.</p>
             </div>

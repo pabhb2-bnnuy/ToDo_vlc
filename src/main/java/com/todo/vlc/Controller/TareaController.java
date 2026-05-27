@@ -33,7 +33,7 @@ public class TareaController {
         @Autowired
         private UsuarioRepository usuarioRepository;
 
-        // ===================== MOSTRAR FORMULARIO =====================
+        // Mostrar información de la tarea para su creacion
         @GetMapping("/crearTarea/{id}")
         public String mostrarFormulario(
                         @PathVariable Integer id,
@@ -51,7 +51,7 @@ public class TareaController {
                 return "crearTarea";
         }
 
-        // ===================== GUARDAR TAREA =====================
+        // Crear una tarea
         @PostMapping("/crearTarea/{id}")
         public String guardarTarea(
 
@@ -81,7 +81,7 @@ public class TareaController {
                 return "redirect:/proyecto/" + id;
         }
 
-        // ===================== CAMBIAR ESTADO =====================
+        // Mapeado para cambiar estado de una tarea
         @GetMapping("/tarea/estado/{id}/{estado}")
         public String cambiarEstado(
                         @PathVariable int id,
@@ -106,7 +106,7 @@ public class TareaController {
                 return "redirect:/proyecto/" + proyectoId;
         }
 
-        // ===================== MOSTRAR FORMULARIO Eliminar Tarea =====================
+        // Listar tareas en base a un proyecto
         @GetMapping("/eliminarTarea/{id}")
         public String mostrarEliminarTarea(
                         @PathVariable Integer id,
@@ -123,7 +123,7 @@ public class TareaController {
                 return "eliminarTarea";
         }
 
-        // ===================== ELIMINAR TAREA (POST) =====================
+        // Eliminar tareas
         @PostMapping("/eliminarTarea/{id}")
         public String eliminarTarea(
                         @PathVariable Integer id,

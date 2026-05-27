@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
 
+    // Mecanismo de redireccion por si ya estas logeado y si tienes tu cuenta
+    // deshabilitada o no
+    // Tambien hace el mapeo a /inicioSesion
     @GetMapping("/inicioSesion")
     public String login(
             Authentication authentication,

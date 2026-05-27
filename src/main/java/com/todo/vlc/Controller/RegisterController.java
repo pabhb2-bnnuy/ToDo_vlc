@@ -23,6 +23,7 @@ public class RegisterController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    // Registro de usuarios
     @PostMapping("/register")
     public String registrarUsuario(
             @RequestParam("nombre") String nombre,

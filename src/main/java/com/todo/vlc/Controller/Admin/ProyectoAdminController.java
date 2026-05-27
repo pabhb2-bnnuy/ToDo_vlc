@@ -16,256 +16,248 @@ import com.todo.vlc.model.*;
 @RequestMapping("/admin")
 public class ProyectoAdminController {
 
-    @Autowired
-    private UsuarioProyectoRepository usuarioProyectoRepository;
+        @Autowired
+        private UsuarioProyectoRepository usuarioProyectoRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+        @Autowired
+        private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private ProyectoRepository proyectoRepository;
+        @Autowired
+        private ProyectoRepository proyectoRepository;
 
-    // =====================================================
-    // ================= LISTA PROYECTOS ===================
-    // =====================================================
+        // Listar proyectos
 
-    @GetMapping("/proyectos")
-    public String proyectos(Model model) {
+        @GetMapping("/proyectos")
+        public String proyectos(Model model) {
 
-        model.addAttribute(
-                "proyectos",
-                proyectoRepository.findAll());
+                model.addAttribute(
+                                "proyectos",
+                                proyectoRepository.findAll());
 
-        return "admin/proyectos";
-    }
-
-    // =====================================================
-    // ================= EDITAR PROYECTO ===================
-    // =====================================================
-    @Autowired
-    private TareaRepository tareaRepository;
-
-    @GetMapping("/proyecto/{id}")
-    public String editarProyecto(
-
-            @PathVariable Integer id,
-
-            Model model) {
-
-        Proyecto proyecto = proyectoRepository
-                .findById(id)
-                .orElseThrow();
-
-        model.addAttribute(
-                "proyecto",
-                proyecto);
-
-        model.addAttribute(
-                "tareas",
-                tareaRepository.findByProyecto(proyecto));
-
-        return "admin/editarProyecto";
-    }
-
-    // =====================================================
-    // ============== GUARDAR PROYECTO =====================
-    // =====================================================
-
-    @PostMapping("/editarProyecto/{id}")
-    public String guardarProyecto(
-
-            @PathVariable Integer id,
-
-            @RequestParam String nombre,
-
-            @RequestParam String descripcion,
-
-            @RequestParam String estado,
-
-            @RequestParam String fecha_limite) {
-
-        Proyecto proyecto = proyectoRepository
-                .findById(id)
-                .orElseThrow();
-
-        proyecto.setNombre(nombre);
-
-        proyecto.setDescripcion(descripcion);
-
-        proyecto.setEstado(estado);
-
-        proyecto.setFechalimite(fecha_limite);
-
-        proyectoRepository.save(proyecto);
-
-        return "redirect:/admin/proyectos";
-    }
-
-    // =====================================================
-    // ================= ELIMINAR ==========================
-    // =====================================================
-
-    @PostMapping("/eliminarTarea/{id}")
-    public String eliminarTarea(
-            @PathVariable Integer id) {
-
-        Tarea tarea = tareaRepository
-                .findById(id)
-                .orElseThrow();
-
-        Integer idProyecto = tarea.getProyecto().getIdproyecto();
-
-        tareaRepository.delete(tarea);
-
-        return "redirect:/admin/proyecto/" + idProyecto;
-    }
-
-    @PostMapping("/eliminarProyecto/{id}")
-    public String eliminarProyecto(
-            @PathVariable Integer id) {
-
-        proyectoRepository.deleteById(id);
-
-        return "redirect:/admin/proyectos";
-    }
-
-    // =====================================================
-    // ================= ASIGNAR ===========================
-    // =====================================================
-
-    @PostMapping("/asignarProyecto")
-    public String asignarProyecto(
-
-            @RequestParam Integer idusuario,
-
-            @RequestParam Integer idproyecto) {
-
-        Usuario usuario = usuarioRepository
-                .findById(idusuario)
-                .orElseThrow();
-
-        Proyecto proyecto = proyectoRepository
-                .findById(idproyecto)
-                .orElseThrow();
-
-        boolean existe = usuarioProyectoRepository
-                .existsByUsuarioAndProyecto(
-                        usuario,
-                        proyecto);
-
-        if (!existe) {
-
-            UsuarioProyecto usuarioProyecto = new UsuarioProyecto();
-
-            UsuarioProyectoId id = new UsuarioProyectoId(
-                    usuario.getIdusuario(),
-                    proyecto.getIdproyecto());
-
-            usuarioProyecto.setId(id);
-
-            usuarioProyecto.setUsuario(usuario);
-
-            usuarioProyecto.setProyecto(proyecto);
-
-            usuarioProyectoRepository.save(usuarioProyecto);
+                return "admin/proyectos";
         }
 
-        return "redirect:/admin/usuario/" + idusuario;
-    }
+        // Cargar proyectos y tareas
 
-    // =====================================================
-    // ================= QUITAR ============================
-    // =====================================================
+        @Autowired
+        private TareaRepository tareaRepository;
 
-    @PostMapping("/quitarProyecto")
-    public String quitarProyecto(
+        @GetMapping("/proyecto/{id}")
+        public String editarProyecto(
 
-            @RequestParam Integer idusuario,
+                        @PathVariable Integer id,
 
-            @RequestParam Integer idproyecto) {
+                        Model model) {
 
-        Usuario usuario = usuarioRepository
-                .findById(idusuario)
-                .orElseThrow();
+                Proyecto proyecto = proyectoRepository
+                                .findById(id)
+                                .orElseThrow();
 
-        Proyecto proyecto = proyectoRepository
-                .findById(idproyecto)
-                .orElseThrow();
+                model.addAttribute(
+                                "proyecto",
+                                proyecto);
 
-        usuarioProyectoRepository
-                .deleteByUsuarioAndProyecto(
-                        usuario,
-                        proyecto);
+                model.addAttribute(
+                                "tareas",
+                                tareaRepository.findByProyecto(proyecto));
 
-        return "redirect:/admin/usuario/" + idusuario;
+                return "admin/editarProyecto";
+        }
 
-    }
+        // Editar datos de un proyecto
 
-    @GetMapping("/tarea/{id}")
-    public String editarTarea(
+        @PostMapping("/editarProyecto/{id}")
+        public String guardarProyecto(
 
-            @PathVariable Integer id,
+                        @PathVariable Integer id,
 
-            Model model) {
+                        @RequestParam String nombre,
 
-        Tarea tarea = tareaRepository
-                .findById(id)
-                .orElseThrow();
+                        @RequestParam String descripcion,
 
-        Proyecto proyecto = tarea.getProyecto();
+                        @RequestParam String estado,
 
-        model.addAttribute(
-                "tarea",
-                tarea);
+                        @RequestParam String fecha_limite) {
 
-        model.addAttribute(
-                "usuarios",
+                Proyecto proyecto = proyectoRepository
+                                .findById(id)
+                                .orElseThrow();
+
+                proyecto.setNombre(nombre);
+
+                proyecto.setDescripcion(descripcion);
+
+                proyecto.setEstado(estado);
+
+                proyecto.setFechalimite(fecha_limite);
+
+                proyectoRepository.save(proyecto);
+
+                return "redirect:/admin/proyectos";
+        }
+
+        // Eliminar una tarea
+
+        @PostMapping("/eliminarTarea/{id}")
+        public String eliminarTarea(
+                        @PathVariable Integer id) {
+
+                Tarea tarea = tareaRepository
+                                .findById(id)
+                                .orElseThrow();
+
+                Integer idProyecto = tarea.getProyecto().getIdproyecto();
+
+                tareaRepository.delete(tarea);
+
+                return "redirect:/admin/proyecto/" + idProyecto;
+        }
+
+        @PostMapping("/eliminarProyecto/{id}")
+        public String eliminarProyecto(
+                        @PathVariable Integer id) {
+
+                proyectoRepository.deleteById(id);
+
+                return "redirect:/admin/proyectos";
+        }
+
+        // Asignar un proyecto a un usuario
+
+        @PostMapping("/asignarProyecto")
+        public String asignarProyecto(
+
+                        @RequestParam Integer idusuario,
+
+                        @RequestParam Integer idproyecto) {
+
+                Usuario usuario = usuarioRepository
+                                .findById(idusuario)
+                                .orElseThrow();
+
+                Proyecto proyecto = proyectoRepository
+                                .findById(idproyecto)
+                                .orElseThrow();
+
+                boolean existe = usuarioProyectoRepository
+                                .existsByUsuarioAndProyecto(
+                                                usuario,
+                                                proyecto);
+
+                if (!existe) {
+
+                        UsuarioProyecto usuarioProyecto = new UsuarioProyecto();
+
+                        UsuarioProyectoId id = new UsuarioProyectoId(
+                                        usuario.getIdusuario(),
+                                        proyecto.getIdproyecto());
+
+                        usuarioProyecto.setId(id);
+
+                        usuarioProyecto.setUsuario(usuario);
+
+                        usuarioProyecto.setProyecto(proyecto);
+
+                        usuarioProyectoRepository.save(usuarioProyecto);
+                }
+
+                return "redirect:/admin/usuario/" + idusuario;
+        }
+
+        // Quitar proyectos de un usuario
+
+        @PostMapping("/quitarProyecto")
+        public String quitarProyecto(
+
+                        @RequestParam Integer idusuario,
+
+                        @RequestParam Integer idproyecto) {
+
+                Usuario usuario = usuarioRepository
+                                .findById(idusuario)
+                                .orElseThrow();
+
+                Proyecto proyecto = proyectoRepository
+                                .findById(idproyecto)
+                                .orElseThrow();
+
                 usuarioProyectoRepository
-                        .findByProyecto(proyecto));
+                                .deleteByUsuarioAndProyecto(
+                                                usuario,
+                                                proyecto);
 
-        return "admin/editarTarea";
-    }
+                return "redirect:/admin/usuario/" + idusuario;
 
-    @PostMapping("/editarTarea/{id}")
-    public String guardarTarea(
+        }
 
-            @PathVariable Integer id,
+        // Listar tareas de usuarios
+        @GetMapping("/tarea/{id}")
+        public String editarTarea(
 
-            @RequestParam String titulo,
+                        @PathVariable Integer id,
 
-            @RequestParam String descripcion,
+                        Model model) {
 
-            @RequestParam Integer prioridad,
+                Tarea tarea = tareaRepository
+                                .findById(id)
+                                .orElseThrow();
 
-            @RequestParam String estado,
+                Proyecto proyecto = tarea.getProyecto();
 
-            @RequestParam String fecha_entrega,
+                model.addAttribute(
+                                "tarea",
+                                tarea);
 
-            @RequestParam Integer idusuario) {
+                model.addAttribute(
+                                "usuarios",
+                                usuarioProyectoRepository
+                                                .findByProyecto(proyecto));
 
-        Tarea tarea = tareaRepository
-                .findById(id)
-                .orElseThrow();
+                return "admin/editarTarea";
+        }
 
-        Usuario usuario = usuarioRepository
-                .findById(idusuario)
-                .orElseThrow();
+        // Editar tareas
 
-        tarea.setTitulo(titulo);
+        @PostMapping("/editarTarea/{id}")
+        public String guardarTarea(
 
-        tarea.setDescripcion(descripcion);
+                        @PathVariable Integer id,
 
-        tarea.setPrioridad(prioridad);
+                        @RequestParam String titulo,
 
-        tarea.setEstado(estado);
+                        @RequestParam String descripcion,
 
-        tarea.setFechaentrega(fecha_entrega);
+                        @RequestParam Integer prioridad,
 
-        tarea.setUsuario(usuario);
+                        @RequestParam String estado,
 
-        tareaRepository.save(tarea);
+                        @RequestParam String fecha_entrega,
 
-        return "redirect:/admin/proyecto/"
-                + tarea.getProyecto().getIdproyecto();
-    }
+                        @RequestParam Integer idusuario) {
+
+                Tarea tarea = tareaRepository
+                                .findById(id)
+                                .orElseThrow();
+
+                Usuario usuario = usuarioRepository
+                                .findById(idusuario)
+                                .orElseThrow();
+
+                tarea.setTitulo(titulo);
+
+                tarea.setDescripcion(descripcion);
+
+                tarea.setPrioridad(prioridad);
+
+                tarea.setEstado(estado);
+
+                tarea.setFechaentrega(fecha_entrega);
+
+                tarea.setUsuario(usuario);
+
+                tareaRepository.save(tarea);
+
+                return "redirect:/admin/proyecto/"
+                                + tarea.getProyecto().getIdproyecto();
+        }
 }

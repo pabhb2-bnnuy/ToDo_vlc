@@ -36,7 +36,7 @@ public class UsuarioAdminController {
         @Autowired
         private PasswordEncoder passwordEncoder;
 
-        // ===================== LISTA USUARIOS =====================
+        // Listar todos los usuarios
 
         @GetMapping("/usuarios")
         public String usuarios(Model model) {
@@ -48,7 +48,7 @@ public class UsuarioAdminController {
                 return "admin/usuarios";
         }
 
-        // ===================== DETALLE USUARIO =====================
+        // Listar detalles de usuarios
 
         @GetMapping("/usuario/{id}")
         public String detalleUsuario(
@@ -71,7 +71,7 @@ public class UsuarioAdminController {
                 return "admin/detalleUsuario";
         }
 
-        // ===================== FORM CREAR USUARIO =====================
+        // Crear usuario
 
         @PostMapping("/crearUsuario")
         public String crearUsuario(
@@ -104,7 +104,7 @@ public class UsuarioAdminController {
                 return "admin/crearUsuario";
         }
 
-        // ===================== CAMBIAR ROL =====================
+        // Cambiar rol de un usuario
 
         @PostMapping("/cambiarRol/{id}")
         public String cambiarRol(
@@ -121,7 +121,7 @@ public class UsuarioAdminController {
                 return "redirect:/admin/usuario/" + id;
         }
 
-        // ===================== ACTIVAR / DESACTIVAR =====================
+        // Activar o desactivar un usuario
 
         @PostMapping("/toggleUsuario/{id}")
         public String toggleUsuario(
@@ -137,7 +137,7 @@ public class UsuarioAdminController {
                 return "redirect:/admin/usuario/" + id;
         }
 
-        // ===================== FORM ASIGNAR PROYECTO =====================
+        //Listar proyectos de un usuario
 
         @GetMapping("/asignarProyecto/{id}")
         public String asignarProyectoForm(
@@ -156,7 +156,7 @@ public class UsuarioAdminController {
                 return "admin/asignarProyecto";
         }
 
-        // ===================== FORM ASIGNAR TAREA =====================
+        // Listar tareas de un usuario
 
         @GetMapping("/asignarTarea/{id}")
         public String asignarTareaForm(
