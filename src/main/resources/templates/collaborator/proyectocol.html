@@ -11,6 +11,34 @@
 
 <body class="text-white bg-black">
     <style>
+        .project-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .status.pending {
+            background: #f39c12;
+        }
+
+        .status.doing {
+            background: #3498db;
+        }
+
+        .status.done {
+            background: #2ecc71;
+        }
+
         .bg-video {
             position: fixed;
             inset: 0;
@@ -156,6 +184,15 @@
                 <div class="panel rounded-4 p-3 p-lg-4">
                     <div class="mb-4">
                         <h2 class="h5 fw-bold mb-3">📌 Proyecto</h2>
+                        <div class="project-status">
+                            <span class="status-label">Estado:</span>
+
+                            <span class="status" th:text="${#strings.replace(proyecto.estado, '_', ' ')}"
+                                th:classappend="${proyecto.estado == 'PENDIENTE'} ? ' pending' :
+                      (${proyecto.estado == 'EN_PROGRESO'} ? ' doing' :
+                      (${proyecto.estado == 'COMPLETADO'} ? ' done' : ''))">
+                            </span>
+                        </div>
                         <div class="card border-0 rounded-4 bg-dark bg-opacity-75 text-white">
                             <div class="card-body">
                                 <h3 class="h5 mb-2" th:text="${proyecto.nombre}">Proyecto</h3>

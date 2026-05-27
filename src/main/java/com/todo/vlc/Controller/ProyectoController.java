@@ -135,4 +135,33 @@ public class ProyectoController {
                 return "proyecto";
         }
 
+        // Listar listar el proyecto donde estas situado
+        @GetMapping("/proyecto/cambiarEstado/{id}")
+        public String mostrarCambioEstado(
+                        @PathVariable int id,
+                        Model model) {
+
+                Proyecto proyecto = proyectoRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+                model.addAttribute("proyecto", proyecto);
+
+                return "cambiarEstadoProyecto";
+        }
+
+        // Cambiar el estado de un proyecto
+        @PostMapping("/proyecto/cambiarEstado/{id}")
+        public String cambiarEstadoProyecto(
+                        @PathVariable int id,
+                        @RequestParam("estado") String estado) {
+
+                Proyecto proyecto = proyectoRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+                proyecto.setEstado(estado);
+
+                proyectoRepository.save(proyecto);
+
+                return "redirect:/proyecto/" + id;
+        }
 }
