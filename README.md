@@ -70,7 +70,7 @@ Docker descargará automáticamente las imágenes necesarias y construirá los s
 
 # Acceso
 
-Una vez iniciado correctamente, la aplicación estará disponible en:
+Una vez iniciado correctamente, la aplicación estará disponible localmente en:
 
 ```txt
 http://localhost
@@ -80,10 +80,11 @@ http://localhost
 
 # Estructura del proyecto
 (En base al release)
+
 ```txt
 release/
 ├── compiled/
-|      └──todo_vlc.jar
+│   └── todo_vlc.jar
 ├── docker-compose.yml
 ├── .env
 ├── Dockerfile
