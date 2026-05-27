@@ -20,6 +20,8 @@ Este proyecto incluye una configuración lista para ejecutar una aplicación Spr
 
 Estructurado para iniciar facilmente con Docker Compose.
 
+Completamente configurable mediante los archivos como .env, nginx.conf, docker-compose.yml...
+
 ---
 
 #  Requisitos
