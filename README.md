@@ -9,7 +9,7 @@
 </p>
 
 <p align="left">
-  Despliegue completo utilizando Docker Compose, Nginx y Spring Boot.
+  Despliegue completo utilizando Docker Compose, Nginx y Spring Boot, Maven.
 </p>
 
 ---
