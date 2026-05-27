@@ -39,12 +39,12 @@ public class SecurityConfig {
                                                 // Públicas
                                                 .requestMatchers(
                                                                 "/",
-                                                                "/inicioSesion",
-                                                                "/registrarse",
-                                                                "/register",
+                                                                "/inicioSesion/**",
+                                                                "/registrarse/**",
+                                                                "/register/**",
                                                                 "/media/**",
                                                                 "/webjars/**",
-                                                                "/cerrarSesion")
+                                                                "/cerrarSesion/**")
                                                 .permitAll()
 
                                                 // Admin
@@ -57,19 +57,24 @@ public class SecurityConfig {
 
                                                 // Collaborator
                                                 .requestMatchers(
-                                                                "/menucol",
+                                                                "/menucol/**",
                                                                 "/proyectocol/**",
-                                                                "/perfilcol",
-                                                                "/cambiar-passwordcol")
+                                                                "/perfilcol/**",
+                                                                "/cambiar-passwordcol/**")
                                                 .hasRole("COLLABORATOR")
 
                                                 // Gestor/Admin
                                                 .requestMatchers(
-                                                                "/datosProyecto",
-                                                                "/menu",
+                                                                "/datosProyecto/+*",
+                                                                "/menu/**",
                                                                 "/proyecto/**",
-                                                                "/perfil",
-                                                                "/cambiar-password")
+                                                                "/perfil/**",
+                                                                "/cambiar-password/**",
+                                                                "/eliminarProyecto/**",
+                                                                "/invitarUsuario/**",
+                                                                "/quitarUsuario/**",
+                                                                "/eliminarTarea/**",
+                                                                "/crearTarea/**")
                                                 .hasAnyRole("GESTOR", "ADMIN")
 
                                                 .anyRequest()

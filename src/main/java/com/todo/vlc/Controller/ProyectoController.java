@@ -164,4 +164,31 @@ public class ProyectoController {
 
                 return "redirect:/proyecto/" + id;
         }
+
+        // Listar proyectos para poder eliminarlos
+        @GetMapping("/eliminarProyecto")
+        public String vistaEliminarProyecto(
+                        @AuthenticationPrincipal Usuario usuario,
+                        Model model) {
+
+                List<Proyecto> proyectos = proyectoRepository.findByUsuario(usuario);
+
+                model.addAttribute("proyectos", proyectos);
+
+                return "eliminarProyecto";
+        }
+
+        // Eliminar proyectos
+        @PostMapping("/eliminarProyecto")
+        public String eliminarProyecto(
+                        @RequestParam("idproyecto") int idproyecto) {
+
+                Proyecto proyecto = proyectoRepository.findById(idproyecto)
+                                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+                proyectoRepository.delete(proyecto);
+
+                return "redirect:/menu";
+        }
+
 }

@@ -23,6 +23,14 @@ Estructurado para iniciar facilmente con Docker Compose.
 Completamente configurable mediante los archivos como .env, nginx.conf, docker-compose.yml...
 
 ---
+#  Administrador
+
+Por defecto siempre habra un usuario administrador con las siguientes credenciales para iniciar sesión:
+```text
+Email: admin@admin.com
+Contraseña: admin
+```
+---
 
 #  Requisitos
 
