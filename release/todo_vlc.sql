@@ -43,7 +43,7 @@
     CREATE TABLE usuario_proyecto (
         idusuario INT,
         idproyecto INT,
-        fechaasignacion VARCHAR(60),
+        fechaentrega VARCHAR(60),
         PRIMARY KEY (idusuario, idproyecto),
         FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario) ON DELETE CASCADE,
         FOREIGN KEY (idproyecto) REFERENCES proyecto(idproyecto) ON DELETE CASCADE

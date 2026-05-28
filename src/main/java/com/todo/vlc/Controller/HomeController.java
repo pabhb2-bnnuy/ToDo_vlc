@@ -86,7 +86,7 @@ public class HomeController {
 
         model.addAttribute("usuario", usuario);
 
-        return "/collaborator/perfilcol";
+        return "collaborator/perfilcol";
     }
 
     @GetMapping("/cambiar-password")

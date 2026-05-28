@@ -1,8 +1,6 @@
 HELP.md
 target/
 release/*
-!release/compiled/
-release/compiled/*
 !release/Dockerfile
 !release/docker-compose.yml
 !release/nginx.conf

@@ -60,6 +60,7 @@ public class SecurityConfig {
                                                                 "/menucol/**",
                                                                 "/proyectocol/**",
                                                                 "/perfilcol/**",
+                                                                "/perfilcol/",
                                                                 "/cambiar-passwordcol/**")
                                                 .hasRole("COLLABORATOR")
 
