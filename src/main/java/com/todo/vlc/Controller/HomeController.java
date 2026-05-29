@@ -27,7 +27,7 @@ public class HomeController {
     @Autowired
     private ProyectoRepository proyectoRepository;
 
-    // Mapping para registrarse
+    // Mapping to register (it alse checks if you are logged in)
     @GetMapping("/registrarse")
     public String registro(Authentication authentication) {
 
