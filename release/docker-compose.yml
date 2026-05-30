@@ -15,10 +15,10 @@ services:
       - "3306:3306"
 
     volumes:
-      # Persistencia de datos
+      # data persistance
       - mysql_data:/var/lib/mysql
 
-      # Script inicial SQL
+      # SQL script
       - ./todo_vlc.sql:/docker-entrypoint-initdb.d/init.sql
 
     healthcheck:

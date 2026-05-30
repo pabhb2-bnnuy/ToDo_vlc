@@ -36,7 +36,7 @@ public class UsuarioAdminController {
         @Autowired
         private PasswordEncoder passwordEncoder;
 
-        // Listar todos los usuarios
+        // show every user
 
         @GetMapping("/usuarios")
         public String usuarios(Model model) {
@@ -48,7 +48,7 @@ public class UsuarioAdminController {
                 return "admin/usuarios";
         }
 
-        // Listar detalles de usuarios
+        // show user details
 
         @GetMapping("/usuario/{id}")
         public String detalleUsuario(
@@ -71,7 +71,7 @@ public class UsuarioAdminController {
                 return "admin/detalleUsuario";
         }
 
-        // Crear usuario
+        // create a user
 
         @PostMapping("/crearUsuario")
         public String crearUsuario(
@@ -104,7 +104,7 @@ public class UsuarioAdminController {
                 return "admin/crearUsuario";
         }
 
-        // Cambiar rol de un usuario
+        // change user rol
 
         @PostMapping("/cambiarRol/{id}")
         public String cambiarRol(
@@ -121,7 +121,7 @@ public class UsuarioAdminController {
                 return "redirect:/admin/usuario/" + id;
         }
 
-        // Activar o desactivar un usuario
+        // enable or disabled a user
 
         @PostMapping("/toggleUsuario/{id}")
         public String toggleUsuario(
@@ -137,7 +137,7 @@ public class UsuarioAdminController {
                 return "redirect:/admin/usuario/" + id;
         }
 
-        //Listar proyectos de un usuario
+        // load user's projects
 
         @GetMapping("/asignarProyecto/{id}")
         public String asignarProyectoForm(
@@ -156,7 +156,7 @@ public class UsuarioAdminController {
                 return "admin/asignarProyecto";
         }
 
-        // Listar tareas de un usuario
+        // load user's tasks
 
         @GetMapping("/asignarTarea/{id}")
         public String asignarTareaForm(

@@ -27,7 +27,7 @@ public class HomeController {
     @Autowired
     private ProyectoRepository proyectoRepository;
 
-    // Mapping to register (it alse checks if you are logged in)
+    // Mapping to register (it also checks if you are logged in)
     @GetMapping("/registrarse")
     public String registro(Authentication authentication) {
 
@@ -37,8 +37,8 @@ public class HomeController {
         return "registrarse";
     }
 
-    // Mapping para menu que lista todos los proyectos (este mapping se usa para
-    // admin y gestor)
+    // Menu mapping that lists all projects (this mapping is used for
+    // admin and manager)
 
     @GetMapping("/menu")
     public String menu(Model model, Authentication authentication) {
@@ -56,18 +56,25 @@ public class HomeController {
         return "datosProyecto";
     }
 
-    // Redirect a /menu si estas logeado y si no a /
+    // Redirect to /menu if logged in, otherwise to /
     @GetMapping("/")
     public String index(Authentication authentication) {
 
-        if (AuthUtils.estaLogeado(authentication)) {
-            return "redirect:/menu";
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "index";
         }
 
-        return "index";
+        boolean isCollaborator = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_COLLABORATOR"));
+
+        if (isCollaborator) {
+            return "redirect:/menucol";
+        }
+
+        return "redirect:/menu";
     }
 
-    // Perfil de usuario para admin y gestor
+    // User profile for admin and manager
     @GetMapping("/perfil")
     public String perfil(Model model, Authentication authentication) {
 
@@ -77,8 +84,8 @@ public class HomeController {
 
         return "perfil";
     }
-    // Perfil de usuario para collaborator
 
+    // User profile for collaborator
     @GetMapping("/perfilcol")
     public String perfilcol(Model model, Authentication authentication) {
 
@@ -100,7 +107,7 @@ public class HomeController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Mapping de cambiar contraseña admin y gestor
+    // Change password mapping for admin and manager
 
     @PostMapping("/cambiar-password")
     public String actualizarPassword(
@@ -112,19 +119,19 @@ public class HomeController {
 
         Usuario usuario = (Usuario) authentication.getPrincipal();
 
-        // 1. comprobar contraseña actual
+        // 1. Check current password
         if (!passwordEncoder.matches(actual, usuario.getPassword())) {
             model.addAttribute("error", "La contraseña actual no es correcta");
             return "cambiarPassword";
         }
 
-        // 2. comprobar repetición
+        // 2. Check password confirmation
         if (!nueva.equals(repetir)) {
             model.addAttribute("error", "Las contraseñas no coinciden");
             return "cambiarPassword";
         }
 
-        // 3. guardar nueva encriptada
+        // 3. Save the new encrypted password
         usuario.setPassword(passwordEncoder.encode(nueva));
         usuarioRepository.save(usuario);
 
@@ -138,7 +145,7 @@ public class HomeController {
         return "collaborator/cambiarPasswordcol";
     }
 
-    // Mapping de cambiar contraseña para collaborator
+    // Change password mapping for collaborator
     @PostMapping("/cambiar-passwordcol")
     public String actualizarPasswordcol(
             Authentication authentication,
@@ -149,19 +156,19 @@ public class HomeController {
 
         Usuario usuario = (Usuario) authentication.getPrincipal();
 
-        // 1. comprobar contraseña actual
+        // 1. Check current password
         if (!passwordEncoder.matches(actual, usuario.getPassword())) {
             model.addAttribute("error", "La contraseña actual no es correcta");
             return "collaborator/cambiarPasswordcol";
         }
 
-        // 2. comprobar repetición
+        // 2. Check password confirmation
         if (!nueva.equals(repetir)) {
             model.addAttribute("error", "Las contraseñas no coinciden");
             return "collaborator/cambiarPasswordcol";
         }
 
-        // 3. guardar nueva encriptada
+        // 3. Save the new encrypted password
         usuario.setPassword(passwordEncoder.encode(nueva));
         usuarioRepository.save(usuario);
 

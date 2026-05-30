@@ -23,7 +23,7 @@ public class RegisterController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Registro de usuarios
+    // User registration
     @PostMapping("/register")
     public String registrarUsuario(
             @RequestParam("nombre") String nombre,
@@ -31,13 +31,13 @@ public class RegisterController {
             @RequestParam("password") String password,
             RedirectAttributes redirectAttrs) {
 
-        // 1. Comprobar si ya existe un usuario con ese email
+        // 1. Check if a user with that email already exists
         if (usuarioRepository.existsByEmail(email)) {
             redirectAttrs.addFlashAttribute("error", "Ya existe una cuenta registrada con este email.");
             return "redirect:/registrarse";
         }
 
-        // 2. Crear el nuevo usuario
+        // 2. Create the new user
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setEmail(email);
@@ -51,7 +51,7 @@ public class RegisterController {
 
         usuarioRepository.save(usuario);
 
-        // 3. Éxito (ej: mensaje de éxito o redirigir al login)
+        // 3. Success (e.g. success message or redirect to login)
         redirectAttrs.addFlashAttribute("success", "Usuario creado con éxito. Inicia sesión.");
         return "redirect:/inicioSesion";
     }

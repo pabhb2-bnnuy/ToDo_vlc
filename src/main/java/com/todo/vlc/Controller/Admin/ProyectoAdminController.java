@@ -25,7 +25,7 @@ public class ProyectoAdminController {
         @Autowired
         private ProyectoRepository proyectoRepository;
 
-        // Listar proyectos
+        // function to find every project in the database
 
         @GetMapping("/proyectos")
         public String proyectos(Model model) {
@@ -37,7 +37,7 @@ public class ProyectoAdminController {
                 return "admin/proyectos";
         }
 
-        // Cargar proyectos y tareas
+        // this function loads projects and tasks
 
         @Autowired
         private TareaRepository tareaRepository;
@@ -96,7 +96,7 @@ public class ProyectoAdminController {
                 return "redirect:/admin/proyectos";
         }
 
-        // Eliminar una tarea
+        // Delete a task
 
         @PostMapping("/eliminarTarea/{id}")
         public String eliminarTarea(
@@ -122,7 +122,7 @@ public class ProyectoAdminController {
                 return "redirect:/admin/proyectos";
         }
 
-        // Asignar un proyecto a un usuario
+        // assign a project to a user
 
         @PostMapping("/asignarProyecto")
         public String asignarProyecto(
@@ -164,7 +164,7 @@ public class ProyectoAdminController {
                 return "redirect:/admin/usuario/" + idusuario;
         }
 
-        // Quitar proyectos de un usuario
+        // remove project from a user
 
         @PostMapping("/quitarProyecto")
         public String quitarProyecto(
@@ -190,7 +190,7 @@ public class ProyectoAdminController {
 
         }
 
-        // Listar tareas de usuarios
+        // function to show users tasks
         @GetMapping("/tarea/{id}")
         public String editarTarea(
 
@@ -216,7 +216,7 @@ public class ProyectoAdminController {
                 return "admin/editarTarea";
         }
 
-        // Editar tareas
+        // edit tasks
 
         @PostMapping("/editarTarea/{id}")
         public String guardarTarea(

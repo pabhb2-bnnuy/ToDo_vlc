@@ -33,7 +33,7 @@ public class TareaController {
         @Autowired
         private UsuarioRepository usuarioRepository;
 
-        // Mostrar información de la tarea para su creacion
+        // Show task information for its creation
         @GetMapping("/crearTarea/{id}")
         public String mostrarFormulario(
                         @PathVariable Integer id,
@@ -51,7 +51,7 @@ public class TareaController {
                 return "crearTarea";
         }
 
-        // Crear una tarea
+        // Create a task
         @PostMapping("/crearTarea/{id}")
         public String guardarTarea(
 
@@ -64,14 +64,14 @@ public class TareaController {
 
                 tarea.setProyecto(proyecto);
 
-                // asignar usuario si viene
+                // assign user if provided
                 if (idusuario != null) {
                         Usuario usuarioAsignado = usuarioRepository.findById(idusuario)
                                         .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
                         tarea.setUsuario(usuarioAsignado);
                 }
 
-                // estado por defecto
+                // default status
                 if (tarea.getEstado() == null || tarea.getEstado().isEmpty()) {
                         tarea.setEstado("TODO");
                 }
@@ -81,7 +81,7 @@ public class TareaController {
                 return "redirect:/proyecto/" + id;
         }
 
-        // Mapeado para cambiar estado de una tarea
+        // Mapping to change task status
         @GetMapping("/tarea/estado/{id}/{estado}")
         public String cambiarEstado(
                         @PathVariable int id,
@@ -106,7 +106,7 @@ public class TareaController {
                 return "redirect:/proyecto/" + proyectoId;
         }
 
-        // Listar tareas en base a un proyecto
+        // List tasks based on a project
         @GetMapping("/eliminarTarea/{id}")
         public String mostrarEliminarTarea(
                         @PathVariable Integer id,
@@ -123,7 +123,7 @@ public class TareaController {
                 return "eliminarTarea";
         }
 
-        // Eliminar tareas
+        // Delete tasks
         @PostMapping("/eliminarTarea/{id}")
         public String eliminarTarea(
                         @PathVariable Integer id,

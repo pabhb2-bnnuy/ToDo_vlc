@@ -21,7 +21,7 @@ public class AdminController {
         @Autowired
         private TareaRepository tareaRepository;
 
-        // Contadores de tareas, usuarios, proyectos...
+        // Live counters for total users, projects, total tasks...
 
         @GetMapping("/admin")
         public String adminDashboard(Model model) {

@@ -28,7 +28,7 @@ public class UsuarioProyectoController {
         @Autowired
         private UsuarioProyectoRepository usuarioProyectoRepository;
 
-        // Listar usuarios a la hora de añadirlos
+        // List users when adding them
         @GetMapping("/invitarUsuario/{id}")
         public String mostrarFormularioInvitar(
                         @PathVariable Integer id,
@@ -52,7 +52,7 @@ public class UsuarioProyectoController {
                 return "invitarUsuario";
         }
 
-        // Añadir usuarios
+        // Add users
         @PostMapping("/invitarUsuario/{id}")
         public String invitarUsuario(
                         @PathVariable Integer id,
@@ -84,7 +84,7 @@ public class UsuarioProyectoController {
                 return "redirect:/proyecto/" + id;
         }
 
-        // Mostrar información para quitar un usuario
+        // Show information to remove a user
         @GetMapping("/quitarUsuario/{id}")
         public String mostrarFormularioQuitar(
                         @PathVariable Integer id,
@@ -106,7 +106,7 @@ public class UsuarioProyectoController {
                 return "quitarUsuario";
         }
 
-        // Quitar un usuario de un proyecto
+        // Remove a user from a project
         @PostMapping("/quitarUsuario/{id}")
         public String quitarUsuario(
                         @PathVariable Integer id,

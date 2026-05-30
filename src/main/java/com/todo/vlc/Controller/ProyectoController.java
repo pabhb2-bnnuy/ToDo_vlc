@@ -32,7 +32,7 @@ public class ProyectoController {
         @Autowired
         private TareaRepository tareaRepository;
 
-        // Crear proyecto
+        // Create project
         @PostMapping("/crearProyecto")
         public String crearProyecto(
 
@@ -76,7 +76,7 @@ public class ProyectoController {
                 return "redirect:/menu";
         }
 
-        // Listar proyecto para collaborator
+        // List project for collaborator
         @GetMapping("/proyectocol/{idproyecto}")
         public String verProyectocolcol(
                         @PathVariable int idproyecto,
@@ -92,7 +92,7 @@ public class ProyectoController {
                 List<Tarea> tareasEnProgreso = tareaRepository.findByProyectoAndEstado(proyecto, "DOING");
                 List<Tarea> tareasCompletadas = tareaRepository.findByProyectoAndEstado(proyecto, "DONE");
 
-                // Orden por prioridad: 1 alta, 2 media, 3 baja
+                // Order by priority: 1 high, 2 medium, 3 low
                 tareasPorHacer.sort(Comparator.comparingInt(Tarea::getPrioridad));
                 tareasEnProgreso.sort(Comparator.comparingInt(Tarea::getPrioridad));
                 tareasCompletadas.sort(Comparator.comparingInt(Tarea::getPrioridad));
@@ -106,7 +106,7 @@ public class ProyectoController {
                 return "collaborator/proyectocol";
         }
 
-        // Listar proyecto para admin y gestor
+        // List project for admin and manager
         @GetMapping("/proyecto/{idproyecto}")
         public String verProyecto(
                         @PathVariable int idproyecto,
@@ -135,7 +135,7 @@ public class ProyectoController {
                 return "proyecto";
         }
 
-        // Listar listar el proyecto donde estas situado
+        // Show project where you are located
         @GetMapping("/proyecto/cambiarEstado/{id}")
         public String mostrarCambioEstado(
                         @PathVariable int id,
@@ -149,7 +149,7 @@ public class ProyectoController {
                 return "cambiarEstadoProyecto";
         }
 
-        // Cambiar el estado de un proyecto
+        // Change project status
         @PostMapping("/proyecto/cambiarEstado/{id}")
         public String cambiarEstadoProyecto(
                         @PathVariable int id,
@@ -165,7 +165,7 @@ public class ProyectoController {
                 return "redirect:/proyecto/" + id;
         }
 
-        // Listar proyectos para poder eliminarlos
+        // List projects to be able to delete them
         @GetMapping("/eliminarProyecto")
         public String vistaEliminarProyecto(
                         @AuthenticationPrincipal Usuario usuario,
@@ -178,7 +178,7 @@ public class ProyectoController {
                 return "eliminarProyecto";
         }
 
-        // Eliminar proyectos
+        // Delete projects
         @PostMapping("/eliminarProyecto")
         public String eliminarProyecto(
                         @RequestParam("idproyecto") int idproyecto) {
